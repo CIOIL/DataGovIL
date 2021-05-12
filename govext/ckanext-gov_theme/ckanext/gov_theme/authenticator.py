@@ -20,9 +20,9 @@ class CustomUsernamePasswordAuthenticator(UsernamePasswordAuthenticator):
         if request.method == 'POST':
             came_from = request.params.get('came_from')
             if came_from == "/user/logged_in":
-                if not custom_captcha.check_recaptcha(request):
-                    log.debug('Bad Captcha error')
-                    return None
+                #if not custom_captcha.check_recaptcha(request):
+                log.debug('Bad Captcha error')
+                return None
 
         if not ('login' in identity and 'password' in identity):
             return None

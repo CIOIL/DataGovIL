@@ -11,9 +11,8 @@ class MimetypesPlugin(plugins.SingletonPlugin):
     def update_config(self, config_):
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
-        toolkit.add_resource('fanstatic', 'mimetypes')
+        toolkit.add_resource('fanstatic',
+            'mimetypes')
 
         mimetypes.add_type('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', '.xlsx')
         mimetypes.add_type('GEOJSON', '.geojson')
-        #mimetypes.add_type('WFS', '.wfs')
-        #mimetypes.add_type('WMS', 'wms')

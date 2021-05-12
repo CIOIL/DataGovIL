@@ -1,0 +1,32 @@
+{% ckan_extends %}
+
+{% block social %}
+  {% asset 'gov_theme/facet-list' %}
+  <section class="bg-grey module module-narrow module-shallow social">
+    {% block social_title %}
+      <h2 class="facet-title module-heading">
+        {{ _('Social') }}
+        <i class="fa icon-background"></i>
+        <i class="social-icon icon fa-stack-1x"></i>
+        <hr>
+      </h2>
+    {% endblock %}
+    {% block social_nav %}
+      <ul class="nav nav-simple">
+        <li class="nav-item">
+          <a href="https://twitter.com/israelgov" target="_blank">
+            <img src="/img/twitter.png" alt="" />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="https://www.facebook.com/israelGov" target="_blank">
+            <img src="/img/facebook.png" alt="" />
+          </a>
+        </li>
+      </ul>
+    {% endblock %}
+  </section>
+{% endblock %}
+
+
+

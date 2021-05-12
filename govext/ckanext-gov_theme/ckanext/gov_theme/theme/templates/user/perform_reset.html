@@ -1,0 +1,15 @@
+{% ckan_extends %}
+
+{% block form %}
+  <form class="form-horizontal" action="" method="post">
+{#    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>#}
+    {{ form.errors(error_summary) }}
+    {{ form.input("password1", id="field-password", label=_("Password"), type="password", value='', error='', attrs={'autocomplete': 'no'}, classes=["control-medium"]) }}
+    {{ form.input("password2", id="field-confirm-password", label=_("Confirm"), type="password", value='', error='', attrs={'autocomplete': 'no'}, classes=["control-medium"]) }}
+    <div class="form-actions">
+      {% block form_button %}
+        <button class="btn btn-primary" type="submit" name="save">{{ _("Update Password") }}</button>
+      {% endblock %}
+    </div>
+  </form>
+{% endblock %}

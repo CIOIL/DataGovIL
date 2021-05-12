@@ -1,2 +1,0 @@
-responses==0.8.1
-flake8

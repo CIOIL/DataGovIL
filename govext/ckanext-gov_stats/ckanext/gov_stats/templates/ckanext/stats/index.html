@@ -1,0 +1,284 @@
+{% extends "page.html" %}
+
+{% block breadcrumb_content %}
+  <li class="active">{{ _('Statistics') }}</li>
+{% endblock %}
+
+{% block primary_content %}
+  <article class="module">
+    {# Custom GovIL #}
+
+    <section id="stats-total-datasets" class="module-content tab-content active">
+      <h2>{{ _('Total number of Datasets') }}</h2>
+
+      {% set xaxis = {'mode': 'time', 'timeformat': '%y-%b'} %}
+      {% set yaxis = {'min': 0} %}
+      <table class="table table-chunky table-bordered table-striped" data-module="plot" data-module-xaxis="{{ h.dump_json(xaxis) }}" data-module-yaxis="{{ h.dump_json(yaxis) }}">
+        <thead>
+          <tr>
+            <th>{{ _("Date") }}</th>
+            <th>{{ _("Total datasets") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in raw_packages_by_week %}
+            <tr>
+              <th data-type="date" data-value="{{ row.date.strftime("%s") }}"><time datetime="{{ row.date.isoformat() }}">{{ h.render_datetime(row.date) }}</time></th>
+              <td>{{ row.total_packages }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section id="stats-dataset-revisions" class="module-content tab-content">
+      <h2>{{ _('Dataset Revisions per Week') }}</h2>
+
+      {% set xaxis = {'mode': 'time', 'timeformat': '%y-%b'} %}
+      {% set lines = {'fill': 1} %}
+      <table class="table table-chunky table-bordered table-striped" >
+        <thead>
+          <tr>
+            <th>{{ _("Date") }}</th>
+            <th>{{ _("All dataset revisions") }}</th>
+            <th>{{ _("New datasets") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in raw_all_package_revisions %}
+            <tr>
+              <th data-type="date" data-value="{{ row['date'].strftime("%s") }}"><time datetime="{{ row['date'].isoformat() }}">{{ h.render_datetime(row['date']) }}</time></th>
+              <td>{{ row['total_revisions'] }}</td>
+              <td>{{ raw_new_datasets[loop.index0]['new_packages'] }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section id="stats-most-edited" class="module-content tab-content">
+      <h2>{{ _('Most Edited Datasets') }} <a target="_blank" class="btn btn-primary resource-url-analytics" href="{{ path_to_datasets_most_edited_file }}">{{ _('Export to Excel') }}</a></h2>
+      {% if most_edited_packages %}
+        <table class="table table-chunky table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>{{ _('Dataset') }}</th>
+              <th class="metric">{{ _('Number of edits') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for package, edits in most_edited_packages %}
+              <tr py:for="package, edits in most_edited_packages">
+                <td>{{ h.link_to(package.title or package.name, h.url_for(controller='dataset', action='read', id=package.name)) }}</td>
+                <td class="metric">{{ edits }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="empty">{{ _('No edited datasets') }}</p>
+      {% endif %}
+    </section>
+
+    <section id="modified-resources" class="module-content tab-content">
+      <h2>{{ _('Modified Resources') }} <a target="_blank" class="btn btn-primary resource-url-analytics" href="{{ path_to_modified_resources_file }}">{{ _('Export to Excel') }}</a> </h2>
+      <table class="table table-chunky table-bordered table-striped">
+        <thead>
+          <tr>
+            <th> {{ _('Organization') }} </th>
+            <th> {{ _('Dataset') }} </th>
+            <th> {{ _('Resource') }} </th>
+            <th> {{ _('Last Modified') }} </th>
+            <th> {{ _('Created') }} </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for resource in modified_resources %}
+            <tr>
+              <td>{{ h.link_to(resource[0], h.url_for(controller='organization', action='read', id=resource[6])) }}</td>
+              <td>{{ h.link_to(resource[1], h.url_for(controller='dataset', action='read', id=resource[1])) }}</td>
+              <td> {{ h.link_to(resource[2], h.url_for(controller='dataset_resource', action='read',
+                        id=resource[1], resource_id=resource[5])) }} </td>
+              <td>{{ resource[3] }}</td>
+              <td>{{ resource[4] }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section id="org_resources" class="module-content tab-content">
+      <h2>{{ _('Resources by Organization') }} <a target="_blank" class="btn btn-primary resource-url-analytics" href="{{ path_to_org_resources_file }}">{{ _('Export to Excel') }}</a> </h2>
+      <table class="table table-chunky table-bordered table-striped">
+        <thead>
+          <tr>
+            <th> {{ _('Organization') }} </th>
+            <th> {{ _('CSV') }} </th>
+            <th> {{ _('JSON') }} </th>
+            <th> {{ _('PDF') }} </th>
+            <th> {{ _('XLS') }} </th>
+            <th> {{ _('XLSX') }} </th>
+            <th> {{ _('XML') }} </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for resource in org_resources %}
+            <tr>
+              <td>{{ resource[0] }}</td>
+              <td>{{ resource[1] if resource[1]}}</td>
+              <td>{{ resource[7] if resource[7] }}</td>
+              <td>{{ resource[8] if resource[8] }}</td>
+              <td>{{ resource[14] if resource[14] }}</td>
+              <td>{{ resource[15] if resource[15] }}</td>
+              <td>{{ resource[16] if resource[16] }}</td>
+
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    {# END Custom GovIL #}
+    <section id="stats-top-rated" class="module-content tab-content">
+      <h2>{{ _('Top Rated Datasets') }}</h2>
+      {% if top_rated_packages %}
+        <table class="table table-chunky table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Dataset</th>
+              <th class="metric">{{ _('Average rating') }}</th>
+              <th class="metric">{{ _('Number of ratings') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for package, rating, num_ratings in top_rated_packages %}
+              <tr>
+                <th>{{ h.link_to(package.title or package.name, h.url_for(package.type ~ '.read', id=package.name)) }}</th>
+                <td class="metric">{{ rating }}</td>
+                <td class="metric">{{ num_ratings }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="empty">{{ _('No ratings') }}</p>
+      {% endif %}
+    </section>
+
+    <section id="stats-largest-groups" class="module-content tab-content">
+      <h2>{{ _('Largest Groups') }}</h2>
+      {% if largest_groups %}
+        <table class="table table-chunky table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>{{ _('Group') }}</th>
+              <th class="metric">{{ _('Number of datasets') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for group, num_packages in largest_groups %}
+              <tr>
+                <td>{{ h.link_to(group.title or group.name, h.url_for(controller=group.type, action='read', id=group.name)) }}</td>
+                <td class="metric">{{ num_packages }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="empty">{{ _('No groups') }}</p>
+      {% endif %}
+    </section>
+
+    <section id="stats-top-tags" class="module-content tab-content">
+      <h2>{{ _('Top Tags') }}</h2>
+      <table class="table table-chunky table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>{{ _('Tag Name') }}</th>
+            <th class="metric">{{ _('Number of Datasets') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tag, num_packages in top_tags %}
+            <tr>
+              <td>{{ h.link_to(tag.name, h.url_for('dataset.search', tags=tag.name)) }}</td>
+              <td class="metric">{{ num_packages }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section id="stats-most-create" class="module-content tab-content">
+      <h2>{{ _('Users Creating Most Datasets') }}</h2>
+      <table class="table table-chunky table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>{{ _('User') }}</th>
+            <th class="metric">{{ _('Number of Datasets') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user, num_packages in top_package_creators %}
+            <tr>
+              <td class="media">{{ h.linked_user(user) }}</td>
+              <td class="metric">{{ num_packages }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section id="xloader-tasks" class="module-content tab-content">
+      <table class="table table-chunky table-bordered table-striped">
+        <thead>
+          <tr>
+            <th> {{ _('Resource') }} </th>
+            <th> {{ _('State') }} </th>
+            <th> {{ _('Error') }} </th>
+            <th> {{ _('Last Modified') }} </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for resource in xloader_tasks %}
+            <tr>
+              <td> {{ h.link_to(resource[0], h.url_for(controller='dataset_resource', action='read',
+                        id=resource[6], resource_id=resource[0])) }} </td>
+              <td>{{ resource[2] }}</td>
+              <td>{{ resource[3] }}</td>
+              <td>{{ resource[4] }}</td>
+
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+  </article>
+{% endblock %}
+
+{% block secondary_content %}
+  <section class="module module-narrow">
+    <h2 class="module-heading"><i class="fa fa-bar-chart-o"></i> {{ _('Statistics Menu') }}</h2>
+    <nav data-module="stats-nav">
+      <ul class="unstyled nav nav-simple">
+        <li class="nav-item"><a href="#stats-total-datasets" data-toggle="tab">{{ _('Total number of Datasets') }}</a></li>
+        <li class="nav-item"><a href="#stats-dataset-revisions" data-toggle="tab">{{ _('Dataset Revisions per Week') }}</a></li>
+        <li class="nav-item"><a href="#stats-most-edited" data-toggle="tab">{{ _('Most Edited Datasets') }}</a></li>
+        <li class="nav-item active"><a href="#stats-top-rated" data-toggle="tab">{{ _('Top Rated Datasets') }}</a></li>
+        <li class="nav-item"><a href="#stats-largest-groups" data-toggle="tab">{{ _('Largest Groups') }}</a></li>
+        <li class="nav-item"><a href="#stats-top-tags" data-toggle="tab">{{ _('Top Tags') }}</a></li>
+        <li class="nav-item"><a href="#stats-most-create" data-toggle="tab">{{ _('Users Creating Most Datasets') }}</a></li>
+        <li class="nav-item"><a href="#modified-resources" data-toggle="tab">{{ _('Modified Resources') }}</a></li>
+        <li class="nav-item"><a href="#org_resources" data-toggle="tab">{{ _('Resources by Organization') }}</a></li>
+        <li class="nav-item"><a href="#xloader-tasks" data-toggle="tab">{{ _('Xloader Tasks') }}</a></li>
+      </ul>
+    </nav>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {% asset "ckanext-gov_stats/stats" %}
+{% endblock %}

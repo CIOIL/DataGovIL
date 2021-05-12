@@ -1,0 +1,11 @@
+ajax_xloader_last_updated:
+  contents:
+    - js/ajax_xloader_last_updated.js
+
+ajax_xloader_status:
+  contents:
+    - js/ajax_xloader_status.js
+
+ajax_xloader_upload_log:
+  contents:
+    - js/ajax_xloader_upload_log.js

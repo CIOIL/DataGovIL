@@ -154,7 +154,7 @@
       ]
     },
     {
-      "field_name": "tag_string",
+      "field_name": "tags_in_dataset",
       "required": "True",
       "label": "Tags",
       "preset": "tag_string_autocomplete",
@@ -193,6 +193,61 @@
       "display_property": "dc:creator",
       "display_snippet": "email.html",
       "display_email_name_field": "author"
+    },
+
+    {
+      "field_name": "ref_number",
+      "label": "Reference Number",
+      "validators": "ignore_missing"
+    },
+    {
+      "field_name": "desc_spatial_cover",
+      "label": "Description of the spatial coverage",
+      "preset": "select",
+      "validators": "ignore_missing",
+      "output_validators": "ignore_missing",
+      "choices": [
+        {
+            "label": "NA",
+            "value": "NA"
+        },
+        {
+            "label": "Earthly",
+            "value": "Earthly"
+        },
+        {
+            "label": "Urban",
+            "value": "Urban"
+        }
+      ]
+    },
+    {
+      "field_name": "coordinates",
+      "label": "Coordinates / geographical demarcation",
+      "alt_text": "The coordinate set of the polygon that delimits the coverage area of the reservoir",
+      "validators": "ignore_missing"
+    },
+    {
+      "field_name": "geodetic_ref_sys",
+      "label": "Geodetic reference system",
+      "alt_text": "The reference system of the coordinates in the repository",
+      "validators": "ignore_missing",
+      "preset": "select",
+      "output_validators": "ignore_missing",
+      "choices": [
+        {
+            "label": "NA",
+            "value": "NA"
+        },
+        {
+            "label": "New Network",
+            "value": "New Network"
+        },
+        {
+            "label": "Old Network",
+            "value": "Old Network"
+        }
+      ]
     }
   ],
 

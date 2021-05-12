@@ -7,6 +7,7 @@ import ckanext.gov_theme.action as _action
 import ckanext.gov_theme.auth as _auth
 import ckanext.gov_theme.schema as _schema
 import ckanext.gov_theme.helpers as gov_helpers
+from ckanext.gov_theme import blueprint
 
 import logging
 log = logging.getLogger(__name__)
@@ -18,12 +19,16 @@ class Gov_ThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IAuthFunctions)
+    plugins.implements(plugins.IBlueprint)
+
+    def get_blueprint(self):
+        return blueprint.gov_blueprint
 
     # IConfigurer
     def update_config(self, config):
-        toolkit.add_template_directory(config, 'templates')
-        toolkit.add_public_directory(config, 'public')
-        toolkit.add_resource('fanstatic', 'gov_theme')
+        toolkit.add_template_directory(config, 'theme/templates')
+        toolkit.add_public_directory(config, 'theme/public')
+        toolkit.add_resource('theme/public', 'gov_theme')
         ckan.logic.schema.default_user_schema = _schema.default_user_schema
         ckan.logic.schema.user_new_form_schema = _schema.user_new_form_schema
         ckan.logic.schema.user_edit_form_schema = _schema.user_edit_form_schema
@@ -33,15 +38,16 @@ class Gov_ThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
     def get_helpers(self):
         return {'is_back_site': gov_helpers.is_back,
                 'get_tags_count': gov_helpers.tags_count,
-                'token_hidden_field': gov_helpers.anti_csrf_hidden_field,  # for csrf hidden field
                 'format_resource_items': gov_helpers.format_resource_items,
                 'api_usage_count': gov_helpers.api_usage_count,
                 'gui_view_count': gov_helpers.gui_view_count,
                 'resource_download_count': gov_helpers.resource_download_count,
+                'get_resources_count': gov_helpers.get_resources_count,
                 'sessionTimeout': gov_helpers.getTimeout,
                 'get_config_value': gov_helpers.get_config_value,
                 'get_datasets_count': gov_helpers.get_datasets_count,
-                'get_organizations_count': gov_helpers.get_organizations_count
+                'get_organizations_count': gov_helpers.get_organizations_count,
+                'govil_markdown_extract': gov_helpers.govil_markdown_extract
                 }
 
     # IActions
@@ -101,11 +107,10 @@ class Gov_ThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
                 'user_followee_list':  _action.user_followee_list,
                 'dataset_followee_list':  _action.dataset_followee_list,
                 'group_followee_list':  _action.group_followee_list,
-                'dashboard_activity_list':  _action.dashboard_activity_list,
-                'dashboard_activity_list_html':  _action.dashboard_activity_list_html,
-                'dashboard_new_activities_count':  _action.dashboard_new_activities_count,
-                'member_roles_list': _action.member_roles_list,
-                'package_create': _action.package_create}
+                #'dashboard_activity_list':  _action.dashboard_activity_list,
+                #'dashboard_activity_list_html':  _action.dashboard_activity_list_html,
+                #'dashboard_new_activities_count':  _action.dashboard_new_activities_count,
+                'member_roles_list': _action.member_roles_list}
 
     # IAuthFunctions
     def get_auth_functions(self):

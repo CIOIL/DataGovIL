@@ -106,7 +106,7 @@ class Upload(object):
                                          'uploads', object_type)
         try:
             os.makedirs(self.storage_path)
-        except OSError, e:
+        except OSError as e:
             # errno 17 is file already exists
             if e.errno != 17:
                 raise
@@ -192,7 +192,7 @@ class ResourceUpload(object):
         self.storage_path = os.path.join(path, 'resources')
         try:
             os.makedirs(self.storage_path)
-        except OSError, e:
+        except OSError as e:
             # errno 17 is file already exists
             if e.errno != 17:
                 raise
@@ -231,7 +231,7 @@ class ResourceUpload(object):
                     self.mimetype = magic.from_buffer(self.upload_file.read(),
                                                       mime=True)
                     self.upload_file.seek(0, os.SEEK_SET)
-                except IOError, e:
+                except IOError as e:
                     # Not that important if call above fails
                     self.mimetype = None
 
@@ -309,5 +309,5 @@ class ResourceUpload(object):
             try:
                 os.remove(filepath)
                 log.info("upload: saved as link to url")
-            except OSError, e:
+            except OSError as e:
                 pass

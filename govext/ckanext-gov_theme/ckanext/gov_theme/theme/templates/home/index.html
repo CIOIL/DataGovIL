@@ -1,0 +1,12 @@
+{% ckan_extends %}
+
+{% block content %}
+  <div class="homepage layout-{{ homepage_style }}">
+    <div class="container">
+      {{ self.flash() }}
+    </div>
+    {% block primary_content %}
+      {% snippet "home/gov-layout.html".format(homepage_style) %}
+    {% endblock %}
+  </div>
+{% endblock %}

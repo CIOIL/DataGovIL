@@ -2,30 +2,26 @@
    these badges work. The necessary Travis and Coverage config files have been
    generated for you.
 
-.. image:: https://travis-ci.org//ckanext-mimetypes.svg?branch=master
-    :target: https://travis-ci.org//ckanext-mimetypes
+.. image:: https://travis-ci.org/sagivtuvia/ckanext-mimetypes.svg?branch=master
+    :target: https://travis-ci.org/sagivtuvia/ckanext-mimetypes
 
-.. image:: https://coveralls.io/repos//ckanext-mimetypes/badge.svg
-  :target: https://coveralls.io/r//ckanext-mimetypes
+.. image:: https://coveralls.io/repos/sagivtuvia/ckanext-mimetypes/badge.svg
+  :target: https://coveralls.io/r/sagivtuvia/ckanext-mimetypes
 
-.. image:: https://pypip.in/download/ckanext-mimetypes/badge.svg
-    :target: https://pypi.python.org/pypi//ckanext-mimetypes/
-    :alt: Downloads
-
-.. image:: https://pypip.in/version/ckanext-mimetypes/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-mimetypes/
+.. image:: https://img.shields.io/pypi/v/ckanext-mimetypes.svg
+    :target: https://pypi.org/project/ckanext-mimetypes/
     :alt: Latest Version
 
-.. image:: https://pypip.in/py_versions/ckanext-mimetypes/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-mimetypes/
+.. image:: https://img.shields.io/pypi/pyversions/ckanext-mimetypes.svg
+    :target: https://pypi.org/project/ckanext-mimetypes/
     :alt: Supported Python versions
 
-.. image:: https://pypip.in/status/ckanext-mimetypes/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-mimetypes/
+.. image:: https://img.shields.io/pypi/status/ckanext-mimetypes.svg
+    :target: https://pypi.org/project/ckanext-mimetypes/
     :alt: Development Status
 
-.. image:: https://pypip.in/license/ckanext-mimetypes/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-mimetypes/
+.. image:: https://img.shields.io/pypi/l/ckanext-mimetypes.svg
+    :target: https://pypi.org/project/ckanext-mimetypes/
     :alt: License
 
 =============
@@ -65,7 +61,7 @@ To install ckanext-mimetypes:
 
 3. Add ``mimetypes`` to the ``ckan.plugins`` setting in your CKAN
    config file (by default the config file is located at
-   ``/etc/ckan/default/production.ini``).
+   ``/etc/ckan/default/ckan.ini``).
 
 4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu::
 
@@ -73,94 +69,78 @@ To install ckanext-mimetypes:
 
 
 ---------------
-Config Settings
+Config settings
 ---------------
 
-Document any optional config settings here. For example::
+None at present
 
-    # The minimum number of hours to wait before re-checking a resource
-    # (optional, default: 24).
-    ckanext.mimetypes.some_setting = some_default_value
+.. Document any optional config settings here. For example::
+
+.. # The minimum number of hours to wait before re-checking a resource
+   # (optional, default: 24).
+   ckanext.mimetypes.some_setting = some_default_value
 
 
-------------------------
-Development Installation
-------------------------
+----------------------
+Developer installation
+----------------------
 
 To install ckanext-mimetypes for development, activate your CKAN virtualenv and
 do::
 
-    git clone https://github.com//ckanext-mimetypes.git
+    git clone https://github.com/sagivtuvia/ckanext-mimetypes.git
     cd ckanext-mimetypes
     python setup.py develop
     pip install -r dev-requirements.txt
 
 
------------------
-Running the Tests
------------------
+-----
+Tests
+-----
 
 To run the tests, do::
 
-    nosetests --nologcapture --with-pylons=test.ini
+    pytest --ckan-ini=test.ini
 
 To run the tests and produce a coverage report, first make sure you have
-coverage installed in your virtualenv (``pip install coverage``) then run::
+``pytest-cov`` installed in your virtualenv (``pip install pytest-cov``) then run::
 
-    nosetests --nologcapture --with-pylons=test.ini --with-coverage --cover-package=ckanext.mimetypes --cover-inclusive --cover-erase --cover-tests
-
-
----------------------------------
-Registering ckanext-mimetypes on PyPI
----------------------------------
-
-ckanext-mimetypes should be availabe on PyPI as
-https://pypi.python.org/pypi/ckanext-mimetypes. If that link doesn't work, then
-you can register the project on PyPI for the first time by following these
-steps:
-
-1. Create a source distribution of the project::
-
-     python setup.py sdist
-
-2. Register the project::
-
-     python setup.py register
-
-3. Upload the source distribution to PyPI::
-
-     python setup.py sdist upload
-
-4. Tag the first release of the project on GitHub with the version number from
-   the ``setup.py`` file. For example if the version number in ``setup.py`` is
-   0.0.1 then do::
-
-       git tag 0.0.1
-       git push --tags
+    pytest --ckan-ini=test.ini  --cov=ckanext.mimetypes
 
 
 ----------------------------------------
-Releasing a New Version of ckanext-mimetypes
+Releasing a new version of ckanext-mimetypes
 ----------------------------------------
 
-ckanext-mimetypes is availabe on PyPI as https://pypi.python.org/pypi/ckanext-mimetypes.
+ckanext-mimetypes should be available on PyPI as https://pypi.org/project/ckanext-mimetypes.
 To publish a new version to PyPI follow these steps:
 
 1. Update the version number in the ``setup.py`` file.
    See `PEP 440 <http://legacy.python.org/dev/peps/pep-0440/#public-version-identifiers>`_
    for how to choose version numbers.
 
-2. Create a source distribution of the new version::
+2. Make sure you have the latest version of necessary packages::
 
-     python setup.py sdist
+    pip install --upgrade setuptools wheel twine
 
-3. Upload the source distribution to PyPI::
+3. Create a source and binary distributions of the new version::
 
-     python setup.py sdist upload
+       python setup.py sdist bdist_wheel && twine check dist/*
 
-4. Tag the new release of the project on GitHub with the version number from
+   Fix any errors you get.
+
+4. Upload the source distribution to PyPI::
+
+       twine upload dist/*
+
+5. Commit any outstanding changes::
+
+       git commit -a
+       git push
+
+6. Tag the new release of the project on GitHub with the version number from
    the ``setup.py`` file. For example if the version number in ``setup.py`` is
-   0.0.2 then do::
+   0.0.1 then do::
 
-       git tag 0.0.2
+       git tag 0.0.1
        git push --tags

@@ -1,0 +1,30 @@
+{#
+Displays information about accessing a resource via the API.
+
+datastore_root_url - The root API url.
+resource_id - The resource id
+embedded - If true will not include the "modal" classes on the snippet.
+
+Example
+
+    {% snippet 'ajax_snippets/contact_form.html', recaptcha_v3_action=recaptcha_v3_action,
+        recaptcha_v3_key=recaptcha_v3_key, resource_id=resource_id, package_id=package_id %}
+
+#}
+
+
+<div class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>
+                {{ _('Contact form') }}
+            </h3>
+        </div>
+        <div class="modal-body" style="max-height: 80vh !important;">
+            {% set data = {} %}
+            {% set errors = {} %}
+            {% set error_summary = {} %}
+            {% include "contact/snippets/form.html" %}
+        </div>
+    </div>
+</div>

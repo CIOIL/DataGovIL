@@ -2,6 +2,9 @@ import json
 import datetime
 import pytz
 import re
+
+import six
+
 import ckan.lib.helpers as h
 import ckanext.scheming.helpers as sh
 
@@ -81,7 +84,7 @@ def scheming_multiple_choice(field, schema):
 
         value = data[key]
         if value is not missing:
-            if isinstance(value, basestring):
+            if isinstance(value, six.string_types):
                 value = [value]
             elif not isinstance(value, list):
                 errors[key].append(_('expecting list of strings'))
@@ -140,7 +143,7 @@ def validate_date_inputs(field, key, data, extras, errors, context):
         try:
             value_full = value
             date = h.date_str_to_datetime(value)
-        except (TypeError, ValueError), e:
+        except (TypeError, ValueError) as e:
             errors[date_key].append(date_error)
 
     time_key, value = get_input('time')
@@ -152,7 +155,7 @@ def validate_date_inputs(field, key, data, extras, errors, context):
             try:
                 value_full += ' ' + value
                 date = h.date_str_to_datetime(value_full)
-            except (TypeError, ValueError), e:
+            except (TypeError, ValueError) as e:
                 errors[time_key].append(time_error)
 
     tz_key, value = get_input('tz')
@@ -178,7 +181,7 @@ def scheming_isodatetime(field, schema):
             else:
                 try:
                     date = h.date_str_to_datetime(value)
-                except (TypeError, ValueError), e:
+                except (TypeError, ValueError) as e:
                     raise Invalid(_('Date format incorrect'))
         else:
             extras = data.get(('__extras',))
@@ -207,7 +210,7 @@ def scheming_isodatetime_tz(field, schema):
             else:
                 try:
                     date = sh.date_tz_str_to_datetime(value)
-                except (TypeError, ValueError), e:
+                except (TypeError, ValueError) as e:
                     raise Invalid(_('Date format incorrect'))
         else:
             extras = data.get(('__extras',))
@@ -226,26 +229,6 @@ def scheming_isodatetime_tz(field, schema):
     return validator
 
 
-@scheming_validator
-def govil_email_validator(field, schema):
-    def validator(key, data, errors, context):
-        value = data[key]
-        email_pattern = re.compile(
-            # additional pattern to reject malformed dots usage
-            r"^(?!\.)(?!.*\.$)(?!.*?\.\.)" \
-            "[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9]" \
-            "(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9]" \
-            "(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
-        )
-
-        if value:
-            if not email_pattern.match(value):
-                raise Invalid(_('Email {email} is not a valid format').format(email=value))
-        return value
-
-    return validator
-
-
 def scheming_valid_json_object(value, context):
     """Store a JSON object as a serialized JSON string
 
@@ -256,7 +239,7 @@ def scheming_valid_json_object(value, context):
     """
     if not value:
         return
-    elif isinstance(value, basestring):
+    elif isinstance(value, six.string_types):
         try:
             loaded = json.loads(value)
 
@@ -283,7 +266,7 @@ def scheming_valid_json_object(value, context):
 
 
 def scheming_load_json(value, context):
-    if isinstance(value, basestring):
+    if isinstance(value, six.string_types):
         try:
             return json.loads(value)
         except ValueError:
@@ -330,10 +313,29 @@ def get_validator_or_converter(name):
     Get a validator or converter by name
     """
     if name == 'unicode':
-        return unicode
+        return six.text_type
     try:
         v = get_validator(name)
         return v
     except UnknownValidator:
         pass
     raise SchemingException('validator/converter not found: %r' % name)
+
+@scheming_validator
+def govil_email_validator(field, schema):
+    def validator(key, data, errors, context):
+        value = data[key]
+        email_pattern = re.compile(
+            # additional pattern to reject malformed dots usage
+            r"^(?!\.)(?!.*\.$)(?!.*?\.\.)" \
+            "[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9]" \
+            "(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9]" \
+            "(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        )
+
+        if value:
+            if not email_pattern.match(value):
+                raise Invalid(_('Email {email} is not a valid format').format(email=value))
+        return value
+
+    return validator

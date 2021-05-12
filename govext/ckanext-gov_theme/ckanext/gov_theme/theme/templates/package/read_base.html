@@ -1,0 +1,12 @@
+{% ckan_extends %}
+
+{% block maintag %}<div class="main main-dataset">{% endblock %}
+
+{% block content_primary_nav %}
+  {% if h.is_back_site() %}
+    {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name) }}
+    {{ h.build_nav_icon('dataset_activity', _('Activity Stream'), id=pkg.name) }}
+  {% endif %}
+{% endblock %}
+
+{% block package_info %}{% endblock %}

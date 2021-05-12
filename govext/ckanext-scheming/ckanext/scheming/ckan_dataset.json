@@ -23,154 +23,6 @@
       "form_placeholder": "eg. Some useful notes about the data"
     },
     {
-      "field_name": "remark",
-      "label": {
-                "en": "Remarks",
-                "he": "הערות"
-      },
-      "form_snippet": "markdown.html",
-      "form_placeholder": "Some useful remarks about the data",
-      "display_property": "dc:remarks"
-    },
-    {
-      "required" : "True",
-      "preset": "select",
-      "field_name": "Frequency",
-      "label": "Frequency",
-      "output_validators": "ignore_missing",
-      "choices": [
-        {
-            "label": "NA",
-            "value": "NA"
-        },
-        {
-            "label": "Year",
-            "value": "Year"
-        },
-        {
-            "label": "Quarter",
-            "value": "Quarter"
-        },
-        {
-            "label": "Month",
-            "value": "Month"
-        },
-        {
-            "label": "Week",
-            "value": "Week"
-        },
-        {
-            "label": "Day",
-            "value": "Day"
-        },
-        {
-            "label": "NoUpdate",
-            "value": "NoUpdate"
-        },
-        {
-            "label": "NotConstant",
-            "value": "NotConstant"
-        },
-        {
-            "label": "NoUpdate",
-            "value": "NoUpdate"
-        },
-        {
-            "label": "NoUpdate",
-            "value": "NoUpdate"
-        }
-      ]
-    },
-    {
-      "required" : "True",
-      "preset": "select",
-      "field_name": "Update",
-      "label": "Update",
-      "output_validators": "ignore_missing",
-      "choices": [
-        {
-            "label": "NA",
-            "value": "NA"
-        },
-        {
-            "label": "Manual",
-            "value": "Manual"
-        },
-        {
-            "label": "Automat",
-            "value": "Automat"
-        }
-      ]
-    },
-    {
-      "required" : "True",
-      "preset": "select",
-      "field_name": "Accessibility",
-      "label": "Accessibility",
-      "output_validators": "ignore_missing",
-      "choices": [
-        {
-            "label": "Accessible",
-            "value": "Accessible"
-        },
-        {
-            "label": "NotAccessible",
-            "value": "NotAccessible"
-        }
-      ]
-    },
-    {
-      "required" : "True",
-      "preset": "select",
-      "field_name": "ContainPrivateData",
-      "label": "ContainPrivateData",
-      "output_validators": "ignore_missing",
-      "choices": [
-        {
-          "label": "No",
-          "value": "No"
-        },
-        {
-          "label": "Yes",
-          "value": "Yes"
-        }
-      ]
-    },
-    {
-      "required" : "True",
-      "preset": "select",
-      "field_name": "accessibility",
-      "label": "Accessibility",
-      "output_validators": "ignore_missing",
-      "choices": [
-        {
-          "label": "Accessible",
-          "value": "Accessible"
-        },
-        {
-          "label": "NotAccessible",
-          "value": "NotAccessible"
-        }
-      ]
-    },
-    {
-      "required" : "True",
-      "preset": "select",
-      "field_name": "is_geographic",
-      "label": "is_geographic",
-      "output_validators": "ignore_missing",
-      "choices": [
-        {
-          "label": "No",
-          "value": "No"
-        },
-        {
-          "label": "Yes",
-          "value": "Yes"
-        }
-      ]
-    },
-    {
       "field_name": "tag_string",
       "label": "Tags",
       "preset": "tag_string_autocomplete",
@@ -204,7 +56,7 @@
       "field_name": "author",
       "label": "Author",
       "form_placeholder": "Joe Bloggs",
-      "display_property": "dc:author"
+      "display_property": "dc:creator"
     },
     {
       "field_name": "author_email",
@@ -213,6 +65,20 @@
       "display_property": "dc:creator",
       "display_snippet": "email.html",
       "display_email_name_field": "author"
+    },
+    {
+      "field_name": "maintainer",
+      "label": "Maintainer",
+      "form_placeholder": "Joe Bloggs",
+      "display_property": "dc:contributor"
+    },
+    {
+      "field_name": "maintainer_email",
+      "label": "Maintainer Email",
+      "form_placeholder": "joe@example.com",
+      "display_property": "dc:contributor",
+      "display_snippet": "email.html",
+      "display_email_name_field": "maintainer"
     }
   ],
   "resource_fields": [

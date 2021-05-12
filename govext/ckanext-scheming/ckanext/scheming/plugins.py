@@ -4,8 +4,12 @@
 import os
 import inspect
 import logging
+from functools import wraps
+
+import six
 
 import ckan.plugins as p
+import ckan.model as model
 from ckan.common import c
 try:
     from ckan.lib.helpers import helper_functions as core_helper_functions
@@ -20,10 +24,10 @@ from ckantoolkit import (
     get_converter,
     navl_validate,
     add_template_directory,
+    add_public_directory,
+    add_resource
 )
 
-from paste.reloader import watch_file
-from paste.deploy.converters import asbool
 
 from ckanext.scheming import helpers
 from ckanext.scheming import loader
@@ -63,6 +67,29 @@ DEFAULT_PRESETS = 'ckanext.scheming:presets.json'
 
 log = logging.getLogger(__name__)
 
+def run_once_for_caller(var_name, rval_fn):
+    """
+    return passed value if this method has been called more than once
+    from the same function, e.g. load_plugin_helpers, get_validator
+
+    This lets us have multiple scheming plugins active without repeating
+    helpers, validators, template dirs and to be compatible with versions
+    of ckan that don't support overwriting helpers/validators
+    """
+    import inspect
+
+    def decorator(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            caller = inspect.currentframe().f_back
+            if var_name in caller.f_locals:
+                return rval_fn()
+            # inject local varible into caller to track separate calls (reloading)
+            caller.f_locals[var_name] = None
+            return fn(*args, **kwargs)
+        return wrapper
+    return decorator
+
 
 class _SchemingMixin(object):
     """
@@ -73,18 +100,13 @@ class _SchemingMixin(object):
     """
     instance = None
     _presets = None
-    _helpers_loaded = False
-    _template_dir_added = False
-    _validators_loaded = False
+    _is_fallback = False
+    _schema_urls = tuple()
+    _schemas = tuple()
+    _expanded_schemas = tuple()
 
+    @run_once_for_caller('_scheming_get_helpers', dict)
     def get_helpers(self):
-        if core_helper_functions is None:
-            if _SchemingMixin._helpers_loaded:
-                return {}
-            _SchemingMixin._helpers_loaded = True
-        elif 'scheming_language_text' in core_helper_functions:
-            return {}
-
         return {
             'scheming_language_text': helpers.scheming_language_text,
             'scheming_choices_label': helpers.scheming_choices_label,
@@ -108,14 +130,12 @@ class _SchemingMixin(object):
             'scheming_display_json_value': helpers.scheming_display_json_value,
             }
 
+    @run_once_for_caller('_scheming_get_validators', dict)
     def get_validators(self):
-        if _SchemingMixin._validators_loaded:
-            return {}
-        _SchemingMixin._validators_loaded = True
         return {
+            'govil_email_validator': govil_email_validator,
             'scheming_choices': scheming_choices,
             'scheming_required': scheming_required,
-            'govil_email_validator': govil_email_validator,
             'scheming_multiple_choice': scheming_multiple_choice,
             'scheming_multiple_choice_output': scheming_multiple_choice_output,
             'convert_to_json_if_date': convert_to_json_if_date,
@@ -126,11 +146,11 @@ class _SchemingMixin(object):
             'scheming_load_json': scheming_load_json,
             }
 
+    @run_once_for_caller('_scheming_add_template_directory', lambda: None)
     def _add_template_directory(self, config):
-        if _SchemingMixin._template_dir_added:
-            return
-        _SchemingMixin._template_dir_added = True
         add_template_directory(config, 'templates')
+        add_public_directory(config, 'public')
+        add_resource('public', 'ckanext-scheming')
 
     def _load_presets(self, config):
         if _SchemingMixin._presets is not None:
@@ -152,7 +172,9 @@ class _SchemingMixin(object):
         self._add_template_directory(config)
         self._load_presets(config)
 
-        self._is_fallback = asbool(config.get(self.FALLBACK_OPTION, False))
+        self._is_fallback = p.toolkit.asbool(
+            config.get(self.FALLBACK_OPTION, False)
+        )
 
         self._schema_urls = config.get(self.SCHEMA_OPTION, "").split()
         self._schemas = _load_schemas(
@@ -280,6 +302,15 @@ class SchemingDatasetsPlugin(p.SingletonPlugin, DefaultDatasetForm,
             'scheming_dataset_schema_show': scheming_dataset_schema_show,
         }
 
+    def setup_template_variables(self, context, data_dict):
+        super(SchemingDatasetsPlugin, self).setup_template_variables(
+            context, data_dict)
+        # do not override licenses if they were already added by some
+        # other extension. We just want to make sure, that licenses
+        # are not empty.
+        if not hasattr(c, 'licenses'):
+            c.licenses = [('', '')] + model.Package.get_license_options()
+
 
 class SchemingGroupsPlugin(p.SingletonPlugin, _GroupOrganizationMixin,
                            DefaultGroupForm, _SchemingMixin):
@@ -301,7 +332,7 @@ class SchemingGroupsPlugin(p.SingletonPlugin, _GroupOrganizationMixin,
     def about_template(self):
         return 'scheming/group/about.html'
 
-    def group_form(group_type=None):
+    def group_form(self, group_type=None):
         return 'scheming/group/group_form.html'
 
     def get_actions(self):
@@ -331,7 +362,7 @@ class SchemingOrganizationsPlugin(p.SingletonPlugin, _GroupOrganizationMixin,
     def about_template(self):
         return 'scheming/organization/about.html'
 
-    def group_form(group_type=None):
+    def group_form(self, group_type=None):
         return 'scheming/organization/group_form.html'
 
     # use the correct controller (see ckan/ckan#2771)
@@ -376,16 +407,20 @@ def _load_schema_module_path(url):
         return
     p = os.path.join(os.path.dirname(inspect.getfile(m)), file_name)
     if os.path.exists(p):
-        watch_file(p)
+        try:
+            from paste.reloader import watch_file
+            watch_file(p)
+        except ImportError:
+            pass
         return loader.load(open(p))
 
 
 def _load_schema_url(url):
-    import urllib2
+    from six.moves import urllib
     try:
-        res = urllib2.urlopen(url)
+        res = urllib.request.urlopen(url)
         tables = res.read()
-    except urllib2.URLError:
+    except urllib.error.URLError:
         raise SchemingException("Could not load %s" % url)
 
     return loader.loads(tables, url)
@@ -428,9 +463,9 @@ def _field_validators(f, schema, convert_extras):
     if 'validators' in f:
         validators = validators_from_string(f['validators'], f, schema)
     elif helpers.scheming_field_required(f):
-        validators = [not_empty, unicode]
+        validators = [not_empty, six.text_type]
     else:
-        validators = [ignore_missing, unicode]
+        validators = [ignore_missing, six.text_type]
 
     if convert_extras:
         validators = validators + [convert_to_extras]
@@ -471,7 +506,7 @@ def _expand_schemas(schemas):
     Return a new dict of schemas with all field presets expanded.
     """
     out = {}
-    for name, original in schemas.iteritems():
+    for name, original in schemas.items():
         s = dict(original)
         for fname in ('fields', 'dataset_fields', 'resource_fields'):
             if fname not in s:

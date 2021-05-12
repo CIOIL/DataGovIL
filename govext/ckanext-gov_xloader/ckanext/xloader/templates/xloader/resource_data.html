@@ -1,0 +1,86 @@
+{% extends "package/resource_edit_base.html" %}
+
+{% block subtitle %}{{ h.dataset_display_name(pkg) }} - {{ h.resource_display_name(res) }}{% endblock %}
+
+{% block primary_content_inner %}
+
+{% set action = h.url_for('xloader.resource_data', id=pkg.name, resource_id=res.id) %}
+{% set show_table = true %}
+
+<form method="post" action="{{ action }}" class="datapusher-form">
+  <button class="btn btn-primary" name="save" type="submit">
+    <i class="fa fa-cloud-upload"></i> {{ _('Upload to DataStore') }}
+  </button>
+</form>
+
+<div id="xloader_hidden_status_result" hidden></div>
+
+{% if status.error and status.error.message %}
+{% set show_table = false %}
+<div class="alert alert-error">
+  <strong>{{ _('Upload error:') }}</strong> {{ status.error.message }}
+</div>
+{% elif status.task_info and status.task_info.error %}
+<div class="alert alert-error">
+  {% if status.task_info.error is string %}
+  {# DataPusher < 0.0.3 #}
+  <strong>{{ _('Error:') }}</strong> {{ status.task_info.error }}
+  {% elif status.task_info.error is mapping %}
+  <strong>{{ _('Error:') }}</strong> {{ status.task_info.error.message }}
+  {% for error_key, error_value in status.task_info.error.items() %}
+  {% if error_key != "message" and error_value %}
+  <br>
+  <strong>{{ error_key }}</strong>:
+  {{ error_value }}
+  {% endif %}
+  {% endfor %}
+  {% elif status.task_info.error is iterable %}
+  <strong>{{ _('Error traceback:') }}</strong>
+  <pre>{{ ''.join(status.task_info.error) }}</pre>
+  {% endif %}
+</div>
+{% endif %}
+
+<table class="table table-bordered">
+
+  <colgroup>
+    <col width="150">
+    <col>
+  </colgroup>
+
+  <tr>
+    {# Rendering the status of the uploaded resource using ajax #}
+    {% block xloader_status_refresher %}
+      {% set action = h.url_for('xloader.xloader_status',
+                      resource_id=res.id) %}
+
+      {% snippet 'snippets/xloader_status.html',
+        xloader_status_api_url=action,
+        xloader_status_key=xloader_status_key,
+        status=status,
+        xloader_status_refresh_interval=xloader_status_refresh_interval %}
+    {% endblock %}
+  </tr>
+
+  <tr>
+    {# Rendering the last updated time of the uploaded resource using ajax #}
+    {% block xloader_last_updated_time_refresher %}
+      {% snippet 'snippets/xloader_last_updated.html',
+          status=status,
+          status_last_updated=status.last_updated,
+          xloader_last_updated_refresh_interval=xloader_last_updated_refresh_interval %}
+    {% endblock %}
+  </tr>
+
+</table>
+
+  {# Rendering the upload log using ajax #}
+  {% block xloader_upload_log %}
+  {% snippet 'snippets/xloader_upload_log.html',
+      status=status.status,
+      show_table=show_table,
+      resource_id = res.id,
+      xloader_upload_log_refresh_interval=xloader_upload_log_refresh_interval %}
+  {% endblock%}
+
+{% endblock %}

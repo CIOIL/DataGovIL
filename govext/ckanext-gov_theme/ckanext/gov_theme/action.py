@@ -1,5 +1,5 @@
 import logging
-from pylons import config
+from ckan.common import config
 import ckan.model.misc as misc
 import ckan.logic as logic
 import ckan.lib.dictization
@@ -18,7 +18,6 @@ import ckan.logic.action.get as _get
 import ckan.logic.action.patch as _patch
 import ckanext.gov_theme.email_notifications as custom_email_notifications
 import ckanext.gov_theme.mailer as custom_mailer
-import ckanext.gov_theme.activity_streams as custom_activity_streams
 import ckanext.gov_theme.schema as custom_schema
 
 import ckan.lib.plugins as lib_plugins
@@ -135,7 +134,7 @@ def package_create(context, data_dict):
                 raise logic.ValidationError({
                     'Tags': [_("Missing value")]
                 })
-        except KeyError, e:
+        except KeyError as e:
             pass
         try:
             authorEmail = data_dict['author_email']
@@ -143,7 +142,7 @@ def package_create(context, data_dict):
                 raise logic.ValidationError({
                     _('Author Email'): [_("Missing value")]
                 })
-        except KeyError, e:
+        except KeyError as e:
             pass
 
             # Validation for the update frequency field
@@ -154,7 +153,7 @@ def package_create(context, data_dict):
                 raise logic.ValidationError({
                     ('Frequency'): [_("Missing value")]
                 })
-        except KeyError, e:
+        except KeyError as e:
             pass
 
         try:
@@ -163,7 +162,7 @@ def package_create(context, data_dict):
                 raise logic.ValidationError({
                     ('Update'): [_("Missing value")]
                 })
-        except KeyError, e:
+        except KeyError as e:
             pass
 
     if 'type' not in data_dict:
@@ -312,8 +311,8 @@ def resource_create(context, data_dict):
 
     '''
 
-    if data_dict['upload'] is not None and data_dict['upload'] != "":
-        file_validators.check_file_extension(data_dict['upload'].filename)
+    if data_dict['upload'] is not None:
+        file_validators.check_file_extension(data_dict.get('url', ''))
 
 
     model = context['model']
@@ -353,7 +352,7 @@ def resource_create(context, data_dict):
         context['use_cache'] = False
         _get_action('package_update')(context, pkg_dict)
         context.pop('defer_commit')
-    except ValidationError, e:
+    except ValidationError as e:
         try:
             raise ValidationError(e.error_dict['resources'][-1])
         except (KeyError, IndexError):
@@ -746,8 +745,8 @@ def resource_update(context, data_dict):
 
     '''
 
-    if data_dict['upload'] is not None and data_dict['upload'] != "":
-        file_validators.check_file_extension(data_dict['upload'].filename)
+    if data_dict['upload'] is not None:
+        file_validators.check_file_extension(data_dict.get('url', ''))
 
     model = context['model']
     user = context['user']
@@ -807,7 +806,7 @@ def resource_update(context, data_dict):
         context['use_cache'] = False
         updated_pkg_dict = _get_action('package_update')(context, pkg_dict)
         context.pop('defer_commit')
-    except ValidationError, e:
+    except ValidationError as e:
         try:
             raise ValidationError(e.error_dict['resources'][-1])
         except (KeyError, IndexError):
@@ -1341,7 +1340,7 @@ def _get_num_of_resources_for_package(group_id):
     con = eng.connect()
 
     rs = con.execute(text('SELECT name from "group"'))
-    print rs.fetchone()
+    print (rs.fetchone())
     sql = 'SELECT COUNT(*) as num_of_resources FROM '
     sql = sql+ '(SELECT G.title as Office, P.name as DataSet, R.Name as resourceName, date(R.last_modified) as last_modified ,date(R.created) as created, R.id, G.name as name, R.url as url  FROM "group" as G INNER JOIN  "package" as P ON G.id = P.owner_org INNER JOIN resource as R ON P.id = R.package_id'
     sql = sql + " WHERE G.type = 'organization' AND G.state = 'active' AND P.state = 'active' AND R.state = 'active' "

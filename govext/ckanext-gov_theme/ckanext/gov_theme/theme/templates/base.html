@@ -1,0 +1,55 @@
+{% ckan_extends %}
+
+{%- block styles %}
+  {{ super() }}
+
+  {% asset 'gov_theme/custom-main' %}
+  {% asset 'gov_theme/custom-fonts' %}
+  {% asset 'gov_theme/gov-ltr' %}
+
+  {% set current_lang = request.environ.CKAN_LANG %}
+  {% if current_lang == "he" %}
+    {% asset 'gov_theme/gov-rtl' %}
+  {% endif %}
+{% endblock %}
+
+
+
+{# Allows custom attributes to be added to the <body> tag #}
+{% block bodytag %}
+  {{ super() }}
+  class="gov-dir"
+{% endblock %}>
+
+{#
+    DO NOT USE THIS BLOCK FOR ADDING SCRIPTS
+    Scripts should be loaded by the {% resource %} tag except in very special
+    circumstances
+    #}
+{%- block scripts %}
+  {{ super() }}
+
+  {% asset 'gov_theme/gov' %}
+  {% asset 'gov_theme/modernizr-custom' %}
+{#  {% if not h.is_back_site() %}#}
+{#    {% asset 'gov_theme/msense' %}#}
+{#  {% endif %}#}
+  {% asset 'gov_theme/autocompletecustum' %}
+  {% asset 'gov_theme/scroll-up' %}
+
+{% endblock -%}
+
+{% block head_extras %}
+  {{ super() }}
+  {% if not h.is_back_site() %}
+    <script src='https://accessibility.cio.gov.il/aweb?license=615c93de30fa4501824be99136d0f639' async></script>
+  {% endif %}
+{% endblock %}
+
+{% block body_extras -%}
+  {{ super() }}
+{#  {% if not h.is_back_site() %}#}
+{#    <script src="//msense.tehila.gov.il/widget/avcp.js?p=18178&l=1&c=&s=&j=datagovil&g={08cb46a9-7cd8-4231-9827-d280610c124d}"></script>#}
+{#  {% endif %}#}
+{%- endblock %}
+

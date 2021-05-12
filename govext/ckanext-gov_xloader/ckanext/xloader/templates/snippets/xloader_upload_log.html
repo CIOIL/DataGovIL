@@ -1,0 +1,12 @@
+{#
+Rendering upload log to the DataStore using ajax
+#}
+
+{% asset 'gov_xloader/ajax_xloader_upload_log' %}
+
+<span data-module="ajax_xloader_upload_log"
+      data-module-xloader_upload_log_status="{{status}}"
+      data-module-xloader_upload_log_resource_id="{{resource_id}}"
+      data-module-xloader_upload_log_refresh_interval="{{xloader_upload_log_refresh_interval}}"
+      data-module-xloader_show_table="{{show_table}}">
+</span>

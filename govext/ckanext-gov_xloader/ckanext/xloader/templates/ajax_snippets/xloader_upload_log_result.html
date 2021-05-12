@@ -1,0 +1,29 @@
+{% set upload_log_status = h.xloader_status(xloader_upload_log_resource_id) %}
+{% if upload_log_status.status and upload_log_status.task_info and xloader_show_table %}
+<h3>{{ _('Upload Log') }}</h3>
+<ul class="activity">
+  {% for item in upload_log_status.task_info.logs %}
+  {% set icon = 'ok' if item.level == 'INFO' else 'exclamation' %}
+  {% set class = ' failure' if icon == 'exclamation' else ' success' %}
+  {% set popover_content = 'test' %}
+  <li class="item no-avatar{{ class }}">
+    <i class="fa icon fa-{{ icon }}"></i>
+    <p>
+      {% for line in item.message.strip().split('\n') %}
+      {{ line | urlize }}<br>
+      {% endfor %}
+      <span class="date" title="{{ h.render_datetime(item.timestamp, with_hours=True) }}">
+              {{ h.time_ago_from_timestamp(item.timestamp) }}
+              <a href="#" data-target="popover"
+                 data-content="<dl>{% for key, value in item.items() %}<dt>{{ key }}</dt><dd>{{ h.clean_html(value|string) }}</dd>{% endfor %}</dl>"
+                 data-html="true">{{ _('Details') }}</a>
+            </span>
+    </p>
+  </li>
+  {% endfor %}
+  <li class="item no-avatar">
+    <i class="fa icon fa-info"></i>
+    <p class="muted">{{ _('End of log') }}</p>
+  </li>
+</ul>
+{% endif %}

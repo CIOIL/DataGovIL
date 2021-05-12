@@ -1,13 +1,14 @@
 import ckan.lib.mailer as _mailer
 from ckan.common import _
-from pylons import g
+from ckan.common import config
+import ckan.common
 import ckan.lib.helpers as h
 
 
 def send_invite(user):
     _mailer.create_reset_key(user)
     body = _mailer.get_invite_body(user)
-    subject = _('Invite for {site_title}').format(site_title=g.site_title)
+    subject = _('Invite for {site_title}').format(site_title=config.get('site_title', ''))
     mail_user(user, subject, body)
 
 
@@ -35,7 +36,7 @@ def get_reset_link_body(user):
 
     d = {
         'reset_link': get_reset_link(user),
-        'site_title': g.site_title,
+        'site_title': config.get('site_title', ''),
         'user_fullname': user.fullname
         }
     return reset_link_message.format(**d)
@@ -72,7 +73,7 @@ def _mail_recipient(recipient_name, recipient_email,
     msg['From'] = _("%s <%s>") % (sender_name, mail_from)
     recipient = u"%s <%s>" % (recipient_name, recipient_email)
     msg['To'] = _mailer.Header(recipient, 'utf-8')
-    msg['Date'] = _mailer.Utils.formatdate(_mailer.time())
+    msg['Date'] = _mailer.utils.formatdate(_mailer.time())
     msg['X-Mailer'] = "Version %s" % _mailer.ckan.__version__
 
     # Send the email using Python's smtplib.
@@ -86,7 +87,7 @@ def _mail_recipient(recipient_name, recipient_email,
         smtp_password = None
     else:
         smtp_server = _mailer.config.get('smtp.server', 'localhost')
-        smtp_starttls = _mailer.paste.deploy.converters.asbool(
+        smtp_starttls = ckan.common.asbool(
             _mailer.config.get('smtp.starttls'))
         smtp_user = _mailer.config.get('smtp.user')
         smtp_password = _mailer.config.get('smtp.password')
@@ -116,7 +117,7 @@ def _mail_recipient(recipient_name, recipient_email,
         smtp_connection.sendmail(mail_from, recipient_email.split(","), msg.as_string())
         _mailer.log.info("Sent email to {0}".format(recipient_email.split(",")))
 
-    except _mailer.smtplib.SMTPException, e:
+    except _mailer.smtplib.SMTPException as e:
         msg = '%r' % e
         _mailer.log.exception(msg)
         raise _mailer.MailerException(msg)

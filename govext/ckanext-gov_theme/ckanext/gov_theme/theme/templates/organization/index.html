@@ -1,0 +1,32 @@
+{% ckan_extends %}
+
+{% block maintag %}
+  <div class="main main-organizations">
+{% endblock %}
+
+{% block breadcrumb_content %}
+  <li class="active">{% link_for _('Organizations'), named_route=group_type+'.index' %}</li>
+  <hr/>
+{% endblock %}
+
+{% block secondary %}
+{% endblock %}
+
+{% block primary %}
+  <div class="primary col-sm-12 col-xs-12">
+    {#
+                The primary_content block can be used to add content to the page.
+                This is the main block that is likely to be used within a template.
+
+                Example:
+
+                  {% block primary_content %}
+                    <h1>My page content</h1>
+                    <p>Some content for the page</p>
+                  {% endblock %}
+                #}
+    {% block primary_content %}
+      {{ super() }}
+    {% endblock %}
+  </div>
+{% endblock %}

@@ -1,2 +1,0 @@
-include README.rst
-recursive-include ckanext/custom-group *.html *.json *.js *.less *.css

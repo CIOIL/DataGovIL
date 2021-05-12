@@ -115,6 +115,22 @@ msgstr "הגדרות מנהל מערכת"
 msgid "Admin"
 msgstr "מנהל"
 
+#: ckan/templates/snippets/search_result_text.html:17
+msgid "{number} dataset"
+msgid_plural "{number} datasets"
+msgstr[0] " מאגר מידע יחיד"
+msgstr[1] " {number} מאגרי מידע"
+msgstr[2] " {number} מאגרי מידע"
+msgstr[3] " {number} מאגרי מידע"
+
+#: ckan/templates/snippets/search_result_text.html:29
+msgid "{number} organization"
+msgid_plural "{number} organizations"
+msgstr[0] "ארגון אחד "
+msgstr[1] "{number} ארגונים "
+msgstr[2] "{number} ארגונים "
+msgstr[3] "{number} ארגונים "
+
 #: ckanext/gov_theme/templates/header.html:89
 msgid "View profile"
 msgstr "הצג פרופיל"
@@ -386,132 +402,7 @@ msgid "E.g. environment"
 msgstr "חפש מאגר"
 
 #: ckanext/gov_theme/templates/home/snippets/terms_text.html:1
-msgid ""
-" <p><b><u> Terms of Use of the Data.gov.il Site </u></b></p> <p> This website "
-"(\"Site\") is managed and maintained by the Prime Minister's Office, the "
-"Government ICT Authority, E-Government Unit (\"Office\"). The Site displays "
-"data files accessed from the databases of government ministries, support units "
-"and other public bodies (\"Databases\"). Use of the Site is subject to the "
-"Terms of Use appearing on the <a href='www.gov.il'>www.gov.il</a> site "
-"(\"Terms of Use\"). </p> <p>Use of the Databases, as defined above, is not "
-"subject to the Terms of Use but to the User License set out below. If a "
-"different user license than the one set out below applies to any database, the "
-"license applying to the database shall prevail. Feel free to use the database "
-"any way you like, subject to the licensing terms.</p> <p><b><u> User License "
-"for Databases on the Data.gov.il Site </u></b></p> <p> Use of the Information "
-"is permitted solely in accordance with the terms of this License. The Office "
-"may change the terms of this License at any time, and any such change shall "
-"become effective immediately when it is posted on the Site. Use of the "
-"Information shall be subject to the terms of the License as in effect at the "
-"date and time the Information was accessed from the database. </p> <p><b><u> "
-"Definitions </u></b></p> <p> In this license: </p> <p> \"Site\"  The Data.gov."
-"il site. </p> <p> \"Information\"  A data file, or any part thereof, accessed "
-"from databases of government ministries, support units and other public "
-"bodies, which is displayed on the Site. </p> <p> \"use\"  Doing any act with "
-"the Information that is restricted by copyright law, including copying, "
-"distributing, making available to the public, creating derivative works and "
-"any change as may be necessary technically to use it in a different state or "
-"in a different format, regardless of the medium in which the Information is "
-"embodied.</p> <p> \"value-added product\"  Any product, service or application "
-"you have produced by adapting or incorporating the Information, in whole or in "
-"part, in accordance with the terms of this License. </p> <p> \"you\"  Includes "
-"any natural person or legal entity or corporate body. </p> <p> In this License"
-"  the masculine gender includes the feminine. </p> <p><b><u> Use of "
-"Information under this License </u></b></p> <p> The Information is protected "
-"by intellectual property rights, including copyrights, which are owned by the "
-"State of Israel. <p> Use of the information indicates your acceptance of the "
-"terms of this License, to the extent that such acceptance is required by law."
-"This License grants you a worldwide, royalty-free, perpetual and non-exclusive "
-"license to use the Information subject to the terms and conditions below. </p> "
-"<p> This License does not derogate from the uses permitted by law, including "
-"fair use as well as the use of facts and figures in and of themselves in a "
-"manner that does not infringe the protection of the selection, coordination "
-"and arrangement of the data. </p> <p><b><u> Permitted Uses </u></b></p> <p> "
-"You may copy the Information, distribute it, make it available to the public, "
-"broadcast it, make technical changes to it and create derivative works from it"
-"  in any medium or format. </p> <p> You may make commercial and noncommercial "
-"use of the Information. </p> <p><b><u> Prohibited Uses </u></b></p> <p> You "
-"may not make the following use of the Information: </p> <ol> \t<li> present "
-"the information in a misleading manner and/or in a manner causing a "
-"misrepresentation and/or modify the Information in a manner that distorts it "
-"and/or in a manner which is or could be prejudicial to the honor or reputation "
-"of the owner of the copyright therein;</li> \t<li>make use of the Information "
-"in a manner that breaches any law or statute;</li> \t<li>make use of the "
-"Information in a manner that infringes a person's privacy, including by cross-"
-"referencing the Information with other sources of information;</li> "
-"\t<li>present the information in a manner that gives the appearance that you "
-"may have received, or had access to, information held by the State of Israel "
-"about any identifiable person.</li> </ol> <p><b><u>Attribution of the "
-"Information</u></b></p> <p>When using the Information, you must cite its "
-"source.</p> <p>It should be noted that when using data extracted from the "
-"Information in a manner that does not preserve the original aspect of the "
-"selection or arrangement of the data in the source, there is no need to cite "
-"the source of the Information.</p> <p><b><u>Scope of this License</u></b></p> "
-"<p>This License does not apply to:</p> <ol> \t<li>Data on the personality, "
-"personal status, intimate affairs, state of health, economic condition, "
-"vocational qualifications, opinions and beliefs of a person, as well as "
-"information about a person's private affairs, all the above within the meaning "
-"of the Protection of Privacy Law, 5741-1981.</li> <li>Information forbidden "
-"for publication and/or access by law, or obtained illegally or without "
-"permission, including by circumventing technological means meant to protect it;"
-"</li> \t<li>logos of the State of Israel and any government ministry, support "
-"unit or other public body, except where they form an integral part of a "
-"document;</li> \t<li>third party rights in the Information which the Office is "
-"not permitted to make available to the public under this License;</li> "
-"\t<li>rights other than copyright, including other intellectual property "
-"rights such as patents, trademarks and designs, and including rights under the "
-"Protection of Privacy Law;</li> <li>Any technological means, including "
-"software and applications, by which the Site functions.</li> </ol> "
-"<p><b><u>Copyright in Added-Value Products </u></b></p> <p>Copyright in value-"
-"added products shall be owned by you or by anyone you designate. However, if "
-"information used under this License is incorporated in a value-added product, "
-"any copyright in that information shall belong to the State of Israel, and the "
-"use of such information shall be subject to this User License.</p> <p><b><u>No "
-"Endorsement or Sponsorship</u></b></p> <p>This License does not grant you any "
-"right to use the Information in a way that implies or suggests any official "
-"status of such use or that the State of Israel sponsors or endorses you or any "
-"third party or your or any third party's use of the Information or any value-"
-"added product.</p> <p><b><u>Representations and Disclaimer</u></b></p> <p>The "
-"Information is made available to you under this License \"as is,\" without any "
-"representation, warranty or undertaking, whether explicit or implied, in "
-"relation to the Information. It is hereby expressly declared that the State of "
-"Israel does not guarantee the suitability of the Information for your use, "
-"either directly or in value-added products.</p> <p>The State of Israel is not "
-"liable for any damage caused to you or to any third party as a direct or "
-"indirect result of any act or omission involved in the use of the Information. "
-"For purposes of this section, \"State of Israel\" includes the Office as well "
-"as employees, representatives and service providers of the State.</p> "
-"<p>Without limiting the generality of the foregoing, the State of Israel shall "
-"not be liable:</p> <ol> \t<li>for any error or omission in the Information, "
-"and it shall not be held liable for any loss, injury or damage of any kind, "
-"whether direct or indirect, caused by its use to you or to any third party;</"
-"li> <li>for changes made to the Information by you or by any third party;</li> "
-"\t<li>to third parties, pursuant to use of the Information;</li> \t<li>for any "
-"damage caused due to the use of software applications downloaded directly "
-"through the Site or activated as a result of the use of the Site, including "
-"Internet applications (e.g. Java, JavaScript, ActiveX).</li> </ol> <p>The "
-"State of Israel does not guarantee or undertake to ensure the continued supply "
-"of the Information or the continued supply thereof in a certain format.</p> "
-"<p>The State of Israel reserves the right to remove information from the Site "
-"at any time.</p> <p><b><u> Breach </u></b></p> <p>Breach by you of this "
-"License shall result in immediate termination. Conditions which by their "
-"nature survive the termination of the License, shall continue to apply, "
-"including conditions regarding attribution of the Information, representations "
-"and disclaimer.</p> <p><b><u> Official Publications of the State of Israel </"
-"u></b></p> <p> In the event of a conflict or inconsistency between the "
-"Information and information appearing in official written publications of the "
-"State of Israel, only the material contained in such official publications "
-"shall be deemed correct.</p> <p><b><u> Governing Law and Venue </u></b></p> "
-"<p> This License is subject to the laws and statutes of the State of Israel. "
-"The courts in Jerusalem have exclusive jurisdiction to consider any issue "
-"arising from the use of this License, including with respect to its violation. "
-"</p> <p><b><u> Miscellaneous </u></b></p> <p> No party to this License shall "
-"be deemed to have waived fulfillment or consented to the breach of any of its "
-"conditions, unless the consent or waiver are made in writing by the persons by "
-"law to bind that party. </p> <p> This License covers all the rights granted to "
-"you in relation to the Information on the Office Site, except for exclusions "
-"and limitations prescribed by law, including fair use. </p> <p>&nbsp; </p> "
-"<p>&nbsp; </p> <p>Version 1.0 </p> <p>January 3, 2016</p> "
+msgid "<p><b><u> Terms of Use of the Data.gov.il Site </u></b></p> <p> This website (\"Site\") is managed and maintained by the Prime Minister's Office, the Government ICT Authority, E-Government Unit (\"Office\"). The Site displays data files accessed from the databases of government ministries, support units and other public bodies (\"Databases\"). Use of the Site is subject to the Terms of Use appearing on the <a href=\"www.gov.il\">www.gov.il</a> site (\"Terms of Use\"). </p> <p>Use of the Databases, as defined above, is not subject to the Terms of Use but to the User License set out below. If a different user license than the one set out below applies to any database, the license applying to the database shall prevail. Feel free to use the database any way you like, subject to the licensing terms.</p> <p><b><u> User License for Databases on the Data.gov.il Site </u></b></p> <p> Use of the Information is permitted solely in accordance with the terms of this License. The Office may change the terms of this License at any time, and any such change shall become effective immediately when it is posted on the Site. Use of the Information shall be subject to the terms of the License as in effect at the date and time the Information was accessed from the database. </p> <p><b><u> Definitions </u></b></p> <p> In this license: </p> <p> \"Site\"  The Data.gov.il site. </p> <p> \"Information\"  A data file, or any part thereof, accessed from databases of government ministries, support units and other public bodies, which is displayed on the Site. </p> <p> \"use\"  Doing any act with the Information that is restricted by copyright law, including copying, distributing, making available to the public, creating derivative works and any change as may be necessary technically to use it in a different state or in a different format, regardless of the medium in which the Information is embodied.</p> <p> \"value-added product\"  Any product, service or application you have produced by adapting or incorporating the Information, in whole or in part, in accordance with the terms of this License. </p> <p> \"you\"  Includes any natural person or legal entity or corporate body. </p> <p> In this License  the masculine gender includes the feminine. </p> <p><b><u>  Use of Information under this License </u></b></p> <p> The Information is protected by intellectual property rights, including copyrights, which are owned by the State of Israel. </p><p> Use of the information indicates your acceptance of the terms of this License, to the extent that such acceptance is required by law.This License grants you a worldwide, royalty-free, perpetual and non-exclusive license to use the Information subject to the terms and conditions below. </p> <p> This License does not derogate from the uses permitted by law, including fair use as well as the use of facts and figures in and of themselves in a manner that does not infringe the protection of the selection, coordination and arrangement of the data. </p> <p><b><u> Permitted Uses </u></b></p> <p> You may copy the Information, distribute it, make it available to the public, broadcast it, make technical changes to it and create derivative works from it  in any medium or format. </p> <p> You may make commercial and noncommercial use of the Information. </p> <p><b><u> Prohibited Uses </u></b></p> <p> You may not make the following use of the Information: </p> <ol> 	<li> present the information in a misleading manner and/or in a manner causing a misrepresentation and/or modify the Information in a manner that distorts it and/or in a manner which is or could be prejudicial to the honor or reputation of the owner of the copyright therein;</li> 	<li>make use of the Information in a manner that breaches any law or statute;</li> 	<li>make use of the Information in a manner that infringes a person's privacy, including by cross-referencing the Information with other sources of information;</li> 	<li>present the information in a manner that gives the appearance that you may have received, or had access to, information held by the State of Israel about any identifiable person.</li> </ol> <p><b><u>Attribution of the Information</u></b></p> <p>When using the Information, you must cite its source.</p> <p>It should be noted that when using data extracted from the Information in a manner that does not preserve the original aspect of the selection or arrangement of the data in the source, there is no need to cite the source of the Information.</p> <p><b><u>Scope of this License</u></b></p> <p>This License does not apply to:</p> <ol> 	<li>Data on the personality, personal status, intimate affairs, state of health, economic condition, vocational qualifications, opinions and beliefs of a person, as well as information about a person's private affairs, all the above within the meaning of the Protection of Privacy Law, 5741-1981.</li> <li>Information forbidden for publication and/or access by law, or obtained illegally or without permission, including by circumventing technological means meant to protect it;</li> 	<li>logos of the State of Israel and any government ministry, support unit or other public body, except where they form an integral part of a document;</li> 	<li>third party rights in the Information which the Office is not permitted to make available to the public under this License;</li> 	<li>rights other than copyright, including other intellectual property rights such as patents, trademarks and designs, and including rights under the Protection of Privacy Law;</li> <li>Any technological means, including software and applications, by which the Site functions.</li> </ol> <p><b><u>Copyright in Added-Value Products </u></b></p> <p>Copyright in value-added products shall be owned by you or by anyone you designate. However, if information used under this License is incorporated in a value-added product, any copyright in that information shall belong to the State of Israel, and the use of such information shall be subject to this User License.</p> <p><b><u>No Endorsement or Sponsorship</u></b></p> <p>This License does not grant you any right to use the Information in a way that implies or suggests any official status of such use or that the State of Israel sponsors or endorses you or any third party or your or any third party's use of the Information or any value-added product.</p> <p><b><u>Representations and Disclaimer</u></b></p> <p>The Information is made available to you under this License \"as is,\" without any representation, warranty or undertaking, whether explicit or implied, in relation to the Information. It is hereby expressly declared that the State of Israel does not guarantee the suitability of the Information for your use, either directly or in value-added products.</p> <p>The State of Israel is not liable for any damage caused to you or to any third party as a direct or indirect result of any act or omission involved in the use of the Information. For purposes of this section, \"State of Israel\" includes the Office as well as employees, representatives and service providers of the State.</p> <p>Without limiting the generality of the foregoing, the State of Israel shall not be liable:</p> <ol> 	<li>for any error or omission in the Information, and it shall not be held liable for any loss, injury or damage of any kind, whether direct or indirect, caused by its use to you or to any third party;</li> <li>for changes made to the Information by you or by any third party;</li> 	<li>to third parties, pursuant to use of the Information;</li> 	<li>for any damage caused due to the use of software applications downloaded directly through the Site or activated as a result of the use of the Site, including Internet applications (e.g. Java, JavaScript, ActiveX).</li> </ol> <p>The State of Israel does not guarantee or undertake to ensure the continued supply of the Information or the continued supply thereof in a certain format.</p> <p>The State of Israel reserves the right to remove information from the Site at any time.</p> <p><b><u> Breach </u></b></p> <p>Breach by you of this License shall result in immediate termination. Conditions which by their nature survive the termination of the License, shall continue to apply, including conditions regarding attribution of the Information, representations and disclaimer.</p> <p><b><u> Official Publications of the State of Israel </u></b></p> <p> In the event of a conflict or inconsistency between the Information and information appearing in official written publications of the State of Israel, only the material contained in such official publications shall be deemed correct.</p> <p><b><u> Governing Law and Venue </u></b></p> <p> This License is subject to the laws and statutes of the State of Israel. The courts in Jerusalem have exclusive jurisdiction to consider any issue arising from the use of this License, including with respect to its violation. </p> <p><b><u> Miscellaneous </u></b></p> <p> No party to this License shall be deemed to have waived fulfillment or consented to the breach of any of its conditions, unless the consent or waiver are made in writing by the persons by law to bind that party. </p> <p> This License covers all the rights granted to you in relation to the Information on the Office Site, except for exclusions and limitations prescribed by law, including fair use. </p> <p>&nbsp; </p> <p>&nbsp; </p> <p>Version 1.0 </p> <p>January 3, 2016</p>"
 msgstr ""
 " <p><b><u>תנאי השימוש באתר Data.gov.il</u></b></p> <p> אתר אינטרנט זה (להלן: "
 "האתר) מנוהל ומתוחזק על ידי משרד ראש הממשלה, רשות התקשוב הממשלתי, יחידת ממשל "
@@ -814,14 +705,23 @@ msgstr ""
 #: ckanext/gov_theme/templates/package/search.html:56
 #, python-format
 msgid ""
-" You can also access this registry using the API (see %(api_doc_link)s) or "
+"You can also access this registry using the API (see %(api_doc_link)s) or "
 "download a %(dump_link)s. "
 msgstr ""
 
 #: ckanext/gov_theme/templates/package/search.html:60
 #, python-format
-msgid " You can also access this registry using the API (see %(api_doc_link)s). "
+msgid "You can also access this registry using the API (see %(api_doc_link)s). "
 msgstr "ניתן לגשת לרישום זה באמצעות ה-API (ראה %(api_doc_link)s)."
+
+#: ckan/templates/package/search.html:60
+#, python-format
+msgid ""
+"You can also access this registry using the %(api_link)s (see "
+"%(api_doc_link)s)."
+msgstr ""
+"ניתן גם לגשת אל רישום זה באמצעות API (ראו "
+"%(api_doc_link)s). "
 
 #: ckanext/gov_theme/templates/package/snippets/additional_info.html:2
 msgid "Additional Info"
@@ -881,7 +781,7 @@ msgid ""
 "agree to release the <i>metadata</i> values that you enter into the form under "
 "the <a href=\"http://opendatacommons.org/licenses/odbl/1-0/\">Open Database "
 "License</a>."
-msgstr ""
+msgstr "הרישיון שנבחר יהיה תקף לכל הקבצים שיועלו תחת מאגר זה, ובהתאם להנחיות קוד פתוח"
 
 #: ckanext/gov_theme/templates/package/snippets/package_form.html:40
 #: ckan/templates/package/snippets/package_form.html:39
@@ -1050,7 +950,7 @@ msgstr "הראה עוד"
 
 #: ckan/public/base/javascript/modules/table-toggle-more.js:26
 msgid "Hide"
-msgstr "החבא"
+msgstr "הסתרת מידע נוסף"
 
 #: ckanext/gov_theme/templates/snippets/facet_list.html:83
 msgid "Show Only Popular {facet_type}"
@@ -1099,7 +999,7 @@ msgstr "חפש נתונים"
 
 #: ckanext/gov_theme/templates/snippets/search_form.html:18
 msgid "Submit"
-msgstr "שלח"
+msgstr "שליחה"
 
 #: ckanext/gov_theme/templates/snippets/search_form.html:33
 msgid "Order by"
@@ -1132,6 +1032,10 @@ msgstr " <p class=\"extra\">אנא נסו חיפוש נוסף.</p> "
 msgid ""
 " <p><strong>There was an error while searching.</strong> Please try again.</p> "
 msgstr "<p> <strong> אירעה שגיאה במהלך החיפוש. </ strong> נסהשוב. </ p>"
+
+#: ckanext/gov_theme/templates/snippets/header_custom/search_form.html:28
+msgid "Were found"
+msgstr "נמצאו"
 
 #: ckanext/gov_theme/templates/snippets/social.html:5
 msgid "Social"
@@ -1429,8 +1333,12 @@ msgstr " הזמנה עבור {site_title}"
 #: ckan/templates/snippets/search_result_text.html:17
 msgid "{number} dataset found"
 msgid_plural "{number} datasets found"
-msgstr[0] "נמצא מאגר מידע יחיד"
-msgstr[1] "נמצאו {number} מאגרי מידע"
+msgstr[0] "מאגר מידע יחיד נמצא"
+msgstr[1] "{number} מאגרי מידע נמצאו"
+
+#: ckan/templates/snippets/search_result_text.html:18
+msgid "No datasets found"
+msgstr "לא נמצאו מאגרי מידע"
 
 #: ckan/templates/package/resource_read.html:154
 msgid "Data last updated"
@@ -1595,6 +1503,43 @@ msgstr "רישיון"
 msgid "Tags"
 msgstr "תגיות"
 
+msgid "Contact us"
+msgstr "צור קשר"
+
+msgid "Tell us..."
+msgstr "ספרו לנו..."
+
+msgid "Contact Name"
+msgstr "שם פרטי ומשפחה"
+
+msgid "Your Request"
+msgstr "בקשתך"
+
+msgid "Total number of Datasets"
+msgstr "מספר כולל של מאגרי מידע"
+
+msgid "Dataset Revisions per Week"
+msgstr "שינויים במאגר מידע בשבוע"
+
+msgid "Date"
+msgstr "תאריך"
+
+msgid "All dataset revisions"
+msgstr "כל השינויים בצביר הנתונים"
+
+msgid "New datasets"
+msgstr "מאגרי מידע חדשים"
+
+#: ckanext/stats/templates/ckanext/stats/index.html:108
+msgid "Most Edited Datasets"
+msgstr "מאגרי מידע עם הכי הרבה עריכות"
+
+msgid "Resources by Organization"
+msgstr  "פילוח סוגי קבצים לפי ארגון"
+
+msgid "Xloader Tasks"
+msgstr  "סטטוס טעינת קבצים"
+
 msgid "{kibibytes} KiB"
 msgstr "{kibibytes} KB"
 
@@ -1605,3 +1550,123 @@ msgstr "{mebibytes} MB"
 #: ckan/lib/formatters.py:173
 msgid "{gibibytes} GiB"
 msgstr "{gibibytes} GB"
+
+#: ckan/templates/home/snippets/about_text.html:1
+msgid ""
+"About The Data.gov.il website was established by the e-government as part of an \"open government\" policy, based on promoting the transparency and presentation of reliable government information authorized for public use. This policy is implemented in other advanced countries in the world, such as the United States, United Kingdom and Australia. In the Data.gov.il website, government databases are published clearly and accessibly and are continuously updated. The information system of Data.gov.il allows for quick and efficient location and downloading of data, subject to the Freedom of Information and Protection of Privacy Act. The Data.gov.il project was first developed following a decision by the Ministerial Committee on Improving Public Government Services and Open Government, on Monday, November 29, 2010. The project's goal is to improve the service to the public and encourage the creative use of the public, the academia and of the government with the government databases. The Data.gov.il site provides its users the full freedom to develop applications and systems, based on the published information. All information updates to the databases will be automatically available to applications based on them. About E-government E-government is responsible for providing the services and information offered online to the public, in order to improve the communication between citizens and government institutions. E-government operates under the Prime Minister's office, under which operate the Gov.IL portal, Government Payment Service, Government Forms Service and more."
+msgstr ""
+" <p><b>מה זה data.gov.il? </b></p><p>data.gov.il מרכז מאגרי נתונים מכלל משרדי "
+"הממשלה הפתוחים לשימוש הציבור. האתר מאפשר חיפוש נתונים בקלות וביעילות. המשתמשים "
+"ב- data.gov.il מקבלים יד חופשית לפיתוח יישומים ומערכות המבוססות על המידע "
+"המפורסם בו וכל עדכון במאגרי המידע באתר מעודכן אוטומטית גם ביישומים המבוססים "
+"עליו. </p><p><b>איזה מידע זמין באתר? </b></p><p>כיום ניתן למצוא באתר מאגרי "
+"מידע של משרדי ממשלה מרכזיים וכמה רשויות מרכזיות. המאגרים הם בנושא דיור, "
+"תחבורה, מזג אוויר, תקציב המדינה ועוד. </p><p><b>האתר המחודש</b></p><p>האתר "
+"חודש לאחרונה ומציג מאגרי מידע ממשלתיים בפורטל קוד פתוח, בטכנולוגיה המובילה "
+"בעולם בתחום - תשתית CKAN. CKAN היא מערכת רבת עוצמה לניהול נתונים שהופכת את "
+"הנתונים נגישים לכל על ידי מתן כלים לייעול פרסום, שיתוף, חיפוש ושימוש. </"
+"p><p>בהתאם לרשיון השימוש ב ckan ובכפוף לתנאי השימוש Version 3 AFFERO GENERAL "
+"PUBLIC LICENSE מצורף קוד ההרחבות שבוצעו באתר <a href='https://github.com/CIOIL/"
+"DataGovIL/tree/master/govext'>להורדת קוד ההרחבות</a>, מבוסס על Ckan 2.8.2 <a "
+"href='https://github.com/CIOIL/DataGovIL'>להורדת קוד המקור</a>.</p><p><b>כיצד "
+"ניתן להשתמש במידע המופיע באתר? </b></p><p>המשתמשים ב- data.gov.il מקבלים יד "
+"חופשית לפיתוח יישומים ומערכות המבוססות על המידע המפורסם בו וכל עדכון במאגרי "
+"המידע באתר מעודכן אוטומטית גם ביישומים המבוססים עליו. <br/> <p><b> צריכת "
+"נתונים מהאתר על ידי crawling </b></p> יש להוסיף ב  user agent את הערך datagov-"
+"external-client,  ניתן להוסיף את האפשרות  ל - user agent קיים  או להגדיר user "
+"agent חדש.</p><p><b>קצת על ממשל זמין </b></p><p>יחידת ממשל זמין ברשות התקשוב, "
+"משרד ראש הממשלה, הקימה את אתר data.gov.il בכדי להציג מידע ממשלתי אמין ומוסמך "
+"לשימוש הציבור הרחב, זאת כחלק ממדיניות ממשל פתוח המקדמת שקיפות מצד משרדי "
+"הממשלה. </p><p>ועדת השרים לעניין שיפור השירות הממשלתי לציבור, החליטה בשנת 2010 "
+"על פיתוח פרויקט data.gov.il במטרה לקדם את מדיניות <b>הממשל הפתוח</b> בישראל. </"
+"p> "
+
+#: ckan/public/base/javascript/modules/resource-reorder.js:65
+#: ckan/public/base/javascript/modules/resource-reorder.min.js:1
+#: ckan/public/base/javascript/modules/resource-view-reorder.js:55
+#: ckan/public/base/javascript/modules/resource-view-reorder.min.js:1
+msgid "Save order"
+msgstr "שמור סדר"
+
+msgid "Reference Number"
+msgstr "מספר סימוכין (GIS)"
+
+msgid "Description of the spatial coverage"
+msgstr "תיאור הכיסוי המרחבי (GIS)"
+
+msgid "Geodetic reference system"
+msgstr "מערכת ייחוס גיאודטיות (GIS)"
+
+msgid "New Network"
+msgstr "רשת חדשה"
+
+msgid "Old Network"
+msgstr "רשת ישנה"
+
+msgid "Coordinates / geographical demarcation"
+msgstr "קואורדינטות \ תיחום גיאוגרפי (GIS)"
+
+msgid "Earthly"
+msgstr "ארצי"
+
+msgid "Urban"
+msgstr "עירוני"
+
+msgid "Description..."
+msgstr "פירוט..."
+
+msgid "Report Us"
+msgstr "משוב"
+
+msgid "Last modified date of file"
+msgstr "תאריך עדכון אחרון של הקובץ הפיזי"
+
+msgid "File creation date"
+msgstr "תאריך יצירת הקובץ במאגר הנתונים"
+
+msgid "The coordinate set of the polygon that delimits the coverage area of the reservoir"
+msgstr "סט הקואורדינטות של הפוליגון התוחם את  איזור הכיסוי של המאגר"
+
+msgid "The reference system of the coordinates in the repository"
+msgstr "מערכת הרפרנס  של הקואורדינטות במאגר"
+
+msgid "Notes"
+msgstr "הערות"
+
+msgid "Report Type"
+msgstr "סוג הבקשה"
+
+msgid "General"
+msgstr "כללי"
+
+msgid "Request for dataset"
+msgstr "בקשה למאגר"
+
+msgid "Home page"
+msgstr "דף בית"
+
+msgid "Your comment has been sent, we will answer you as soon as possible."
+msgstr "הפנייה נשלחה בהצלחה"
+
+msgid "Thank you!"
+msgstr "תודה"
+
+msgid "active"
+msgstr "פעיל/ה"
+
+msgid ""
+"You can rearrange the resources by dragging them using the arrow icon. Drag "
+"the resource to the right and place it to the desired location on the list. "
+"When you are done, click the \"Save order\" -button."
+msgstr "בסיום, לחץ על שמור סדר."
+
+msgid "Some useful remarks about the data"
+msgstr "הערות שימושיות לגבי המידע"
+
+msgid ""
+"License definitions and additional information can be found at http://opendefinition.org/"
+msgstr "הגדרות הרישוי ומידע נוסף נמצאים ב- http://opendefinition.org"
+
+#: ckan/templates/snippets/activities/changed_package.html:6
+msgid "{actor} updated the dataset {dataset}"
+msgstr "{actor} {dataset} עודכן"

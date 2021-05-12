@@ -1,0 +1,14 @@
+
+
+
+
+<div class="module module-search module-narrow module-shallow box">
+{% set tags = h.get_facet_items_dict('tags', limit=3) %}
+  <div class="tags">
+    <h3>{{ _('Popular tags') }}</h3>
+    {% for tag in tags %}
+      <a class="tag" href="{% url_for controller='dataset', action='search', tags=tag.name %}">{{ h.truncate(tag.display_name, 22) }}</a>
+    {% endfor %}
+  </div>
+</div>
+

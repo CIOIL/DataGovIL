@@ -5,11 +5,12 @@
     'description',
     'url',
     'format',
-    'notes'
     ] -%}
 {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
 
 {% block resource_additional_information_inner %}
+  {% asset 'ckanext-scheming/popover-bs-govil' %}
+
   <div class="module-content">
     <h2>{{ _('Additional Information') }}</h2>
     <table class="table table-striped table-bordered table-condensed" data-module="table-toggle-more">
@@ -22,33 +23,46 @@
       <tbody>
         {%- block resource_last_updated -%}
           <tr>
-            <th scope="row">{{ _('Last updated') }}</th>
-             <td>{{ h.render_datetime(res.last_modified) or h.render_datetime(res.created,None, True) or _('unknown') }}</td>
+            <th scope="row" data-module="popover_govil" data-module-content="{{ _('Last modified date of file') }}">
+              {{ _('Last updated') }}
+            </th>
+            <td>{{ h.render_datetime(res.last_modified, with_hours=True, with_seconds=True,date_format='%d/%m/%Y ( %H:%M )') or
+             h.render_datetime(res.revision_timestamp, with_hours=True, with_seconds=True,date_format='%d/%m/%Y ( %H:%M )') or
+             h.render_datetime(res.created, with_hours=True, with_seconds=True,date_format='%d/%m/%Y ( %H:%M )') or
+              _('unknown') }}</td>
           </tr>
         {%- endblock -%}
         {%- block resource_created -%}
           <tr>
-            <th scope="row">{{ _('Created') }}</th>
-           <td>{{ h.render_datetime(res.created) or _('unknown') }}</td>
+            <th scope="row" data-module="popover_govil" data-module-content="{{ _('File creation date') }}">{{ _('Created') }}</th>
+            <td>{{ h.render_datetime(res.created) or _('unknown') }}</td>
           </tr>
         {%- endblock -%}
         {%- block resource_format -%}
           <tr>
             <th scope="row">{{ _('Format') }}</th>
-            <td>{{ res.format or res.mimetype_inner or res.mimetype or _('unknown') }}</td>
+            <td>{{ res.mimetype_inner or res.mimetype or res.format or _('unknown') }}</td>
           </tr>
         {%- endblock -%}
-        {%- block resource_license -%}
+        {%- block resource_licenses -%}
           <tr>
             <th scope="row">{{ _('License') }}</th>
             <td>{% snippet "snippets/license.html", pkg_dict=pkg, text_only=True %}</td>
           </tr>
         {%- endblock -%}
+        {%- block file_size -%}
+          {% if res.get('size',None) != None %}
+          <tr>
+            <th scope="row">{{ _('File Size') }}</th>
+            <td>{{ res.get('size',None) | filesizeformat }}</td>
+          </tr>
+          {%  endif %}
+        {%- endblock -%}
         {%- block resource_fields -%}
           {%- for field in schema.resource_fields -%}
             {%- if field.field_name not in exclude_fields
                 and field.display_snippet is not none -%}
-              <tr>
+              <tr class="toggle-more">
                 <th scope="row">
                   {{- h.scheming_language_text(field.label) -}}
                 </th>
@@ -61,12 +75,37 @@
             {%- endif -%}
           {%- endfor -%}
         {%- endblock -%}
-        {% for key, value in h.format_resource_items(res.items()) %}
-          {%- if key not in exclude_fields -%}
-                <tr class="toggle-more"><th scope="row">{{ _(key) }}</th><td>{{ value }}</td></tr>
-          {%- endif -%}
-        {% endfor %}
       </tbody>
     </table>
   </div>
+
+  {% if res.datastore_active %}
+    {% block resource_data_dictionary %}
+      <div class="module-content">
+        <h2>{{ _('Data Dictionary') }}</h2>
+        <table class="table table-striped table-bordered table-condensed" data-module="table-toggle-more">
+          <thead>
+            {% block resouce_data_dictionary_headers %}
+              {{ super() }}
+            {% endblock %}
+          </thead>
+          {% block resource_data_dictionary_data %}
+            {% set dict=h.datastore_dictionary(res.id) %}
+            {% for field in dict %}
+              {%- if loop.index > loop.length / 2 -%}
+                <tr class="toggle-more">
+                  <td scope="row">
+                    {{ field.id }}
+                  </td>
+                  {%- snippet 'scheming/snippets/display_dictionary_field.html', field=field -%}
+                </tr>
+              {% else %}
+                {% snippet "package/snippets/dictionary_table.html", field=field %}
+              {%- endif -%}
+            {% endfor %}
+          {% endblock %}
+        </table>
+      </div>
+    {% endblock %}
+  {% endif %}
 {% endblock %}

@@ -1,0 +1,19 @@
+{#
+Rendering status of the uploaded resource to DataStore
+#}
+
+{% asset 'gov_xloader/ajax_xloader_status' %}
+<th>{{ _('Status') }}</th>
+<td>
+  <div id="xloader_result">
+    {{ h.xloader_status_description(status) }}
+  </div>
+</td>
+
+<div data-module="ajax_xloader_status"
+     data-module-xloader_status_url_api="{{xloader_status_api_url}}"
+     data-module-xloader_status_key="{{xloader_status_key}}"
+     data-module-xloader_status_refresh_interval="{{xloader_status_refresh_interval}}">
+</div>
+
+

@@ -1,0 +1,14 @@
+{% ckan_extends %}
+
+
+
+{% block organization_list %}
+  {% asset 'gov_theme/custom-media-grid' %}
+  <ul class="media-grid" data-module="custom-media-grid">
+    {% block organization_list_inner %}
+      {% for organization in organizations %}
+        {% snippet "organization/snippets/organization_item.html", organization=organization, position=loop.index, show_capacity=show_capacity %}
+      {% endfor %}
+    {% endblock %}
+  </ul>
+{% endblock %}

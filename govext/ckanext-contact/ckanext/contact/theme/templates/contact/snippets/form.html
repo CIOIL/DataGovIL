@@ -1,0 +1,73 @@
+{% import 'macros/form.html' as form %}
+{% asset 'ckanext-contact/main' %}
+
+{% set recaptcha_v3_key = h.get_recaptcha_v3_key() %}
+{% set recaptcha_v3_action = h.get_recaptcha_v3_action() %}
+
+{% block contact_form %}
+    <form class="contact-form form-horizontal" method="post" data-module="form-contact"
+          data-module-action="{{ recaptcha_v3_action }}" data-module-key="{{ recaptcha_v3_key }}">
+
+        {{ form.errors(error_summary) }}
+
+        <fieldset>
+            {% block contact_form_legend %}
+                <legend>
+                    {% block contact_form_legend_content %}
+
+                    {% endblock %}
+                </legend>
+            {% endblock %}
+            {% block contact_form_fields %}
+                {{ form.input('name', label=_('Contact Name'), id='field-name', value=data.name,
+                              error=errors.name, classes=['control-medium'], is_required=true) }}
+
+                {{ form.input('email', label=_('Email'), id='field-email', type='email',
+                              value=data.email, error=errors.email, classes=['control-medium'],
+                              is_required=true) }}
+                {% asset 'gov_theme/select-filters' %}
+
+                <div class="form-group control-medium">
+                    <label class="control-label" for="type">{{ _('Report Type') }}</label>
+                    <div class="controls">
+                        <div class="sel sel--black-panther">
+                            <i class="angle-down-icon icon"></i>
+                            <select id="field-type" class="form-control" name="report_type">
+                                <option value="general"><span>{{ _('General')}}</span></option>
+                                    <option value="dataset_req">{{ _('Request for dataset') }}</option>
+                                    {% if data.type == 'report' %}
+                                        <option selected="selected" value="report">{{ _('Report Us')}}</option>
+                                    {% else %}
+                                      <option value="report">{{ _('Report Us')}}</option>
+                                  {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                {{ form.markdown('content', label=_('Your Request'), id='field-content',
+                                 value=data.content, error=errors.content,
+                                 placeholder=_('Description...'), is_required=true) }}
+
+                {% if data.type == 'report' %}
+                    {{ form.hidden('type', 'report_mail') }}
+                    {{ form.hidden('dataset_id', data.dataset_id) }}
+                    {{ form.hidden('dataset_title', data.dataset_title) }}
+                    {{ form.hidden('dataset_author', data.dataset_author) }}
+                    {{ form.hidden('resource_id', data.resource_id) }}
+                    {{ form.hidden('resource_title', data.resource_title) }}
+                    {{ form.hidden('organization_name', data.organization_name) }}
+                {% endif %}
+            {% endblock %}
+        </fieldset>
+
+        <div class="form-actions">
+            {% block contact_form_actions %}
+                <button class="btn btn-primary controls" type="submit" name="save">
+                    {{ _('Submit') }}
+                </button>
+            {% endblock %}
+        </div>
+    </form>
+    <i class="contact-us-icon"></i>
+{% endblock %}

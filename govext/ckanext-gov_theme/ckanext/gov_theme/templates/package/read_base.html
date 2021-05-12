@@ -1,8 +1,0 @@
-{% ckan_extends %}
-
-{% block content_primary_nav %}
-  {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name) }}
-  {% if h.is_back_site() %}
-    {{ h.build_nav_icon('dataset_activity', _('Activity Stream'), id=pkg.name) }}
-  {% endif %}
-{% endblock %}

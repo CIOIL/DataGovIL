@@ -1,0 +1,252 @@
+.gov-nav-item {
+  font-family: "Open Sans Hebrew", "Open Sans", Arial, sans-serif;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.5;
+  text-align: right;
+  color: #1d4480 ;
+  font-size: 15px;
+}
+
+.gov-nav-item a:hover {
+  color: #1d4480 ;
+}
+
+.gov-nav-item > a {
+  color: #1d4480;
+}
+
+.bg-grey {
+  margin-bottom: 20px;
+}
+
+.item-label {
+  width: 80%;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.heading h1 {
+  font-size: 17px;
+}
+
+.main-organization .module {
+  background-color: #F5F8FA;
+}
+
+.module,
+.main-organization .secondary .module,
+.main-organization .secondary .module-content {
+  background-color: #FFFFFF;
+}
+
+.main-dataset .page-header.module-content {
+  background-color: #FFFFFF;
+  padding-top: 15px;
+}
+
+.table-condensed > tbody > tr > th,
+.table-condensed > tfoot > tr > th,
+.table-condensed > thead > tr > td,
+.table-condensed > tbody > tr > td,
+.table-condensed > tfoot > tr > td {
+  padding: 8px;
+}
+
+.table-bordered > thead > tr > th {
+  padding: 15px;
+  color: #183C7C;
+  font-size: 16px;
+}
+
+.table-bordered,
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+  border: 1px solid #BBBBCB;
+}
+
+.table-bordered > thead > tr > th,
+.table-bordered > thead > tr > td {
+    border-bottom-style: hidden;
+}
+
+.module .read-more {
+  text-align: right;
+  text-decoration: underline;
+  font: normal normal 600 15px/44px Open Sans Hebrew;
+  letter-spacing: -0.3px;
+  color: #183C7C;
+}
+
+.module .read-more::after{
+  content: " +";
+  color: #EC1651;
+  text-decoration: underline;
+  text-decoration-color: white;
+}
+
+.facet-show-more{
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+  border-top-color: #FFFFFF;
+}
+
+.module-heading {
+    border-top-color: #FFFFFF;
+    border-bottom-color: #FFFFFF;
+}
+
+.facet-title {
+  background-color: #FFFFFF;
+  text-align: right;
+  font-family: "Open Sans Hebrew", "Open Sans", Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.5;
+  letter-spacing: -0.44px;
+  color: #153567;
+}
+
+.facet-title hr {
+  border-top: 3px solid #EC1651;
+  width: 30px;
+  margin: 0px;
+}
+
+.nav-item.active > a, .nav-aside li.active a {
+    color: #5A5A5A;
+    background-color: #F0F8FF;
+}
+
+.nav-item.active > a:hover,
+.nav-aside li.active a:hover {
+    color:  #5A5A5A;
+    background-color: unset;
+}
+
+.main-dataset .nav-simple {
+  display: flex;
+}
+
+.module-narrow .nav-item > a {
+  padding: 10px;
+}
+
+.main-dataset .nav > li > a:hover, .main-dataset .nav > li > a:focus {
+  background-color: #FFFFFF;
+}
+
+.gov-badge{
+  display: inline-block;
+  min-width: 20px;
+  padding: 9px 9px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #1d4480;
+  line-height: 1;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-align: center;
+  background-color: #F5F8FA;
+  border-radius: 10px;
+}
+
+.gov-nav-facet {
+  padding-bottom: 15px 0px;
+  margin-bottom: 0px;
+}
+
+.organization-icon {
+  background-image: url(/img/group4850.svg);
+  width: 30px;
+  height: 36px;
+}
+
+.social-icon {
+  background-image: url(/img/group4849.svg);
+  width: 39px;
+  margin-top: 15px;
+}
+
+.license_id-icon {
+  background-image: url(/img/group4851.svg);
+  width: 39px;
+  margin: 5px 0px 0px 25px;
+}
+
+.tags-icon {
+  background-image: url(/img/group3466.svg);
+  width: 35px;
+  height: 28px;
+  margin: 15px 0px 0px 25px;
+}
+
+.res_format-icon {
+  background-image: url(/img/group3467.svg);
+  width: 37px;
+  height: 39px;
+  margin-left: 25px;
+}
+
+.groups-icon {
+  background-image: url(/img/group3465.svg);
+  width: 35px;
+  height: 37px;
+}
+
+.resource-icon {
+  background-image: url(/img/group4853.svg);
+  width: 40px;
+  height: 40px;
+  background-size: 40px 40px;
+  margin: 8px 0 0 27px;
+}
+
+@media only screen and (max-width: 991px) and (min-width: 768px) {
+  .facet-title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 2.5;
+    letter-spacing: -0.44px;
+  }
+
+  .icon-background {
+    width: 30px;
+    height: 30px;
+  }
+
+  .secondary .icon {
+    margin: 13px 0px 0px 10px;
+  }
+
+  .upload-icon {
+    margin: 0;
+  }
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 768px){
+  .item-label {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 479px) {
+  .main-dataset-search .tags-icon,
+  .main-dataset-search .res_format-icon,
+  .main-dataset-search .license_id-icon {
+    margin-left: 35px;
+  }
+
+  .main-dataset-search .organization-icon {
+    margin: 15px 0px 0px 40px;
+  }
+}
+

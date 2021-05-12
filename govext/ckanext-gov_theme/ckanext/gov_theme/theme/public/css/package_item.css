@@ -1,0 +1,81 @@
+.gov-dataset-item {
+  margin-top: 40px;
+}
+
+.gov-dataset-item:first-child {
+  margin-top: 0;
+}
+
+.search-form {
+  all: unset;
+}
+
+.gov-dataset-item .dataset-heading a {
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: #1d4480;
+}
+
+h3.dataset-heading {
+  margin-bottom: 10px;
+}
+
+.dataset-resources {
+  padding-right: 0px;
+}
+
+.wrapper:before {
+  border-right: none;
+  border-left: none;
+}
+
+.filter-list {
+  margin-bottom: 20px !important;
+}
+
+.gov-dataset-item .dataset-content div {
+  font-size: 17px;
+  font-weight: normal;
+  font-stretch: normal;
+  line-height: 1.59;
+  letter-spacing: normal;
+  /*text-align: right;*/
+  color: #5a5a5a;
+}
+
+.module > .module-content:nth-child(2n) {
+  padding-top: 0px;
+}
+
+.module-content {
+  padding: 0px;
+  background-color: #F5F8FA;
+}
+
+.main-dataset-search .page_primary_action {
+  padding-top: 10px;
+}
+
+.main-dataset-search .secondary {
+  padding-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .module-content{
+    padding: 0px;
+  }
+}
+
+@media (max-width: 479px) {
+  .module-content{
+    padding: 0px;
+  }
+
+  .main-dataset-search .page_primary_action {
+    height: 50px;
+  }
+}

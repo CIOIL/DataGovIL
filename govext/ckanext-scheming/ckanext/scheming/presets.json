@@ -23,7 +23,7 @@
     {
       "preset_name": "tag_string_autocomplete",
       "values": {
-        "validators": "ignore_missing tag_string_convert",
+        "validators": "scheming_required tag_string_convert",
         "classes": ["control-full"],
         "form_attrs": {
           "data-module": "autocomplete",
@@ -48,6 +48,14 @@
         "upload_field": "upload",
         "upload_clear": "clear_upload",
         "upload_label": "File"
+      }
+    },
+    {
+      "preset_name": "organization_url_upload",
+      "values": {
+        "validators": "ignore_missing unicode remove_whitespace",
+        "form_snippet": "organization_upload.html",
+        "form_placeholder": "http://example.com/my-data.csv"
       }
     },
     {

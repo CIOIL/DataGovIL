@@ -18,7 +18,7 @@ def user_invite_password_validator(key, data, errors, context):
 
     if isinstance(value, Missing):
         pass  # Already handeled in core
-    elif not isinstance(value, basestring):
+    elif not isinstance(value, str):
         raise Invalid(_('Passwords must be strings.'))
     elif value == '':
         pass  # Already handeled in core
@@ -30,7 +30,7 @@ def user_password_validator(key, data, errors, context):
 
     if isinstance(value, Missing):
         pass  # Already handeled in core
-    elif not isinstance(value, basestring):
+    elif not isinstance(value, str):
         raise Invalid(_('Passwords must be strings.'))
     elif value == '':
         pass  # Already handeled in core

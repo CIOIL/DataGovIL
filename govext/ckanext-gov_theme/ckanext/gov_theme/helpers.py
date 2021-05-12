@@ -1,12 +1,14 @@
-import pylons.config as config
 import re
 import urllib, json
 import requests
-from ckan.common import _, request, c, response
-import webhelpers.pylonslib.secure_form as auth_token
+from ckan.common import _, request, c, config
 import ckan.plugins.toolkit as toolkit
 import ckan.lib.formatters as formatters
 from ckan.lib.helpers import date_str_to_datetime
+from markdown import markdown
+from ckan.lib.helpers import literal, truncate
+
+from six import text_type
 
 import logging
 log = logging.getLogger(__name__)
@@ -17,10 +19,6 @@ def get_config_value(key):
         return value
     except:
         return ''
-
-def anti_csrf_hidden_field():
-    hidden_field = auth_token.auth_token_hidden_field()
-    return hidden_field
 
 def parseBoolString(theString = 'False'):
   return theString[0].upper()== 'T'
@@ -92,6 +90,11 @@ def get_datasets_count():
     query = toolkit.get_action('package_search')(None, data_dict)
     return query['count']
 
+def get_resources_count(organization_id):
+    '''Return organization resource count.'''
+    from ckanext.gov_theme.action import _get_num_of_resources_for_package as resource_count
+    return resource_count(organization_id)[0][0]
+
 def get_organizations_count():
     q = c.q = request.params.get('q', '')
 
@@ -149,16 +152,17 @@ def tags_count():
         homepage_tag_icon = config.get(homepage_tag_icon_num)
 
         # Use the json module to dump the dictionary to a string for posting.
-        data_string = urllib.quote(json.dumps(dataset_dict))
-        package_search_api = config.get('ckan.site_url')+'/api/3/action/package_search?fq='
+        data_string = urllib.parse.quote(json.dumps(dataset_dict))
+  #      package_search_api = config.get('ckan.site_url')+'/api/3/action/package_search?fq='
 
-        package_search_api_url = package_search_api + query
-        log.info("package search url: "+package_search_api_url)
-        response = requests.get(package_search_api_url)
+ #       package_search_api_url = package_search_api + query
+#        log.info("package search url: "+package_search_api_url)
+        response = toolkit.get_action(u'package_search')({}, dataset_dict)
+        #response = requests.get(package_search_api_url)
 
         # Use the json module to load CKAN's response into a dictionary.
-        response_dict = json.loads(response.text)
-        tag_count = response_dict['result']['count']
+        #response_dict = json.loads(response.text)
+        tag_count = response['count']
         tags_counter.append(dict([('name', homepage_tag_translate), ('icon', homepage_tag_icon), ('count', tag_count)]))
 
     return tags_counter
@@ -188,7 +192,7 @@ def format_resource_items(items):
                     continue
                 value = formatters.localised_filesize(int(value))
 
-            except ValueError, e:
+            except ValueError as e:
 
                 # Sometimes values that can't be converted to ints can sneak
                 # into the db. In this case, just leave them as they are.
@@ -203,16 +207,47 @@ def format_resource_items(items):
                     value = formatters.localised_number(float(value))
                 elif re.search(reg_ex_int, value) and key not in additioanl_fields:
                     value = formatters.localised_number(int(value))
-            except ValueError, e:
+            except ValueError as e:
                 log.info(e.message)
                 pass
         elif ((isinstance(value, int) or isinstance(value, float))
                 and value not in (True, False)):
             try:
                value = formatters.localised_number(value)
-            except ValueError, e:
+            except ValueError as e:
                log.info(e.message)
                pass
         key = key.replace('_', ' ')
         output.append((key, value))
     return sorted(output, key=lambda x: x[0])
+
+
+def govil_markdown_extract(package_id, text, extract_length=190):
+    ''' return the plain text representation of markdown encoded text.  That
+    is the texted without any html tags.  If extract_length is 0 then it
+    will not be truncated.'''
+    RE_MD_HTML_TAGS = re.compile('<[^><]*>')
+
+    if not text:
+        return ''
+    plain = RE_MD_HTML_TAGS.sub('', markdown(text))
+    if not extract_length or len(plain) < extract_length:
+        return literal(plain)
+
+    end_a_tag = '<a data-toggle="collapse"' + \
+                  ' onclick="$(\'#short_pack_des_'+package_id+'\').hide()"' + \
+                  ' href="#full_pack_des_' + package_id + '"' + \
+                  ' role="button"'+ \
+                  ' aria-expanded="false"'+ \
+                  ' aria-controls="full_pack_des_' + package_id + '">...</a>'
+
+    return literal(
+        text_type(
+            truncate(
+                plain,
+                length=extract_length,
+                indicator=end_a_tag,
+                whole_word=True
+            )
+        )
+    )

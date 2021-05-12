@@ -1,0 +1,58 @@
+{% ckan_extends %}
+
+
+  {% block info %}
+  {% asset 'gov_theme/facet-list' %}
+  <section class="bg-grey module module-narrow module-shallow context-info">
+    {% if has_context_title %}
+      <h2 class="facet-title module-heading">
+        {{ _('Organization') }}
+        <i class="fa icon-background"></i>
+        <i class="organization-icon icon fa-stack-1x"></i>
+        <hr/>
+      </h2>
+    {% endif %}
+    <div class="module-content">
+      {% block inner %}
+        {% block image %}
+            {{ super() }}
+        {% endblock %}
+        {% block heading %}{% endblock %}
+        {% block description %}
+          {% if organization.description %}
+            <p class="description">
+              {{ h.markdown_extract(organization.description, 180) }}
+            </p>
+          {% else %}
+            <p class="empty">{{ _('There is no description for this organization') }}</p>
+          {% endif %}
+        {% endblock %}
+        {% if show_nums %}
+          {% block nums %}
+            {% if h.is_back_site() %}
+            {#
+              <div class="nums">
+                <dl>
+                  <dt>{{ _('Followers') }}</dt>
+                  <dd>{{ h.SI_number_span(organization.num_followers) }}</dd>
+                </dl>
+                <dl>
+                  <dt>{{ _('Datasets') }}</dt>
+                  <dd>{{ h.SI_number_span(organization.package_count) }}</dd>
+                </dl>
+              </div>
+            #}
+            {% endif %}
+          {% endblock %}
+          {% block follow %}
+            {% if h.is_back_site() %}
+              <div class="follow_button">
+                {{ h.follow_button('group', organization.id) }}
+              </div>
+            {% endif %}
+          {% endblock %}
+        {% endif %}
+      {% endblock %}
+    </div>
+  </section>
+  {% endblock %}

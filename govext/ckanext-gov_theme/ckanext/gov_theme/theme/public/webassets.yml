@@ -1,0 +1,85 @@
+custom-fonts:
+  contents:
+    - css/custom-fonts.css
+
+custom-main:
+  contents:
+    - css/custom-main.css
+
+custom-footer:
+  contents:
+    - css/custom-footer.css
+
+custom-header:
+  contents:
+    - css/custom-header.css
+
+facet-list:
+  contents:
+    - css/facet-list.css
+
+gov-rtl:
+  contents:
+    - css/gov-rtl.css
+
+gov-ltr:
+  contents:
+    - css/gov-ltr.css
+
+header-nav-mobile:
+  contents:
+    - css/header-nav-mobile.css
+
+organization-list:
+  contents:
+    - css/organization-list.css
+
+package_item:
+  contents:
+    - css/package_item.css
+
+autocomplete-module:
+  contents:
+    - js/autocomplete-module.js
+
+autocompletecustum:
+  contents:
+    - js/autocompletecustum.js
+
+custom-media-grid:
+  contents:
+    - js/custom-media-grid.js
+  extra:
+    preload:
+      - base/main
+
+gov:
+  contents:
+    - js/gov.js
+
+scroll-up:
+  contents:
+    - js/scroll-up.js
+
+header-navtab-selector:
+  contents:
+    - js/header-navtab-selector.js
+  extra:
+    preload:
+      - base/main
+
+jquery-ui:
+  contents:
+    - js/jquery-ui.js
+
+select-filters:
+  contents:
+    - js/select-filters.js
+
+modernizr-custom:
+  contents:
+    - js/modernizr-custom.js
+
+msense:
+  contents:
+    - js/msense.js

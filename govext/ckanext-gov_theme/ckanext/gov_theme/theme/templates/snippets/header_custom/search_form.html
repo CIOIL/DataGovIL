@@ -1,0 +1,41 @@
+{% set type = 'organization' if '/organization' in h.full_current_url() else 'dataset' %}
+{% set controller_search_form = 'dataset' if type == 'dataset' else type %}
+{% set action_search_form = 'search' if type == 'dataset' else 'index' %}
+{% set count = h.get_datasets_count() if type == 'dataset' else h.get_organizations_count() %}
+{% set text_no_query = ungettext('{number} dataset found', '{number} datasets found', count) if type == 'dataset' else ungettext('{number} organization found', '{number} organizations found', count) %}
+
+{% asset 'gov_theme/jquery-ui' %}
+{% asset 'gov_theme/autocomplete-module' %}
+
+{% if not '/contact' in h.full_current_url() and not '/resource' in h.full_current_url()%}
+<form class="" action="{% url_for controller=controller_search_form, action=action_search_form %}" method="get">
+  <div class="row search-wrapper">
+    <div class="">
+      <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 search-bar-wrapper">
+        <div class="input-group">
+          <input id="{{ type + 's' }}" class="header-font-20 header-text-right" data-module="autocomplete-module"
+                 type="text" name="q" value="{{ c.q }}" class="form-control"
+                 placeholder="{{ _('Search') }}"/>
+          <div class="input-group-btn">
+            <button class="btn header-font-20 btn-search-bar" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-4 col-lg-2 col-lg-offset-5  header-text-center dataset-count-wrapper"
+           dir="rtl">
+        {% if not c.q %}
+          {% set text_no_query = text_no_query.replace('{', '<b>{').replace('}', '}</b>') %}
+          {{ text_no_query.format(number=h.localised_number(count), type=type) | safe}}
+        {% else %}
+          {% snippet 'snippets/search_result_text.html', query=query, count= count, type=type %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</form>
+{% endif %}

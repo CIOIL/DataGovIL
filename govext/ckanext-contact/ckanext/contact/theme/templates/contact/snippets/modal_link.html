@@ -1,0 +1,12 @@
+{% set recaptcha_v3_key = h.get_recaptcha_v3_key() %}
+{% set recaptcha_v3_action = h.get_recaptcha_v3_action() %}
+
+{% block modal_link %}
+
+    <a title="{{ _('Contact') }}" data-module="modal-contact"
+       data-module-action="{{ recaptcha_v3_action }}" data-module-key="{{ recaptcha_v3_key }}">
+        {{ _('Contact') }}
+    </a>
+
+{% resource 'ckanext-contact/main' %}
+{% endblock %}

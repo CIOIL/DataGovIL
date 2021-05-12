@@ -1,0 +1,18 @@
+{% ckan_extends %}
+
+{% block resource_actions_inner %}
+    <li>
+      {# Link to report about resource page #}
+      <form class="btn-circle" action="/contact" method="post">
+        <input type="hidden" name="type" value="report">
+        <input type="hidden" name="dataset_id" value="{{ pkg.name }}">
+        <input type="hidden" name="dataset_title" value="{{ pkg.title }}">
+        <input type="hidden" name="dataset_author" value="{{ pkg.author_email }}">
+        <input type="hidden" name="resource_id" value="{{ res.id }}">
+        <input type="hidden" name="resource_title" value="{{ res.name }}">
+        <input type="hidden" name="organization_name" value="{{ pkg.organization.title }}">
+        <input type="submit" name="submit" class="message-icon icon" value='' title="{{ _('Report Us') }}">
+      </form>
+    </li>
+    {{ super() }}
+{% endblock %}

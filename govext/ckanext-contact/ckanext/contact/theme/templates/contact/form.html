@@ -1,0 +1,29 @@
+{% extends "page.html" %}
+
+{% block maintag %}<div class="main-contact">{% endblock %}
+{% block breadcrumb_content %}
+    {{ super() }}
+    {% if data.type == 'report' %}
+      <li class="active">
+        <a href="{{ h.url_for('contact.form') }}">{{ _('Report Us') }}</a>
+      </li>
+    {%  else %}
+      <li class="active">
+        <a href="{{ h.url_for('contact.form') }}">{{ _('Tell us...') }}</a>
+      </li>
+    {% endif %}
+    <hr/>
+{% endblock %}
+
+{% block secondary %}
+{% endblock %}
+
+{% block primary %}
+    <article class="module">
+        <div class="module-content">
+            {% block contact_form_content %}
+                {% include "contact/snippets/form.html" %}
+            {% endblock %}
+        </div>
+    </article>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('terms') }}{% endblock %}
+
+{% block breadcrumb_content %}
+  <li class="active">{% link_for _('terms'), controller='gov_theme', action='terms' %}</li>
+  <hr/>
+{% endblock %}
+
+{% block primary %}
+  <article class="module">
+    <div class="module-content">
+      {% block about %}
+        {% if g.site_about %}
+          {{ h.render_markdown(g.site_about) }}
+        {% else %}
+          {% snippet 'home/snippets/terms_text.html' %}
+        {% endif %}
+      {% endblock %}
+    </div>
+  </article>
+{% endblock %}
+
+{% block secondary %}{% endblock %}

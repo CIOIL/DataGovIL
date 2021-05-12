@@ -1,0 +1,23 @@
+{% ckan_extends %}
+
+
+{% block resources %}
+  <section class="bg-grey module module-narrow module-shallow resources">
+    {% block resources_inner %}
+      {% block resources_title %}
+        <h2 class="facet-title module-heading">
+          {{ _("Resources") }}
+          <i class="fa icon-background"></i>
+          <i class="resource-icon icon fa-stack-1x"></i>
+          <hr>
+        </h2>
+      {% endblock %}
+      {% block resources_list %}
+        {{ super() }}
+      {% endblock %}
+    {% endblock %}
+  </section>
+{% endblock %}
+
+
+

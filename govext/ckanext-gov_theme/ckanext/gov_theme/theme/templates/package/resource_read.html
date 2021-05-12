@@ -1,0 +1,88 @@
+{% ckan_extends %}
+{% block maintag %}<div class="main main-resource">{% endblock %}
+
+
+{% block resource_actions_inner %}
+  {% if res.url and h.is_url(res.url) %}
+    <li>
+      <div class="btn-group">
+        <button class="btn btn-primary btn-circle" data-toggle="dropdown">
+        {% if res.datastore_active %}
+          <i title="{{ _('Download') }}" class="upload-icon icon"></i>
+        {% else %}
+          <a class="resource-url-analytics resource-type-{{ res.resource_type }}" href="{{ res.url }}">
+            {% if res.resource_type in ('listing', 'service') %}
+              <i title="{{ _('View') }}" class="eye-icon icon"></i>
+            {% elif  res.resource_type == 'api' %}
+              <i class="fa fa-key"></i> {{ _('API Endpoint') }}
+            {% elif not res.has_views and not res.url_type == 'upload' %}
+              <i class="fa fa-external-link"></i> {{ _('Go to resource') }}
+            {% else %}
+              <i title="{{ _('Download') }}" class="upload-icon icon"></i>
+            {% endif %}
+          </a>
+         {% endif %}
+        </button>
+        {% block download_resource_button %}
+          {% if res.datastore_active %}
+            <ul class="dropdown-menu">
+              <li>
+                <a href="{{ h.url_for('datastore.dump', resource_id=res.id, bom=True) }}"
+                  target="_blank"><span>CSV</span></a>
+                <a href="{{ h.url_for('datastore.dump', resource_id=res.id, format='tsv', bom=True) }}"
+                  target="_blank"><span>TSV</span></a>
+                <a href="{{ h.url_for('datastore.dump', resource_id=res.id, format='json') }}"
+                  target="_blank"><span>JSON</span></a>
+                <a href="{{ h.url_for('datastore.dump', resource_id=res.id, format='xml') }}"
+                  target="_blank"><span>XML</span></a>
+              </li>
+            </ul>
+          {% endif %}
+        {% endblock %}
+      </div>
+    </li>
+  {% endif %}
+  {% if h.check_access('package_update', {'id':pkg.id }) and not is_activity_archive %}
+    <li>{% link_for _('Manage'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
+  {% endif %}
+  {% if res.datastore_active %}
+    <li>{% snippet 'package/snippets/data_api_button.html', resource=res %}</li>
+  {% endif %}
+{% endblock %}
+
+{% block resource_content %}
+
+  {% block package_archive_notice %}{{ super() }}{% endblock %}
+  {% block resource_read_title %}{{ super() }}{% endblock %}
+
+  {% block resource_read_url %}
+    {#
+      {% if res.url and h.is_url(res.url) %}
+        <a class="resource-url-analytics btn btn-primary " href="{{ res.url }}" title="{{ res.url }}">{{  _('Link to file') }}</a>
+      {% elif res.url %}
+        <p class="text-muted break-word">{{ _('URL:') }} {{ res.url }}</p>
+      {% endif %}
+    #}
+  {% endblock %}
+
+  <div class="prose notes" property="rdfs:label">
+    {% if res.description %}
+      {{ h.render_markdown(res.description) }}
+      {% elif res.notes %}
+      <h3>{{ _('Description') }}:</h3>
+      <blockquote>{{ h.markdown_extract(res.notes) }}</blockquote>
+    {% endif %}
+  </div>
+
+{% endblock %}
+
+{% block resource_view_nav %}{% endblock %}
+
+{% block primary_content %}
+  {% asset 'gov_theme/facet-list' %}
+  {{ super() }}
+{% endblock %}
+
+{% block resource_license %}
+  {% snippet "snippets/license.html", pkg_dict=pkg %}
+{% endblock %}
