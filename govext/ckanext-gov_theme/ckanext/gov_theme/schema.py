@@ -2,15 +2,15 @@ from ckan.lib.navl.validators import ignore_missing, not_empty, ignore, not_miss
 from ckan.logic.validators import name_validator, user_name_validator, \
     user_password_not_empty, user_passwords_match, ignore_not_sysadmin, \
     ignore_not_group_admin, ignore_not_package_admin, user_about_validator, \
-    user_both_passwords_entered
+    user_both_passwords_entered, vocabulary_id_exists
 
 from ckan.logic import schema as ckan_schema
 
 from ckanext.gov_theme import validators
 
 
-# The main purpose of this file is to modify CKAN's user-related schemas, and
-# to replace the default password validators everywhere. We are also replacing
+# The main purpose of this file is to modify CKAN's user-related schemas, CKAN's default tags schema,
+# and to replace the default password validators everywhere. We are also replacing
 # the username validators for endpoints where username changes user to be
 # allowed.
 
@@ -86,4 +86,18 @@ def default_update_user_schema():
 
     return schema
 
+
+def default_tags_schema():
+    return {
+        'name': [not_missing,
+                 not_empty,
+                 unicode_safe,
+                 ],
+        'vocabulary_id': [ignore_missing,
+                          unicode_safe,
+                          vocabulary_id_exists],
+        'revision_timestamp': [ignore],
+        'state': [ignore],
+        'display_name': [ignore],
+    }
 

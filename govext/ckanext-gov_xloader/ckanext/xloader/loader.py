@@ -70,7 +70,7 @@ def load_csv(csv_filepath, resource_id, mimetype='text/csv', logger=None):
         except messytables.ReadError as e:
             raise LoaderError('Messytables error: {}'.format(e))
     # Some headers might have been converted from strings to floats and such.
-    headers = encode_headers(headers)
+    # headers = encode_headers(headers)
 
     # Guess the delimiter used in the file
     with open(csv_filepath, 'rb') as f:
@@ -305,7 +305,7 @@ def load_table(table_filepath, resource_id, mimetype='text/csv', logger=None):
                 for f in existing.get('fields', []) if 'info' in f)
 
         # Some headers might have been converted from strings to floats and such.
-        headers = encode_headers(headers)
+        # headers = encode_headers(headers)
 
         row_set.register_processor(messytables.headers_processor(headers))
         row_set.register_processor(messytables.offset_processor(offset + 1))

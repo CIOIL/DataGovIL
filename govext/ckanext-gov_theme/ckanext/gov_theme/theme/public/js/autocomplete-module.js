@@ -55,8 +55,11 @@ this.ckan.module('autocomplete-module', function ($) {
                 response([]);
               }
             })
-          }
+          },
           //end source
+          select: function() {
+              $(this).closest('form').trigger('submit');
+          }
         });
 
       } catch (err) {
@@ -104,8 +107,11 @@ this.ckan.module('autocomplete-module', function ($) {
                 response([]);
               }
             })
-          }
+          },
           //end source
+          select: function() {
+              $(this).closest('form').trigger('submit');
+          }
         });
 
       } catch (err) {
@@ -153,8 +159,11 @@ this.ckan.module('autocomplete-module', function ($) {
                 response([]);
               }
             })
-          }
+          },
           //end source
+          select: function() {
+              $(this).closest('form').trigger('submit');
+          }
         });
 
       } catch (err) {

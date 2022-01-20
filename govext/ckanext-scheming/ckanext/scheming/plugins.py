@@ -11,6 +11,8 @@ import six
 import ckan.plugins as p
 import ckan.model as model
 from ckan.common import c
+from ckan.lib.plugins import DefaultTranslation
+
 try:
     from ckan.lib.helpers import helper_functions as core_helper_functions
 except ImportError:  # CKAN <= 2.5
@@ -43,6 +45,20 @@ from ckanext.scheming.validation import (
     scheming_valid_json_object,
     scheming_load_json,
     govil_email_validator,
+    govil_mail_box_validator,
+    govil_name_validator,
+    govil_content_validator,
+    govil_url_validator,
+    govil_package_version_validator,
+    govil_ref_number_validator,
+    govil_coordinates_validator,
+    govil_format_validator,
+    govil_description_validator,
+    govil_title_validator,
+    govil_dataset_name_validator,
+    govil_tag_validator,
+    govil_resource_name_validator,
+    govil_gis_validator_format,
 )
 from ckanext.scheming.logic import (
     scheming_dataset_schema_list,
@@ -134,6 +150,20 @@ class _SchemingMixin(object):
     def get_validators(self):
         return {
             'govil_email_validator': govil_email_validator,
+            'govil_mail_box_validator': govil_mail_box_validator,
+            'govil_name_validator': govil_name_validator,
+            'govil_content_validator': govil_content_validator,
+            'govil_description_validator': govil_description_validator,
+            'govil_url_validator': govil_url_validator,
+            'govil_package_version_validator': govil_package_version_validator,
+            'govil_title_validator': govil_title_validator,
+            'govil_dataset_name_validator': govil_dataset_name_validator,
+            'govil_ref_number_validator': govil_ref_number_validator,
+            'govil_coordinates_validator': govil_coordinates_validator,
+            'govil_format_validator': govil_format_validator,
+            'govil_tag_validator': govil_tag_validator,
+            'govil_resource_name_validator': govil_resource_name_validator,
+            'govil_gis_validator_format': govil_gis_validator_format,
             'scheming_choices': scheming_choices,
             'scheming_required': scheming_required,
             'scheming_multiple_choice': scheming_multiple_choice,
@@ -229,8 +259,9 @@ class _GroupOrganizationMixin(object):
         return navl_validate(data_dict, schema, context)
 
 
-class SchemingDatasetsPlugin(p.SingletonPlugin, DefaultDatasetForm,
+class SchemingDatasetsPlugin(p.SingletonPlugin, DefaultTranslation, DefaultDatasetForm,
                              _SchemingMixin):
+    p.implements(p.ITranslation)
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IDatasetForm, inherit=True)
@@ -312,8 +343,9 @@ class SchemingDatasetsPlugin(p.SingletonPlugin, DefaultDatasetForm,
             c.licenses = [('', '')] + model.Package.get_license_options()
 
 
-class SchemingGroupsPlugin(p.SingletonPlugin, _GroupOrganizationMixin,
+class SchemingGroupsPlugin(p.SingletonPlugin, DefaultTranslation, _GroupOrganizationMixin,
                            DefaultGroupForm, _SchemingMixin):
+    p.implements(p.ITranslation)
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IGroupForm, inherit=True)
@@ -342,8 +374,9 @@ class SchemingGroupsPlugin(p.SingletonPlugin, _GroupOrganizationMixin,
         }
 
 
-class SchemingOrganizationsPlugin(p.SingletonPlugin, _GroupOrganizationMixin,
+class SchemingOrganizationsPlugin(p.SingletonPlugin, DefaultTranslation, _GroupOrganizationMixin,
                                   DefaultOrganizationForm, _SchemingMixin):
+    p.implements(p.ITranslation)
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IGroupForm, inherit=True)
@@ -363,7 +396,7 @@ class SchemingOrganizationsPlugin(p.SingletonPlugin, _GroupOrganizationMixin,
         return 'scheming/organization/about.html'
 
     def group_form(self, group_type=None):
-        return 'scheming/organization/group_form.html'
+        return 'scheming/organization/snippets/organization_form.html'
 
     # use the correct controller (see ckan/ckan#2771)
     def group_controller(self):

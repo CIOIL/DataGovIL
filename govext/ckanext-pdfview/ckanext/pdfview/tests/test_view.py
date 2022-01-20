@@ -44,7 +44,7 @@ class TestPdfView(object):
 
     def test_can_view(self, ckan_config, pdf_view):
         url_same_domain = urljoin(
-            ckan_config.get("ckan.site_url", "//localhost:5000"),
+            ckan_config.get("ckan.site_url", "//localhost:p5"),
             "/resource.txt",
         )
         url_different_domain = "http://some.com/resource.pdf"

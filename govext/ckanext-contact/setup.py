@@ -21,9 +21,9 @@ setup(
         u'Framework :: Flask',
         u'Programming Language :: Python :: 2.7'
     ],
-    keywords=u'CKAN data contact',
+    keywords=keywords2',
     author=u'Natural History Museum',
-    author_email=u'data@nhm.ac.uk',
+    author_email=u'user@mail2',
     url=u'https://github.com/NaturalHistoryMuseum/ckanext-contact',
     license=u'GNU GPLv3',
     packages=find_packages(exclude=[u'tests']),
@@ -33,9 +33,23 @@ setup(
     install_requires=[
         'requests>=2.10.0',
         ],
-    entry_points= \
-        u'''
+
+    entry_points='''
         [ckan.plugins]
-            contact=ckanext.contact.plugin:ContactPlugin
+        contact=ckanext.contact.plugin:ContactPlugin
+        [babel.extractors]
+        ckan = ckan.lib.extract:extract_ckan
         ''',
+
+    # If you are changing from the default layout of your extension, you may
+    # have to change the message extractors, you can read more about babel
+    # message extraction at
+    # http://babel.pocoo.org/docs/messages/#extraction-method-mapping-and-configuration
+    message_extractors={
+        'ckanext': [
+            ('**.py', 'python', None),
+            ('**.js', 'javascript', None),
+            ('**/templates/**.html', 'ckan', None),
+        ],
+    }
     )

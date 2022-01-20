@@ -2,33 +2,42 @@
 import logging
 from ckan.common import config
 from suds.client import Client
+from ckan.common import config
+
+import requests
 
 log = logging.getLogger(__name__)
 
+
 def check_recaptcha(request):
-    captcha_response = request.POST.get('g-recaptcha-response', None)
-    application_id = str(config.get('ckan.recaptcha.application_id', ''))
-    recaptcha_server_name = config.get('ckan.recaptcha.server_name')
-    token_type = str(config.get('ckan.recaptcha.token_type'))
-    appID_type = str(config.get('ckan.recaptcha.appID_type'))
+    '''Check a user\'s recaptcha submission is valid, and raise CaptchaError
+    on failure.'''
+    recaptcha_private_key = config.get('ckan.recaptcha.privatekey', '')
+    if not recaptcha_private_key:
+        # Recaptcha not enabled
+        return
 
-    client = Client(recaptcha_server_name)
-    log.info(client)
-    token = client.factory.create(token_type)
-    token.IDToken = captcha_response
-    appID = client.factory.create(appID_type)
-    appID = application_id
+    client_ip_address = request.environ.get(
+        'REMOTE_ADDR', 'Unknown IP Address')
 
-    r = client.service.ValidateCaptchaByAppId(token, appID)
+    # reCAPTCHA v2
+    recaptcha_response_field = request.POST.get('g-recaptcha-response', None)
+    recaptcha_server_name = 'https://www.google.com/recaptcha/api/siteverify'
 
-    if r != None:
-        message = r['Message']
-        if message == "Valid":
-            return True
-        else:
-            return False
-    else:
+    # recaptcha_response_field will be unicode if there are foreign chars in
+    # the user input. So we need to encode it as utf8 before urlencoding or
+    # we get an exception (#1431).
+    params = dict(
+        secret=recaptcha_private_key,
+        remoteip=client_ip_address,
+        response=recaptcha_response_field.encode('utf8')
+    )
+    response = requests.get(recaptcha_server_name, params)
+    data = response.json()
+
+    if not data['success']:
         return False
+    return True
 
 
 class CaptchaError(ValueError):

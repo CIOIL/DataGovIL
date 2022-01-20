@@ -25,7 +25,12 @@
     </tr>
   {% endif %}
 
-
+  {% if pkg_dict.mail_box %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Mail Box") }}</th>
+      <td class="dataset-details">{{ pkg_dict.mail_box }}</td>
+    </tr>
+  {% endif %}
 
   {% if pkg_dict.version %}
     <tr>

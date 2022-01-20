@@ -44,9 +44,10 @@ class Stats(object):
 
         rs = con.execute(text('SELECT id from "task_status"'))
         rs.fetchone()
-        sql = "SELECT  S.entity_id,  R.Name as resourceName, S.state, REPLACE(S.error, 'null', '') as error,  S.last_updated, R.url as url , P.Name as Dataset FROM public.task_status as S"
+        sql = "SELECT  S.entity_id,  R.Name as resourceName, G.title as organizationName, S.state, REPLACE(S.error, 'null', '') as error,  S.last_updated, R.url as url , P.Name as Dataset FROM public.task_status as S"
         sql = sql + " INNER JOIN resource as R ON S.entity_id = R.id "
         sql = sql + " INNER JOIN package as P ON P.id =  R.package_id "
+        sql = sql + " INNER JOIN public.group as G ON G.id =  P.owner_org "
         sql = sql + " order by last_updated desc"
 
         result = con.execute(text(sql))
@@ -75,7 +76,7 @@ class Stats(object):
         sql = sql + " GROUP BY 1,2 "
         sql = sql + " ORDER BY 1,2$$ "
         sql = sql + " ,$$SELECT unnest( "
-        sql=sql +   " '{CSV, DOC, DOCX, GeoJSON, HTML, JPEG, JSON, PDF, PNG, PPT, PPTX, RSS, TXT, XLS, XLSX, XML, ZIP}'::text[])$$) "
+        sql = sql + " '{CSV, DOC, DOCX, GeoJSON, HTML, JPEG, JSON, PDF, PNG, PPT, PPTX, RSS, TXT, XLS, XLSX, XML, ZIP}'::text[])$$) "
         sql = sql + "  AS final_result "
         sql = sql + ' ("Organization" TEXT, "CSV" bigint, "DOC" bigint, "DOCX" bigint, "GeoJSON" bigint, "HTML" bigint, "JPEG" bigint, "JSON" bigint, "PDF" bigint, "PNG" bigint, "PPT" bigint, "PPTX" bigint, "RSS" bigint, "TXT" bigint, "XLS" bigint, "XLSX" bigint, "XML" bigint, "ZIP" bigint);'
 

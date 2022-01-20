@@ -13,7 +13,9 @@
     h.scheming_field_by_name(schema.dataset_fields, 'notes_translated')) and
     pkg.notes%}
     <div class="notes embedded-content">
-      {{ h.render_markdown(h.get_translated(pkg, 'notes')) }}
+      {% set notes = h.govil_markdown_extract(pkg.id, pkg.notes) %}
+      <div id="short_pack_des_{{ pkg.id }}">{{ notes|urlize }}</div>
+      <div id="full_pack_des_{{ pkg.id }}" class="collapse">{{ pkg.notes }}</div>
     </div>
   {% endif %}
 {% endblock %}

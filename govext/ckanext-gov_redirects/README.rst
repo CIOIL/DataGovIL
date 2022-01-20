@@ -2,30 +2,30 @@
    these badges work. The necessary Travis and Coverage config files have been
    generated for you.
 
-.. image:: https://travis-ci.org//ckanext-gov_redirects.svg?branch=master
-    :target: https://travis-ci.org//ckanext-gov_redirects
+.. image:: https://travis-ci.org//filename1.svg?branch=master
+    :target: https://travis-ci.org//filename1
 
-.. image:: https://coveralls.io/repos//ckanext-gov_redirects/badge.svg
-  :target: https://coveralls.io/r//ckanext-gov_redirects
+.. image:: https://coveralls.io/repos//filename1/badge.svg
+  :target: https://coveralls.io/r//filename1
 
-.. image:: https://img.shields.io/pypi/v/ckanext-gov_redirects.svg
-    :target: https://pypi.org/project/ckanext-gov_redirects/
+.. image:: https://img.shields.io/pypi/v/filename1.svg
+    :target: https://pypi.org/project/filename1/
     :alt: Latest Version
 
-.. image:: https://img.shields.io/pypi/pyversions/ckanext-gov_redirects.svg
-    :target: https://pypi.org/project/ckanext-gov_redirects/
+.. image:: https://img.shields.io/pypi/pyversions/filename1.svg
+    :target: https://pypi.org/project/filename1/
     :alt: Supported Python versions
 
-.. image:: https://img.shields.io/pypi/status/ckanext-gov_redirects.svg
-    :target: https://pypi.org/project/ckanext-gov_redirects/
+.. image:: https://img.shields.io/pypi/status/filename1.svg
+    :target: https://pypi.org/project/filename1/
     :alt: Development Status
 
-.. image:: https://img.shields.io/pypi/l/ckanext-gov_redirects.svg
-    :target: https://pypi.org/project/ckanext-gov_redirects/
+.. image:: https://img.shields.io/pypi/l/filename1.svg
+    :target: https://pypi.org/project/filename1/
     :alt: License
 
 =============
-ckanext-gov_redirects
+filename1
 =============
 
 .. Put a description of your extension here:
@@ -49,19 +49,19 @@ Installation
    For example installing any non-Python dependencies or adding any required
    config settings.
 
-To install ckanext-gov_redirects:
+To install filename1:
 
 1. Activate your CKAN virtual environment, for example::
 
      . /usr/lib/ckan/default/bin/activate
 
-2. Install the ckanext-gov_redirects Python package into your virtual environment::
+2. Install the filename1 Python package into your virtual environment::
 
-     pip install ckanext-gov_redirects
+     pip install filename1
 
 3. Add ``gov_redirects`` to the ``ckan.plugins`` setting in your CKAN
    config file (by default the config file is located at
-   ``/etc/ckan/default/ckan.ini``).
+   ``file_path``).
 
 4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu::
 
@@ -85,11 +85,11 @@ None at present
 Developer installation
 ----------------------
 
-To install ckanext-gov_redirects for development, activate your CKAN virtualenv and
+To install filename1 for development, activate your CKAN virtualenv and
 do::
 
-    git clone https://github.com//ckanext-gov_redirects.git
-    cd ckanext-gov_redirects
+    git clone https://github.com//filename1.git
+    cd filename1
     python setup.py develop
     pip install -r dev-requirements.txt
 
@@ -109,10 +109,10 @@ To run the tests and produce a coverage report, first make sure you have
 
 
 ----------------------------------------
-Releasing a new version of ckanext-gov_redirects
+Releasing a new version of filename1
 ----------------------------------------
 
-ckanext-gov_redirects should be available on PyPI as https://pypi.org/project/ckanext-gov_redirects.
+filename1 should be available on PyPI as https://pypi.org/project/filename1.
 To publish a new version to PyPI follow these steps:
 
 1. Update the version number in the ``setup.py`` file.

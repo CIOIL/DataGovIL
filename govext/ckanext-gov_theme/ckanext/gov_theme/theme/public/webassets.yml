@@ -83,3 +83,8 @@ modernizr-custom:
 msense:
   contents:
     - js/msense.js
+
+session-notifier:
+  contents:
+    - js/sweetalert.min.js
+    - js/session-notifier.js

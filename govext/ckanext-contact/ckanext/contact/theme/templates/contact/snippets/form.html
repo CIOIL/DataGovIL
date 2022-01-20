@@ -1,11 +1,13 @@
 {% import 'macros/form.html' as form %}
-{% asset 'ckanext-contact/main' %}
+{% asset 'ckanext-contact/form-contact' %}
+{% asset 'ckanext-contact/recaptcha_helpers' %}
+{% asset 'ckanext-contact/validate-contact' %}
 
 {% set recaptcha_v3_key = h.get_recaptcha_v3_key() %}
 {% set recaptcha_v3_action = h.get_recaptcha_v3_action() %}
 
 {% block contact_form %}
-    <form class="contact-form form-horizontal" method="post" data-module="form-contact"
+    <form class="contact-form form-horizontal" method="post" data-module="validate-contact form-contact"
           data-module-action="{{ recaptcha_v3_action }}" data-module-key="{{ recaptcha_v3_key }}">
 
         {{ form.errors(error_summary) }}
@@ -20,11 +22,12 @@
             {% endblock %}
             {% block contact_form_fields %}
                 {{ form.input('name', label=_('Contact Name'), id='field-name', value=data.name,
-                              error=errors.name, classes=['control-medium'], is_required=true) }}
+                              error=errors.name, classes=['control-medium'], is_required=true,
+                              maxlength="30", pattern="^[a-zA-Zא-ת\s\'\-]+$") }}
 
                 {{ form.input('email', label=_('Email'), id='field-email', type='email',
                               value=data.email, error=errors.email, classes=['control-medium'],
-                              is_required=true) }}
+                              is_required=true, maxlength="30", pattern="^[\w|\.|\-]+@(?:[\w|\-]+\.)+[a-zA-Z]{2,6}$") }}
                 {% asset 'gov_theme/select-filters' %}
 
                 <div class="form-group control-medium">
@@ -47,7 +50,7 @@
 
                 {{ form.markdown('content', label=_('Your Request'), id='field-content',
                                  value=data.content, error=errors.content,
-                                 placeholder=_('Description...'), is_required=true) }}
+                                 placeholder=_('Description...'), is_required=true, maxlength="300") }}
 
                 {% if data.type == 'report' %}
                     {{ form.hidden('type', 'report_mail') }}

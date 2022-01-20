@@ -13,7 +13,7 @@ _A CKAN extension for adding popup contact forms to pages._
 
 Borrows much of the contact form code from [ckanext-surrey](https://github.com/CityofSurrey/ckanext-surrey).
 
-An example can be seen on the Natural History Museum's [Data Portal](https://data.nhm.ac.uk) when clicking "_Contact dataset curator._"
+An example can be seen on the Natural History Museum's [Data Portal](https://hdname) when clicking "_Contact dataset curator._"
 
 This extension now includes Google's [reCAPTCHA](https://www.google.com/recaptcha) for preventing spam submissions.
 

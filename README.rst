@@ -32,7 +32,7 @@ Installation
 
 See the `CKAN Documentation <http://docs.ckan.org>`_ for installation instructions.
 
-We are using ckan 2.9 `Source code <https://github.com/ckan/ckan/tree/2.9>`_
+We are using ckan 2.9.4 `Source code <https://github.com/ckan/ckan/tree/ckan-2.9.4>`_
 
 
 Support

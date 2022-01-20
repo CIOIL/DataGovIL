@@ -8,7 +8,7 @@ from ckan.lib.helpers import date_str_to_datetime
 from markdown import markdown
 from ckan.lib.helpers import literal, truncate
 
-from six import text_type
+from six import text_type, string_types
 
 import logging
 log = logging.getLogger(__name__)
@@ -197,7 +197,7 @@ def format_resource_items(items):
                 # Sometimes values that can't be converted to ints can sneak
                 # into the db. In this case, just leave them as they are.
                 pass
-        elif isinstance(value, basestring):
+        elif isinstance(value, string_types):
             try:
                 # check if strings are actually datetime/number etc
                 if re.search(reg_ex_datetime, value):

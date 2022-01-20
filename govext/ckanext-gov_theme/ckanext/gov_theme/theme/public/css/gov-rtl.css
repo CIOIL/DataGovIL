@@ -1625,3 +1625,7 @@ ol {
 .form-actions .action-info {
   text-align: right;
 }
+
+label.checkbox {
+  clear: both;
+}

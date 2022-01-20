@@ -42,7 +42,6 @@ def resource_data(id, resource_id):
             'status': xloader_status,
             'resource': p.toolkit.c.resource,
             'pkg_dict': p.toolkit.c.pkg_dict,
-            'xloader_status_key': p.toolkit.c.userobj.apikey,
             'xloader_status_refresh_interval':
                 config.get('ckanext.xloader.xloader_status_refresh_interval', 1000),
             'xloader_last_updated_refresh_interval':

@@ -1,30 +1,40 @@
 import logging
-from ckan.common import config
-import ckan.model.misc as misc
+import six
+import mimetypes
+import datetime
+import socket
+from sqlalchemy import create_engine
+from sqlalchemy.sql import text
+
+from ckan import authz
+from ckan.common import config, _
+from ckan.lib import mailer
+from ckan.logic.action.delete import _unfollow
+from ckan.logic.validators import clean_format
+from ckan.logic import side_effect_free
 import ckan.logic as logic
-import ckan.lib.dictization
 import ckan.logic.action
 import ckan.logic.schema
-import ckan.lib.dictization.model_dictize as model_dictize
-import ckan.lib.dictization.model_save as model_save
-import ckan.lib.navl.dictization_functions
-import ckan.lib.datapreview
-from ckan import authz
-from ckan.common import _
-from ckan.logic.action.delete import _unfollow
 import ckan.logic.action.create as _create
 import ckan.logic.action.update as _update
 import ckan.logic.action.get as _get
 import ckan.logic.action.patch as _patch
+import ckan.lib.plugins as lib_plugins
+import ckan.lib.dictization as dictization
+import ckan.lib.dictization.model_dictize as model_dictize
+import ckan.lib.dictization.model_save as model_save
+import ckan.lib.uploader as uploader
+import ckan.lib.navl.dictization_functions
+import ckan.lib.datapreview
+import ckan.plugins as plugins
+import ckan.model.misc as misc
+
 import ckanext.gov_theme.email_notifications as custom_email_notifications
 import ckanext.gov_theme.mailer as custom_mailer
 import ckanext.gov_theme.schema as custom_schema
-
-import ckan.lib.plugins as lib_plugins
-import ckan.plugins as plugins
-
 from ckanext.gov_theme import file_validators
-#from ckanext.gov_theme import custom_uploader
+
+# from ckanext.gov_theme import custom_uploader
 
 log = logging.getLogger(__name__)
 
@@ -33,9 +43,11 @@ log = logging.getLogger(__name__)
 # actions in the action API.
 _validate = ckan.lib.navl.dictization_functions.validate
 _check_access = logic.check_access
+_get_or_bust = logic.get_or_bust
 _get_action = logic.get_action
 ValidationError = logic.ValidationError
 NotFound = logic.NotFound
+
 
 # ckan.logic.create extend
 def package_create(context, data_dict):
@@ -130,7 +142,7 @@ def package_create(context, data_dict):
     if not (data_dict is None):
         try:
             tagVal = data_dict['tags']
-            if len(tagVal) == 0 :
+            if len(tagVal) == 0:
                 raise logic.ValidationError({
                     'Tags': [_("Missing value")]
                 })
@@ -269,6 +281,166 @@ def package_create(context, data_dict):
 
     return output
 
+
+# ckan.logic.update extend
+def package_update(context, data_dict):
+    '''Update a dataset (package).
+
+    You must be authorized to edit the dataset and the groups that it belongs
+    to.
+
+    .. note:: Update methods may delete parameters not explicitly provided in the
+        data_dict. If you want to edit only a specific attribute use `package_patch`
+        instead.
+
+    It is recommended to call
+    :py:func:`ckan.logic.action.get.package_show`, make the desired changes to
+    the result, and then call ``package_update()`` with it.
+
+    Plugins may change the parameters of this function depending on the value
+    of the dataset's ``type`` attribute, see the
+    :py:class:`~ckan.plugins.interfaces.IDatasetForm` plugin interface.
+
+    For further parameters see
+    :py:func:`~ckan.logic.action.create.package_create`.
+
+    :param id: the name or id of the dataset to update
+    :type id: string
+
+    :returns: the updated dataset (if ``'return_package_dict'`` is ``True`` in
+              the context, which is the default. Otherwise returns just the
+              dataset id)
+    :rtype: dictionary
+
+    '''
+    model = context['model']
+    session = context['session']
+    name_or_id = data_dict.get('id') or data_dict.get('name')
+    author_email = data_dict.get('author_email')
+    if name_or_id is None:
+        raise ValidationError({'id': _('Missing value')})
+
+    pkg = model.Package.get(name_or_id)
+    if pkg is None:
+        raise NotFound(_('Package was not found.'))
+    context["package"] = pkg
+
+    # immutable fields
+    data_dict["id"] = pkg.id
+    data_dict['type'] = pkg.type
+
+    if 'author_notification' not in data_dict:
+        data_dict['author_notification'] = None
+
+    _check_access('package_update', context, data_dict)
+
+    user = context['user']
+    # get the schema
+    package_plugin = lib_plugins.lookup_package_plugin(pkg.type)
+    if 'schema' in context:
+        schema = context['schema']
+    else:
+        schema = package_plugin.update_package_schema()
+
+    if 'api_version' not in context:
+        # check_data_dict() is deprecated. If the package_plugin has a
+        # check_data_dict() we'll call it, if it doesn't have the method we'll
+        # do nothing.
+        check_data_dict = getattr(package_plugin, 'check_data_dict', None)
+        if check_data_dict:
+            try:
+                package_plugin.check_data_dict(data_dict, schema)
+            except TypeError:
+                # Old plugins do not support passing the schema so we need
+                # to ensure they still work.
+                package_plugin.check_data_dict(data_dict)
+
+    resource_uploads = []
+    for resource in data_dict.get('resources', []):
+        # file uploads/clearing
+        upload = uploader.get_resource_uploader(resource)
+
+        if 'mimetype' not in resource:
+            if hasattr(upload, 'mimetype'):
+                resource['mimetype'] = upload.mimetype
+
+        if 'size' not in resource and 'url_type' in resource:
+            if hasattr(upload, 'filesize'):
+                resource['size'] = upload.filesize
+
+        resource_uploads.append(upload)
+
+    data, errors = lib_plugins.plugin_validate(
+        package_plugin, context, data_dict, schema, 'package_update')
+    log.debug('package_update validate_errs=%r user=%s package=%s data=%r',
+              errors, context.get('user'),
+              context.get('package').name if context.get('package') else '',
+              data)
+
+    if errors:
+        model.Session.rollback()
+        raise ValidationError(errors)
+
+    #avoid revisioning by updating directly
+    model.Session.query(model.Package).filter_by(id=pkg.id).update(
+        {"metadata_modified": datetime.datetime.utcnow()})
+    model.Session.refresh(pkg)
+
+    pkg = model_save.package_dict_save(data, context)
+
+    context_org_update = context.copy()
+    context_org_update['ignore_auth'] = True
+    context_org_update['defer_commit'] = True
+    _get_action('package_owner_org_update')(context_org_update,
+                                            {'id': pkg.id,
+                                             'organization_id': pkg.owner_org})
+
+    # Needed to let extensions know the new resources ids
+    model.Session.flush()
+    for index, (resource, upload) in enumerate(
+            zip(data.get('resources', []), resource_uploads)):
+        resource['id'] = pkg.resources[index].id
+
+        upload.upload(resource['id'], uploader.get_max_resource_size())
+
+    for item in plugins.PluginImplementations(plugins.IPackageController):
+        item.edit(pkg)
+
+        item.after_update(context, data)
+
+    # Create activity
+    if not pkg.private:
+        user_obj = model.User.by_name(user)
+        if user_obj:
+            user_id = user_obj.id
+        else:
+            user_id = 'not logged in'
+
+        activity = pkg.activity_stream_item('changed', user_id)
+        session.add(activity)
+
+    if not context.get('defer_commit'):
+        model.repo.commit()
+
+    log.debug('Updated object %s' % pkg.name)
+
+    return_id_only = context.get('return_id_only', False)
+
+    # Make sure that a user provided schema is not used on package_show
+    context.pop('schema', None)
+
+    # we could update the dataset so we should still be able to read it.
+    context['ignore_auth'] = True
+    output = data_dict['id'] if return_id_only \
+            else _get_action('package_show')(context, {'id': data_dict['id']})
+
+    if data_dict['author_notification']:
+        _send_mail_response(author_email, user, 'Your Dataset has been updated',
+                            f'Dataset {data_dict["name"]} ({data_dict["id"]}) has been updated successfully.')
+
+    return output
+
+
 def resource_create(context, data_dict):
     '''Appends a new resource to a datasets list of resources.
 
@@ -311,12 +483,12 @@ def resource_create(context, data_dict):
 
     '''
 
-    if data_dict['upload'] is not None:
+    if data_dict['upload'] is not None and data_dict.get('url', '') != "":
         file_validators.check_file_extension(data_dict.get('url', ''))
-
 
     model = context['model']
     user = context['user']
+    max_resources_num = 50
 
     package_id = _create._get_or_bust(data_dict, 'package_id')
     if not data_dict.get('url'):
@@ -335,7 +507,10 @@ def resource_create(context, data_dict):
         pkg_dict['resources'] = []
 
     upload = _create.uploader.get_resource_uploader(data_dict)
-    #upload = custom_uploader.get_resource_uploader(data_dict)
+    # upload = custom_uploader.get_resource_uploader(data_dict)
+
+    if len(pkg_dict['resources']) >= max_resources_num:
+        raise ValidationError({_('Resource'): [_("Dataset can't have more then %i resources") % max_resources_num]})
 
     if 'mimetype' not in data_dict:
         if hasattr(upload, 'mimetype'):
@@ -362,7 +537,7 @@ def resource_create(context, data_dict):
     # package_show until after commit
     upload.upload(context['package'].resources[-1].id,
                   _create.uploader.get_max_resource_size())
-    #upload.upload(context['package'].resources[-1].id, custom_uploader.get_max_resource_size())
+    # upload.upload(context['package'].resources[-1].id, custom_uploader.get_max_resource_size())
     model.repo.commit()
 
     #  Run package show again to get out actual last_resource
@@ -383,6 +558,7 @@ def resource_create(context, data_dict):
         plugin.after_create(context, resource)
 
     return resource
+
 
 def user_invite(context, data_dict):
     '''Invite a new user.
@@ -423,6 +599,7 @@ def user_invite(context, data_dict):
     _get_action('group_member_create')(context, member_dict)
     custom_mailer.send_invite(user)
     return model_dictize.user_dictize(user, context)
+
 
 def user_create_within_org(context, data_dict):
     '''Create a new user.
@@ -508,6 +685,7 @@ def user_create_within_org(context, data_dict):
     log.debug('Created user {name}'.format(name=user.name))
     return user_dict
 
+
 def follow_user(context, data_dict):
     '''Start following another user.
 
@@ -531,8 +709,7 @@ def follow_user(context, data_dict):
     if not userobj:
         raise logic.NotAuthorized(_("You must be logged in to follow users"))
 
-    schema = (context.get('schema')
-              or ckan.logic.schema.default_follow_user_schema())
+    schema = (context.get('schema') or ckan.logic.schema.default_follow_user_schema())
 
     validated_data_dict, errors = _validate(data_dict, schema, context)
 
@@ -546,8 +723,7 @@ def follow_user(context, data_dict):
         raise ValidationError({'message': message}, error_summary=message)
 
     # Don't let a user follow someone she is already following.
-    if model.UserFollowingUser.is_following(userobj.id,
-                                            validated_data_dict['id']):
+    if model.UserFollowingUser.is_following(userobj.id, validated_data_dict['id']):
         followeduserobj = model.User.get(validated_data_dict['id'])
         name = followeduserobj.display_name
         message = _('You are already following {0}').format(name)
@@ -562,11 +738,11 @@ def follow_user(context, data_dict):
     log.debug(u'User {follower} started following user {object}'.format(
         follower=follower.follower_id, object=follower.object_id))
 
-
     if config.get('ckan.gov_theme.is_back'):
         return model_dictize.user_following_user_dictize(follower, context)
     else:
         return 0
+
 
 def follow_dataset(context, data_dict):
     '''Start following a dataset.
@@ -594,8 +770,7 @@ def follow_dataset(context, data_dict):
         raise logic.NotAuthorized(
             _("You must be logged in to follow a dataset."))
 
-    schema = (context.get('schema')
-              or ckan.logic.schema.default_follow_dataset_schema())
+    schema = (context.get('schema') or ckan.logic.schema.default_follow_dataset_schema())
 
     validated_data_dict, errors = _validate(data_dict, schema, context)
 
@@ -604,8 +779,7 @@ def follow_dataset(context, data_dict):
         raise ValidationError(errors)
 
     # Don't let a user follow a dataset she is already following.
-    if model.UserFollowingDataset.is_following(userobj.id,
-                                               validated_data_dict['id']):
+    if model.UserFollowingDataset.is_following(userobj.id, validated_data_dict['id']):
         # FIXME really package model should have this logic and provide
         # 'display_name' like users and groups
         pkgobj = model.Package.get(validated_data_dict['id'])
@@ -614,8 +788,7 @@ def follow_dataset(context, data_dict):
             'You are already following {0}').format(name)
         raise ValidationError({'message': message}, error_summary=message)
 
-    follower = model_save.follower_dict_save(validated_data_dict, context,
-                                             model.UserFollowingDataset)
+    follower = model_save.follower_dict_save(validated_data_dict, context, model.UserFollowingDataset)
 
     if not context.get('defer_commit'):
         model.repo.commit()
@@ -627,6 +800,7 @@ def follow_dataset(context, data_dict):
         return model_dictize.user_following_dataset_dictize(follower, context)
     else:
         return 0
+
 
 def follow_group(context, data_dict):
     '''Start following a group.
@@ -653,8 +827,7 @@ def follow_group(context, data_dict):
         raise logic.NotAuthorized(
             _("You must be logged in to follow a group."))
 
-    schema = context.get('schema',
-                         ckan.logic.schema.default_follow_group_schema())
+    schema = context.get('schema', ckan.logic.schema.default_follow_group_schema())
 
     validated_data_dict, errors = _validate(data_dict, schema, context)
 
@@ -663,8 +836,7 @@ def follow_group(context, data_dict):
         raise ValidationError(errors)
 
     # Don't let a user follow a group she is already following.
-    if model.UserFollowingGroup.is_following(userobj.id,
-                                             validated_data_dict['id']):
+    if model.UserFollowingGroup.is_following(userobj.id,validated_data_dict['id']):
         groupobj = model.Group.get(validated_data_dict['id'])
         name = groupobj.display_name
         message = _(
@@ -679,7 +851,6 @@ def follow_group(context, data_dict):
 
     log.debug(u'User {follower} started following group {object}'.format(
         follower=follower.follower_id, object=follower.object_id))
-
 
     if config.get('ckan.gov_theme.is_back'):
         return model_dictize.user_following_group_dictize(follower, context)
@@ -696,8 +867,9 @@ def unfollow_user(context, data_dict):
     '''
     if authz.config.get('cakn.gov_theme.is_back'):
         schema = context.get('schema') or (
-                ckan.logic.schema.default_follow_user_schema())
+            ckan.logic.schema.default_follow_user_schema())
         _unfollow(context, data_dict, schema, context['model'].UserFollowingUser)
+
 
 def unfollow_dataset(context, data_dict):
     '''Stop following a dataset.
@@ -707,10 +879,9 @@ def unfollow_dataset(context, data_dict):
 
     '''
     if authz.config.get('cakn.gov_theme.is_back'):
-        schema = context.get('schema') or (
-            ckan.logic.schema.default_follow_dataset_schema())
-        _unfollow(context, data_dict, schema,
-                    context['model'].UserFollowingDataset)
+        schema = context.get('schema') or (ckan.logic.schema.default_follow_dataset_schema())
+        _unfollow(context, data_dict, schema, context['model'].UserFollowingDataset)
+
 
 def unfollow_group(context, data_dict):
     '''Stop following a group.
@@ -720,10 +891,8 @@ def unfollow_group(context, data_dict):
 
     '''
     if authz.config.get('cakn.gov_theme.is_back'):
-        schema = context.get('schema',
-                                ckan.logic.schema.default_follow_group_schema())
-        _unfollow(context, data_dict, schema,
-                    context['model'].UserFollowingGroup)
+        schema = context.get('schema', ckan.logic.schema.default_follow_group_schema())
+        _unfollow(context, data_dict, schema, context['model'].UserFollowingGroup)
 # end of ckan.logic.delete extend
 
 
@@ -745,7 +914,7 @@ def resource_update(context, data_dict):
 
     '''
 
-    if data_dict['upload'] is not None:
+    if data_dict['upload'] is not None and data_dict.get('url', '') != '':
         file_validators.check_file_extension(data_dict.get('url', ''))
 
     model = context['model']
@@ -771,7 +940,7 @@ def resource_update(context, data_dict):
 
     package_id = resource.package.id
     pkg_dict = _get_action('package_show')(dict(context, return_type='dict'),
-        {'id': package_id})
+                                           {'id': package_id})
 
     for n, p in enumerate(pkg_dict['resources']):
         if p['id'] == id:
@@ -782,14 +951,14 @@ def resource_update(context, data_dict):
 
     # Persist the datastore_active extra if already present and not provided
     if ('datastore_active' in resource.extras and
-            'datastore_active' not in data_dict):
+        'datastore_active' not in data_dict):
         data_dict['datastore_active'] = resource.extras['datastore_active']
 
     for plugin in _update.plugins.PluginImplementations(_update.plugins.IResourceController):
         plugin.before_update(context, pkg_dict['resources'][n], data_dict)
 
     upload = _update.uploader.get_resource_uploader(data_dict)
-    #upload = custom_uploader.get_resource_uploader(data_dict)
+    # upload = custom_uploader.get_resource_uploader(data_dict)
 
     if 'mimetype' not in data_dict:
         if hasattr(upload, 'mimetype'):
@@ -798,6 +967,18 @@ def resource_update(context, data_dict):
     if 'size' not in data_dict and 'url_type' in data_dict:
         if hasattr(upload, 'filesize'):
             data_dict['size'] = upload.filesize
+
+    resource_to_update = pkg_dict['resources'][n]
+    for key in resource_to_update.keys():
+        if key not in data_dict.keys():
+            data_dict[key] = resource_to_update[key]
+
+    if not data_dict['format']:
+        url = data_dict['url']
+        if url:
+            mimetype, encoding = mimetypes.guess_type(url)
+            if mimetype:
+                data_dict['format'] = clean_format(mimetype)
 
     pkg_dict['resources'][n] = data_dict
 
@@ -813,7 +994,7 @@ def resource_update(context, data_dict):
             raise ValidationError(e.error_dict)
 
     upload.upload(id, _update.uploader.get_max_resource_size())
-    #upload.upload(id, custom_uploader.get_max_resource_size())
+    # upload.upload(id, custom_uploader.get_max_resource_size())
     model.repo.commit()
 
     resource = _get_action('resource_show')(context, {'id': id})
@@ -829,6 +1010,32 @@ def resource_update(context, data_dict):
         plugin.after_update(context, resource)
 
     return resource
+
+
+def resource_tracking(resource, column):
+    '''
+     Resource tracking - count the API usage and downloads
+    :param column: the column to update in the resource count table
+    :type column: string
+    :param resource: resource dictionary of the resource
+    :type resource: dictionary
+    '''
+    eng = create_engine(config.get('sqlalchemy.url'))
+    con = eng.connect()
+
+    resource_id = resource.get('id')
+    sql = f"SELECT id FROM resource_count WHERE id= %s"
+
+    if con.execute(sql, resource_id).fetchone():
+        sql = f"UPDATE resource_count SET {column}_count = resource_count.{column}_count + 1 WHERE id= %s;"
+        parameters = resource_id
+    else:
+        sql = f"INSERT INTO resource_count (id, {column}_count, date_prod) VALUES (%s, '1', %s);"
+        parameters = resource_id, resource.get('created')
+
+    con.execute(sql, parameters)
+    con.close()
+
 
 @logic.auth_audit_exempt
 def send_email_notifications(context, data_dict):
@@ -846,11 +1053,12 @@ def send_email_notifications(context, data_dict):
         _check_access('send_email_notifications', context, data_dict)
 
     if not _update.converters.asbool(
-            config.get('ckan.activity_streams_email_notifications')):
+        config.get('ckan.activity_streams_email_notifications')):
         raise ValidationError('ckan.activity_streams_email_notifications'
                               ' is not enabled in config')
 
         custom_email_notifications.get_and_send_notifications_for_all_users()
+
 
 def term_translation_update_many(context, data_dict):
     '''Create or update many term translations at once.
@@ -881,11 +1089,11 @@ def term_translation_update_many(context, data_dict):
 
     model.Session.commit()
 
-
     if config.get('ckan.gov_theme.is_back'):
         return {'success': '%s rows updated' % (num + 1)}
     else:
         return {'success': False}
+
 
 def task_status_update_many(context, data_dict):
     '''Update many task statuses at once.
@@ -914,7 +1122,6 @@ def task_status_update_many(context, data_dict):
         return {'results': results}
     else:
         return {'results': 0}
-
 # end of ckan.logic.update extend
 
 
@@ -940,7 +1147,7 @@ def package_patch(context, data_dict):
         'session': context['session'],
         'user': context['user'],
         'auth_user_obj': context['auth_user_obj'],
-        }
+    }
 
     package_dict = _get_action('package_show')(
         show_context,
@@ -954,6 +1161,7 @@ def package_patch(context, data_dict):
         return _update.package_update(context, patched)
     else:
         return 0
+
 
 def resource_patch(context, data_dict):
     '''Patch a resource
@@ -973,7 +1181,7 @@ def resource_patch(context, data_dict):
         'session': context['session'],
         'user': context['user'],
         'auth_user_obj': context['auth_user_obj'],
-        }
+    }
 
     resource_dict = _get_action('resource_show')(
         show_context,
@@ -986,6 +1194,7 @@ def resource_patch(context, data_dict):
         return _update.resource_update(context, patched)
     else:
         return 0
+
 
 def group_patch(context, data_dict):
     '''Patch a group
@@ -1005,7 +1214,7 @@ def group_patch(context, data_dict):
         'session': context['session'],
         'user': context['user'],
         'auth_user_obj': context['auth_user_obj'],
-        }
+    }
 
     group_dict = _get_action('group_show')(
         show_context,
@@ -1016,9 +1225,11 @@ def group_patch(context, data_dict):
     patched.update(data_dict)
 
     if config.get('ckan.gov_theme.is_back'):
-        return _update.group_update(context, patched)
+        return _update.group_update(
+            dict(context, allow_partial_update=True), patched)
     else:
         return 0
+
 
 def organization_patch(context, data_dict):
     '''Patch an organization
@@ -1038,7 +1249,7 @@ def organization_patch(context, data_dict):
         'session': context['session'],
         'user': context['user'],
         'auth_user_obj': context['auth_user_obj'],
-        }
+    }
 
     organization_dict = _get_action('organization_show')(
         show_context,
@@ -1049,10 +1260,10 @@ def organization_patch(context, data_dict):
     patched.update(data_dict)
 
     if config.get('ckan.gov_theme.is_back'):
-        return _update.organization_update(context, patched)
+        return _update.organization_update(
+            dict(context, allow_partial_update=True), patched)
     else:
         return 0
-
 # end of ckan.logic.patch extend
 
 
@@ -1089,8 +1300,7 @@ def related_list(context, data_dict=None):
 
         filter_on_type = data_dict.get('type_filter', None)
         if filter_on_type:
-            related_list = related_list.filter(
-                model.Related.type == filter_on_type)
+            related_list = related_list.filter(model.Related.type == filter_on_type)
 
         sort = data_dict.get('sort', None)
         if sort:
@@ -1117,6 +1327,7 @@ def related_list(context, data_dict=None):
         return related_list
     else:
         return 0
+
 
 def member_list(context, data_dict=None):
     '''Return the members of a group.
@@ -1150,8 +1361,8 @@ def member_list(context, data_dict=None):
     # User must be able to update the group to remove a member from it
     _check_access('group_show', context, data_dict)
 
-    q = model.Session.query(model.Member).\
-        filter(model.Member.group_id == group.id).\
+    q = model.Session.query(model.Member). \
+        filter(model.Member.group_id == group.id). \
         filter(model.Member.state == "active")
 
     if obj_type:
@@ -1169,10 +1380,12 @@ def member_list(context, data_dict=None):
 
     if config.get('ckan.gov_theme.is_back'):
         return [(m.table_id, m.table_name, translated_capacity(m.capacity))
-            for m in q.all()]
+                for m in q.all()]
     else:
         return 0
 
+
+@side_effect_free
 def organization_list(context, data_dict):
     '''Return a list of the names of the site's organizations.
 
@@ -1223,6 +1436,7 @@ def organization_list(context, data_dict):
     data_dict['type'] = 'organization'
     return _group_or_org_list(context, data_dict, is_org=True)
 
+
 def _group_or_org_list(context, data_dict, is_org=False):
     model = context['model']
     api = context.get('api_version')
@@ -1260,9 +1474,9 @@ def _group_or_org_list(context, data_dict, is_org=False):
         sort = 'package_count desc'
 
     sort_info = _get._unpick_search(sort,
-                               allowed_fields=['name', 'packages',
-                                               'package_count', 'title'],
-                               total=1)
+                                    allowed_fields=['name', 'packages',
+                                                    'package_count', 'title'],
+                                    total=1)
 
     if sort_info and sort_info[0][0] == 'package_count':
         query = model.Session.query(model.Group.id,
@@ -1270,12 +1484,11 @@ def _group_or_org_list(context, data_dict, is_org=False):
                                     _get.sqlalchemy.func.count(model.Group.id))
 
         query = query.filter(model.Member.group_id == model.Group.id) \
-                     .filter(model.Member.table_id == model.Package.id) \
-                     .filter(model.Member.table_name == 'package') \
-                     .filter(model.Package.state == 'active')
+            .filter(model.Member.table_id == model.Package.id) \
+            .filter(model.Member.table_name == 'package') \
+            .filter(model.Package.state == 'active')
     else:
-        query = model.Session.query(model.Group.id,
-                                    model.Group.name)
+        query = model.Session.query(model.Group.id, model.Group.name)
 
     query = query.filter(model.Group.state == 'active')
 
@@ -1332,19 +1545,17 @@ def _group_or_org_list(context, data_dict, is_org=False):
 
     return group_list
 
-def _get_num_of_resources_for_package(group_id):
-    from sqlalchemy import create_engine
-    from sqlalchemy.sql import text
 
+def _get_num_of_resources_for_package(group_id):
     eng = create_engine(config.get('sqlalchemy.url'))
     con = eng.connect()
 
     rs = con.execute(text('SELECT name from "group"'))
-    print (rs.fetchone())
+    print(rs.fetchone())
     sql = 'SELECT COUNT(*) as num_of_resources FROM '
-    sql = sql+ '(SELECT G.title as Office, P.name as DataSet, R.Name as resourceName, date(R.last_modified) as last_modified ,date(R.created) as created, R.id, G.name as name, R.url as url  FROM "group" as G INNER JOIN  "package" as P ON G.id = P.owner_org INNER JOIN resource as R ON P.id = R.package_id'
+    sql = sql + '(SELECT G.title as Office, P.name as DataSet, R.Name as resourceName, date(R.last_modified) as last_modified ,date(R.created) as created, R.id, G.name as name, R.url as url  FROM "group" as G INNER JOIN  "package" as P ON G.id = P.owner_org INNER JOIN resource as R ON P.id = R.package_id'
     sql = sql + " WHERE G.type = 'organization' AND G.state = 'active' AND P.state = 'active' AND R.state = 'active' "
-    sql = sql+  " And G.id = '" + group_id +"' "
+    sql = sql + " And G.id = '" + group_id + "' "
     sql = sql + " ORDER BY created desc,R.last_modified desc) n"
 
     result = con.execute(text(sql))
@@ -1355,6 +1566,7 @@ def _get_num_of_resources_for_package(group_id):
     con.close()
 
     return names
+
 
 def _group_or_org_show(context, data_dict, resources_count, is_org=False):
     model = context['model']
@@ -1389,7 +1601,7 @@ def _group_or_org_show(context, data_dict, resources_count, is_org=False):
                                              include_tags=include_tags,
                                              include_extras=include_extras,
                                              include_groups=include_groups,
-                                             include_users=include_users,)
+                                             include_users=include_users, )
 
     if is_org:
         plugin_type = _get.plugins.IOrganizationController
@@ -1422,6 +1634,30 @@ def _group_or_org_show(context, data_dict, resources_count, is_org=False):
         'organization_show' if is_org else 'group_show')
     group_dict['resources_count'] = resources_count
     return group_dict
+
+
+def _send_mail_response(email, username, subject, body):
+    '''Define  and send mail.
+    :param email: the recipient email
+    :type email: string
+    :param username: the recipient user name
+    :type username: string
+    :param subject: mail subject
+    :type subject: string
+    :param body: mail body
+    :type body: string
+    '''
+    mail_dict = {
+        'recipient_email': email,
+        'recipient_name': username,
+        'subject': subject,
+        'body': body
+    }
+    try:
+        custom_mailer.mail_recipient(**mail_dict)
+    except (mailer.MailerException, socket.error):
+        log.info(f'Fail sending Mail to {email}.')
+
 
 def group_package_show(context, data_dict):
     '''Return the datasets (packages) of a group.
@@ -1459,13 +1695,14 @@ def group_package_show(context, data_dict):
         'rows': limit,
     })
 
-
     if config.get('ckan.gov_theme.is_back'):
         return result['results']
     else:
         return 0
 
+
 @logic.validate(logic.schema.default_resource_search_schema)
+@side_effect_free
 def resource_search(context, data_dict):
     '''
     Searches for resources satisfying a given search criteria.
@@ -1555,7 +1792,7 @@ def resource_search(context, data_dict):
             {'fields': _('Do not specify if using "query" parameter')})
 
     elif query is not None:
-        if isinstance(query, basestring):
+        if isinstance(query, six.string_types):
             query = [query]
         try:
             fields = dict(pair.split(":", 1) for pair in query)
@@ -1571,7 +1808,7 @@ def resource_search(context, data_dict):
         # So maintain that behaviour
         split_terms = {}
         for field, terms in fields.items():
-            if isinstance(terms, basestring):
+            if isinstance(terms, six.string_types):
                 terms = terms.split()
             split_terms[field] = terms
         fields = split_terms
@@ -1589,11 +1826,11 @@ def resource_search(context, data_dict):
     resource_fields = model.Resource.get_columns()
     for field, terms in fields.items():
 
-        if isinstance(terms, basestring):
+        if isinstance(terms, six.string_types):
             terms = [terms]
 
         if field not in resource_fields:
-            msg = _('Field "{field}" not recognised in resource_search.')\
+            msg = _('Field "{field}" not recognised in resource_search.') \
                 .format(field=field)
 
             # Running in the context of the internal search api.
@@ -1613,7 +1850,7 @@ def resource_search(context, data_dict):
 
             # Treat the has field separately, see docstring.
             if field == 'hash':
-                q = q.filter(model_attr.ilike(unicode(term) + '%'))
+                q = q.filter(model_attr.ilike(six.text_type(term) + '%'))
 
             # Resource extras are stored in a json blob.  So searching for
             # matching fields is a bit trickier.  See the docstring.
@@ -1630,7 +1867,7 @@ def resource_search(context, data_dict):
 
             # Just a regular field
             else:
-                q = q.filter(model_attr.ilike('%' + unicode(term) + '%'))
+                q = q.filter(model_attr.ilike('%' + six.text_type(term) + '%'))
 
     if order_by is not None:
         if hasattr(model.Resource, order_by):
@@ -1642,8 +1879,7 @@ def resource_search(context, data_dict):
 
     results = []
     for result in q:
-        if isinstance(result, tuple) \
-                and isinstance(result[0], model.DomainObject):
+        if isinstance(result, tuple) and isinstance(result[0], model.DomainObject):
             # This is the case for order_by rank due to the add_column.
             results.append(result[0])
         else:
@@ -1653,11 +1889,11 @@ def resource_search(context, data_dict):
     if not context.get('search_query', False):
         results = model_dictize.resource_list_dictize(results, context)
 
-
     if config.get('ckan.gov_theme.is_back'):
-        return {'count': count,'results': results}
+        return {'count': count, 'results': results}
     else:
-        return {'count': 0,'results': 0}
+        return {'count': 0, 'results': 0}
+
 
 def tag_search(context, data_dict):
     '''Return a list of tags whose names contain a given string.
@@ -1694,9 +1930,10 @@ def tag_search(context, data_dict):
     tags, count = _get._tag_search(context, data_dict)
 
     if config.get('ckan.gov_theme.is_back'):
-        return {'count': count,'results': [_get._table_dictize(tag, context) for tag in tags]}
+        return {'count': count, 'results': [_get._table_dictize(tag, context) for tag in tags]}
     else:
-        return {'count': 0,'results': 0}
+        return {'count': 0, 'results': 0}
+
 
 def term_translation_show(context, data_dict):
     '''Return the translations for the given term(s) and language(s).
@@ -1726,7 +1963,7 @@ def term_translation_show(context, data_dict):
     # This action accepts `terms` as either a list of strings, or a single
     # string.
     terms = _get._get_or_bust(data_dict, 'terms')
-    if isinstance(terms, basestring):
+    if isinstance(terms, six.string_types):
         terms = [terms]
     if terms:
         q = q.where(trans_table.c.term.in_(terms))
@@ -1735,7 +1972,7 @@ def term_translation_show(context, data_dict):
     # string.
     if 'lang_codes' in data_dict:
         lang_codes = _get._get_or_bust(data_dict, 'lang_codes')
-        if isinstance(lang_codes, basestring):
+        if isinstance(lang_codes, six.string_types):
             lang_codes = [lang_codes]
         q = q.where(trans_table.c.lang_code.in_(lang_codes))
 
@@ -1752,6 +1989,7 @@ def term_translation_show(context, data_dict):
     else:
         return 0
 
+
 def status_show(context, data_dict):
     '''Return a dictionary with information about the site's configuration.
 
@@ -1760,16 +1998,17 @@ def status_show(context, data_dict):
     '''
     if authz.config.get('ckan.gov_theme.is_back'):
         return {
-        'site_title': config.get('ckan.site_title'),
-        'site_description': config.get('ckan.site_description'),
-        'site_url': config.get('ckan.site_url'),
-        'ckan_version': ckan.__version__,
-        'error_emails_to': config.get('email_to'),
-        'locale_default': config.get('ckan.locale_default'),
-        'extensions': config.get('ckan.plugins').split(),
+            'site_title': config.get('ckan.site_title'),
+            'site_description': config.get('ckan.site_description'),
+            'site_url': config.get('ckan.site_url'),
+            'ckan_version': ckan.__version__,
+            'error_emails_to': config.get('email_to'),
+            'locale_default': config.get('ckan.locale_default'),
+            'extensions': config.get('ckan.plugins').split(),
         }
     else:
         return {'success': False}
+
 
 @logic.validate(logic.schema.default_activity_list_schema)
 def user_activity_list(context, data_dict):
@@ -1803,18 +2042,15 @@ def user_activity_list(context, data_dict):
         raise logic.NotFound
 
     offset = data_dict.get('offset', 0)
-    limit = int(
-        data_dict.get('limit', config.get('ckan.activity_list_limit', 31)))
+    limit = int(data_dict.get('limit', config.get('ckan.activity_list_limit', 31)))
 
-    _activity_objects = model.activity.user_activity_list(user.id, limit=limit,
-            offset=offset)
-    activity_objects = _get._filter_activity_by_user(_activity_objects,
-                                                     _get._activity_stream_get_filtered_users())
+    activity_objects = model.activity.user_activity_list(user.id, limit=limit, offset=offset)
 
     if config.get('ckan.gov_theme.is_back'):
         return model_dictize.activity_list_dictize(activity_objects, context)
     else:
         return 0
+
 
 @logic.validate(logic.schema.default_activity_list_schema)
 def package_activity_list(context, data_dict):
@@ -1850,15 +2086,15 @@ def package_activity_list(context, data_dict):
     limit = int(
         data_dict.get('limit', config.get('ckan.activity_list_limit', 31)))
 
-    _activity_objects = model.activity.package_activity_list(package.id,
-            limit=limit, offset=offset)
-    activity_objects = _get._filter_activity_by_user(_activity_objects,
-                                                     _get._activity_stream_get_filtered_users())
+    activity_objects = model.activity.package_activity_list(
+        package.id, limit=limit, offset=offset,
+    )
 
     if config.get('ckan.gov_theme.is_back'):
         return model_dictize.activity_list_dictize(activity_objects, context)
     else:
         return 0
+
 
 @logic.validate(logic.schema.default_activity_list_schema)
 def group_activity_list(context, data_dict):
@@ -1886,22 +2122,21 @@ def group_activity_list(context, data_dict):
     model = context['model']
     group_id = data_dict.get('id')
     offset = data_dict.get('offset', 0)
-    limit = int(
-        data_dict.get('limit', config.get('ckan.activity_list_limit', 31)))
+    limit = int(data_dict.get('limit', config.get('ckan.activity_list_limit', 31)))
 
     # Convert group_id (could be id or name) into id.
     group_show = logic.get_action('group_show')
     group_id = group_show(context, {'id': group_id})['id']
 
-    _activity_objects = model.activity.group_activity_list(group_id,
-            limit=limit, offset=offset)
-    activity_objects = _get._filter_activity_by_user(_activity_objects,
-                                                     _get._activity_stream_get_filtered_users())
+    activity_objects = model.activity.group_activity_list(
+        group_id, limit=limit, offset=offset,
+    )
 
     if config.get('ckan.gov_theme.is_back'):
         return model_dictize.activity_list_dictize(activity_objects, context)
     else:
         return 0
+
 
 @logic.validate(logic.schema.default_activity_list_schema)
 def organization_activity_list(context, data_dict):
@@ -1920,22 +2155,21 @@ def organization_activity_list(context, data_dict):
     model = context['model']
     org_id = data_dict.get('id')
     offset = data_dict.get('offset', 0)
-    limit = int(
-        data_dict.get('limit', config.get('ckan.activity_list_limit', 31)))
+    limit = int(data_dict.get('limit', config.get('ckan.activity_list_limit', 31)))
 
     # Convert org_id (could be id or name) into id.
     org_show = logic.get_action('organization_show')
     org_id = org_show(context, {'id': org_id})['id']
 
-    _activity_objects = model.activity.group_activity_list(org_id,
-            limit=limit, offset=offset)
-    activity_objects = _get._filter_activity_by_user(_activity_objects,
-                                                     _get._activity_stream_get_filtered_users())
+    activity_objects = model.activity.organization_activity_list(
+        org_id, limit=limit, offset=offset,
+    )
 
     if config.get('ckan.gov_theme.is_back'):
         return model_dictize.activity_list_dictize(activity_objects, context)
     else:
         return 0
+
 
 @logic.validate(logic.schema.default_pagination_schema)
 def recently_changed_packages_activity_list(context, data_dict):
@@ -1956,19 +2190,16 @@ def recently_changed_packages_activity_list(context, data_dict):
     # authorized to read.
     model = context['model']
     offset = data_dict.get('offset', 0)
-    limit = int(
-        data_dict.get('limit', config.get('ckan.activity_list_limit', 31)))
+    limit = int(data_dict.get('limit', config.get('ckan.activity_list_limit', 31)))
 
-    _activity_objects = model.activity.recently_changed_packages_activity_list(
-            limit=limit, offset=offset)
-    activity_objects = _get._filter_activity_by_user(_activity_objects,
-                                                     _get._activity_stream_get_filtered_users())
-
+    activity_objects = model.activity.recently_changed_packages_activity_list(
+        limit=limit, offset=offset)
 
     if config.get('ckan.gov_theme.is_back'):
         return model_dictize.activity_list_dictize(activity_objects, context)
     else:
         return 0
+
 
 def user_activity_list_html(context, data_dict):
     '''Return a user's public activity stream as HTML.
@@ -2003,6 +2234,7 @@ def user_activity_list_html(context, data_dict):
     else:
         return 0
 
+
 def package_activity_list_html(context, data_dict):
     '''Return a package's activity stream as HTML.
 
@@ -2035,6 +2267,7 @@ def package_activity_list_html(context, data_dict):
         return _get.activity_streams.activity_list_to_html(context, activity_stream, extra_vars)
     else:
         return {'success': False}
+
 
 def group_activity_list_html(context, data_dict):
     '''Return a group's activity stream as HTML.
@@ -2069,6 +2302,7 @@ def group_activity_list_html(context, data_dict):
     else:
         return {'success': False}
 
+
 def organization_activity_list_html(context, data_dict):
     '''Return a organization's activity stream as HTML.
 
@@ -2095,6 +2329,7 @@ def organization_activity_list_html(context, data_dict):
     else:
         return {'success': False}
 
+
 def user_follower_count(context, data_dict):
     '''Return the number of followers of a user.
 
@@ -2107,11 +2342,12 @@ def user_follower_count(context, data_dict):
 
     if config.get('ckan.gov_theme.is_back'):
         return _get._follower_count(
-        context, data_dict,
-        ckan.logic.schema.default_follow_user_schema(),
-        context['model'].UserFollowingUser)
+            context, data_dict,
+            ckan.logic.schema.default_follow_user_schema(),
+            context['model'].UserFollowingUser)
     else:
         return {'success': False}
+
 
 def dataset_follower_count(context, data_dict):
     '''Return the number of followers of a dataset.
@@ -2125,11 +2361,12 @@ def dataset_follower_count(context, data_dict):
 
     if config.get('ckan.gov_theme.is_back'):
         return _get._follower_count(
-        context, data_dict,
-        ckan.logic.schema.default_follow_dataset_schema(),
-        context['model'].UserFollowingDataset)
+            context, data_dict,
+            ckan.logic.schema.default_follow_dataset_schema(),
+            context['model'].UserFollowingDataset)
     else:
         return {'success': False}
+
 
 def group_follower_count(context, data_dict):
     '''Return the number of followers of a group.
@@ -2143,11 +2380,12 @@ def group_follower_count(context, data_dict):
 
     if config.get('ckan.gov_theme.is_back'):
         return _get._follower_count(
-        context, data_dict,
-        ckan.logic.schema.default_follow_group_schema(),
-        context['model'].UserFollowingGroup)
+            context, data_dict,
+            ckan.logic.schema.default_follow_group_schema(),
+            context['model'].UserFollowingGroup)
     else:
         return {'success': False}
+
 
 def organization_follower_count(context, data_dict):
     '''Return the number of followers of an organization.
@@ -2163,6 +2401,7 @@ def organization_follower_count(context, data_dict):
         return group_follower_count(context, data_dict)
     else:
         return {'success': False}
+
 
 def _follower_list(context, data_dict, default_schema, FollowerClass):
     schema = context.get('schema', default_schema)
@@ -2186,6 +2425,7 @@ def _follower_list(context, data_dict, default_schema, FollowerClass):
     else:
         return {'success': False}
 
+
 def user_follower_list(context, data_dict):
     '''Return the list of users that are following the given user.
 
@@ -2199,11 +2439,12 @@ def user_follower_list(context, data_dict):
 
     if config.get('ckan.gov_theme.is_back'):
         return _follower_list(
-        context, data_dict,
-        ckan.logic.schema.default_follow_user_schema(),
-        context['model'].UserFollowingUser)
+            context, data_dict,
+            ckan.logic.schema.default_follow_user_schema(),
+            context['model'].UserFollowingUser)
     else:
         return {'success': False}
+
 
 def dataset_follower_list(context, data_dict):
     '''Return the list of users that are following the given dataset.
@@ -2218,11 +2459,12 @@ def dataset_follower_list(context, data_dict):
 
     if config.get('ckan.gov_theme.is_back'):
         return _follower_list(
-        context, data_dict,
-        ckan.logic.schema.default_follow_user_schema(),
-        context['model'].UserFollowingUser)
+            context, data_dict,
+            ckan.logic.schema.default_follow_user_schema(),
+            context['model'].UserFollowingUser)
     else:
         return {'success': False}
+
 
 def group_follower_list(context, data_dict):
     '''Return the list of users that are following the given group.
@@ -2237,11 +2479,12 @@ def group_follower_list(context, data_dict):
 
     if config.get('ckan.gov_theme.is_back'):
         return _follower_list(
-        context, data_dict,
-        ckan.logic.schema.default_follow_group_schema(),
-        context['model'].UserFollowingGroup)
+            context, data_dict,
+            ckan.logic.schema.default_follow_group_schema(),
+            context['model'].UserFollowingGroup)
     else:
         return {'success': False}
+
 
 def organization_follower_list(context, data_dict):
     '''Return the list of users that are following the given organization.
@@ -2256,11 +2499,12 @@ def organization_follower_list(context, data_dict):
 
     if config.get('ckan.gov_theme.is_back'):
         return _follower_list(
-        context, data_dict,
-        ckan.logic.schema.default_follow_group_schema(),
-        context['model'].UserFollowingGroup)
+            context, data_dict,
+            ckan.logic.schema.default_follow_group_schema(),
+            context['model'].UserFollowingGroup)
     else:
         return {'success': False}
+
 
 def am_following_user(context, data_dict):
     '''Return ``True`` if you're following the given user, ``False`` if not.
@@ -2274,11 +2518,12 @@ def am_following_user(context, data_dict):
 
     if config.get('ckan.gov_theme.is_back'):
         return _get._am_following(
-        context, data_dict,
-        ckan.logic.schema.default_follow_user_schema(),
-        context['model'].UserFollowingUser)
+            context, data_dict,
+            ckan.logic.schema.default_follow_user_schema(),
+            context['model'].UserFollowingUser)
     else:
         return {'success': False}
+
 
 def am_following_dataset(context, data_dict):
     '''Return ``True`` if you're following the given dataset, ``False`` if not.
@@ -2292,11 +2537,12 @@ def am_following_dataset(context, data_dict):
 
     if config.get('ckan.gov_theme.is_back'):
         return _get._am_following(
-        context, data_dict,
-        ckan.logic.schema.default_follow_dataset_schema(),
-        context['model'].UserFollowingDataset)
+            context, data_dict,
+            ckan.logic.schema.default_follow_dataset_schema(),
+            context['model'].UserFollowingDataset)
     else:
         return {'success': False}
+
 
 def am_following_group(context, data_dict):
     '''Return ``True`` if you're following the given group, ``False`` if not.
@@ -2310,11 +2556,12 @@ def am_following_group(context, data_dict):
 
     if config.get('ckan.gov_theme.is_back'):
         return _get._am_following(
-        context, data_dict,
-        ckan.logic.schema.default_follow_group_schema(),
-        context['model'].UserFollowingGroup)
+            context, data_dict,
+            ckan.logic.schema.default_follow_group_schema(),
+            context['model'].UserFollowingGroup)
     else:
         return {'success': False}
+
 
 def followee_count(context, data_dict):
     '''Return the number of objects that are followed by the given user.
@@ -2329,23 +2576,20 @@ def followee_count(context, data_dict):
 
     '''
     model = context['model']
-    followee_users = _get._followee_count(context, data_dict,
-                                     model.UserFollowingUser)
+    followee_users = _get._followee_count(context, data_dict, model.UserFollowingUser)
 
     # followee_users has validated data_dict so the following functions don't
     # need to validate it again.
     context['skip_validation'] = True
 
-    followee_datasets = _get._followee_count(context, data_dict,
-                                        model.UserFollowingDataset)
-    followee_groups = _get._followee_count(context, data_dict,
-                                      model.UserFollowingGroup)
-
+    followee_datasets = _get._followee_count(context, data_dict, model.UserFollowingDataset)
+    followee_groups = _get._followee_count(context, data_dict, model.UserFollowingGroup)
 
     if config.get('ckan.gov_theme.is_back'):
         return sum((followee_users, followee_datasets, followee_groups))
     else:
         return {'success': False}
+
 
 def user_followee_count(context, data_dict):
     '''Return the number of users that are followed by the given user.
@@ -2358,11 +2602,10 @@ def user_followee_count(context, data_dict):
     '''
 
     if config.get('ckan.gov_theme.is_back'):
-        return _get._followee_count(
-        context, data_dict,
-        context['model'].UserFollowingUser)
+        return _get._followee_count(context, data_dict, context['model'].UserFollowingUser)
     else:
         return {'success': False}
+
 
 def dataset_followee_count(context, data_dict):
     '''Return the number of datasets that are followed by the given user.
@@ -2375,11 +2618,10 @@ def dataset_followee_count(context, data_dict):
     '''
 
     if config.get('ckan.gov_theme.is_back'):
-        return _get._followee_count(
-        context, data_dict,
-        context['model'].UserFollowingDataset)
+        return _get._followee_count(context, data_dict, context['model'].UserFollowingDataset)
     else:
         return {'success': False}
+
 
 def group_followee_count(context, data_dict):
     '''Return the number of groups that are followed by the given user.
@@ -2392,11 +2634,10 @@ def group_followee_count(context, data_dict):
     '''
 
     if config.get('ckan.gov_theme.is_back'):
-        return _get._followee_count(
-        context, data_dict,
-        context['model'].UserFollowingGroup)
+        return _get._followee_count(context, data_dict, context['model'].UserFollowingGroup)
     else:
         return {'success': False}
+
 
 @logic.validate(logic.schema.default_follow_user_schema)
 def followee_list(context, data_dict):
@@ -2438,10 +2679,10 @@ def followee_list(context, data_dict):
     context['skip_validation'] = True
     context['ignore_auth'] = True
     for followee_list_function, followee_type in (
-            (user_followee_list, 'user'),
-            (dataset_followee_list, 'dataset'),
-            (group_followee_list, 'group'),
-            (_get.organization_followee_list, 'organization')):
+        (user_followee_list, 'user'),
+        (dataset_followee_list, 'dataset'),
+        (group_followee_list, 'group'),
+        (_get.organization_followee_list, 'organization')):
         dicts = followee_list_function(context, data_dict)
         for d in dicts:
             followee_dicts.append(
@@ -2460,11 +2701,11 @@ def followee_list(context, data_dict):
                 matching_followee_dicts.append(followee_dict)
         followee_dicts = matching_followee_dicts
 
-
     if config.get('ckan.gov_theme.is_back'):
         return followee_dicts
     else:
         return 0
+
 
 def user_followee_list(context, data_dict):
     '''Return the list of users that are followed by the given user.
@@ -2478,8 +2719,7 @@ def user_followee_list(context, data_dict):
     _check_access('user_followee_list', context, data_dict)
 
     if not context.get('skip_validation'):
-        schema = context.get('schema') or (
-            ckan.logic.schema.default_follow_user_schema())
+        schema = context.get('schema') or (ckan.logic.schema.default_follow_user_schema())
         data_dict, errors = _validate(data_dict, schema, context)
         if errors:
             raise ValidationError(errors)
@@ -2500,6 +2740,7 @@ def user_followee_list(context, data_dict):
     else:
         return 0
 
+
 def dataset_followee_list(context, data_dict):
     '''Return the list of datasets that are followed by the given user.
 
@@ -2512,8 +2753,7 @@ def dataset_followee_list(context, data_dict):
     _check_access('dataset_followee_list', context, data_dict)
 
     if not context.get('skip_validation'):
-        schema = context.get('schema') or (
-            ckan.logic.schema.default_follow_user_schema())
+        schema = context.get('schema') or (ckan.logic.schema.default_follow_user_schema())
         data_dict, errors = _validate(data_dict, schema, context)
         if errors:
             raise ValidationError(errors)
@@ -2524,17 +2764,16 @@ def dataset_followee_list(context, data_dict):
     followees = model.UserFollowingDataset.followee_list(user_id)
 
     # Convert the list of Follower objects to a list of Package objects.
-    datasets = [model.Package.get(followee.object_id)
-                for followee in followees]
+    datasets = [model.Package.get(followee.object_id) for followee in followees]
     datasets = [dataset for dataset in datasets if dataset is not None]
 
     # Dictize the list of Package objects.
 
     if config.get('ckan.gov_theme.is_back'):
-        return [model_dictize.package_dictize(dataset, context)
-            for dataset in datasets]
+        return [model_dictize.package_dictize(dataset, context) for dataset in datasets]
     else:
         return 0
+
 
 def group_followee_list(context, data_dict):
     '''Return the list of groups that are followed by the given user.
@@ -2547,11 +2786,11 @@ def group_followee_list(context, data_dict):
     '''
     _check_access('group_followee_list', context, data_dict)
 
-
     if config.get('ckan.gov_theme.is_back'):
         return _get._group_or_org_followee_list(context, data_dict, is_org=False)
     else:
         return 0
+
 
 @logic.validate(logic.schema.default_pagination_schema)
 def dashboard_activity_list(context, data_dict):
@@ -2584,13 +2823,10 @@ def dashboard_activity_list(context, data_dict):
 
     # FIXME: Filter out activities whose subject or object the user is not
     # authorized to read.
-    _activity_objects = model.activity.dashboard_activity_list(user_id,
-            limit=limit, offset=offset)
+    activity_objects = model.activity.dashboard_activity_list(
+        user_id, limit=limit, offset=offset)
 
-    activity_objects = _get._filter_activity_by_user(_activity_objects,
-                                                     _get._activity_stream_get_filtered_users())
-    activity_dicts = model_dictize.activity_list_dictize(
-        activity_objects, context)
+    activity_dicts = model_dictize.activity_list_dictize(activity_objects, context)
 
     # Mark the new (not yet seen by user) activities.
     strptime = _get.datetime.datetime.strptime
@@ -2601,13 +2837,13 @@ def dashboard_activity_list(context, data_dict):
             # Never mark the user's own activities as new.
             activity['is_new'] = False
         else:
-            activity['is_new'] = (
-                strptime(activity['timestamp'], fmt) > last_viewed)
+            activity['is_new'] = (strptime(activity['timestamp'], fmt) > last_viewed)
 
     if config.get('ckan.gov_theme.is_back'):
         return activity_dicts
     else:
         return {'success': False}
+
 
 @logic.validate(ckan.logic.schema.default_pagination_schema)
 def dashboard_activity_list_html(context, data_dict):
@@ -2640,9 +2876,10 @@ def dashboard_activity_list_html(context, data_dict):
 
     if config.get('ckan.gov_theme.is_back'):
         return custom_activity_streams.activity_list_to_html(context, activity_stream,
-                                                  extra_vars)
+                                                             extra_vars)
     else:
         return {'success': False}
+
 
 def dashboard_new_activities_count(context, data_dict):
     '''Return the number of new activities in the user's dashboard.
@@ -2658,13 +2895,13 @@ def dashboard_new_activities_count(context, data_dict):
 
     '''
     _check_access('dashboard_new_activities_count', context, data_dict)
-    activities = logic.get_action('dashboard_activity_list')(
-        context, data_dict)
+    activities = logic.get_action('dashboard_activity_list')(context, data_dict)
 
     if config.get('ckan.gov_theme.is_back'):
         return len([activity for activity in activities if activity['is_new']])
     else:
         return {'success': False}
+
 
 def member_roles_list(context, data_dict):
     '''Return the possible roles for members of groups and organizations.
@@ -2681,8 +2918,7 @@ def member_roles_list(context, data_dict):
     group_type = data_dict.get('group_type', 'organization')
     roles_list = authz.roles_list()
     if group_type == 'group':
-        roles_list = [role for role in roles_list
-                      if role['value'] != 'editor']
+        roles_list = [role for role in roles_list if role['value'] != 'editor']
 
     _check_access('member_roles_list', context, data_dict)
 
@@ -2691,3 +2927,108 @@ def member_roles_list(context, data_dict):
     else:
         return {'success': False}
 
+
+def organization_delete(context, data_dict):
+    '''Delete an organization.
+
+    You must be authorized to delete the organization
+    and no datasets should belong to the organization
+    unless 'ckan.auth.create_unowned_dataset=True'
+
+    :param id: the name or id of the organization
+    :type id: string
+
+    '''
+    return _group_or_org_delete(context, data_dict, is_org=True)
+
+
+def _group_or_org_delete(context, data_dict, is_org=False):
+    '''Delete a group.
+
+    You must be authorized to delete the group.
+
+    :param id: the name or id of the group
+    :type id: string
+
+    '''
+    from sqlalchemy import or_
+
+    model = context['model']
+    user = context['user']
+    id = _get_or_bust(data_dict, 'id')
+
+    group = model.Group.get(id)
+    context['group'] = group
+    if group is None:
+        raise NotFound('Group was not found.')
+
+    revisioned_details = 'Group: %s' % group.name
+
+    if is_org:
+        _check_access('organization_delete', context, data_dict)
+    else:
+        _check_access('group_delete', context, data_dict)
+
+    # organization delete will not occur while all datasets for that org are
+    # not deleted
+    if is_org:
+        datasets = model.Session.query(model.Package) \
+            .filter_by(owner_org=group.id) \
+            .filter(model.Package.state != 'deleted') \
+            .all()
+        if datasets:
+            if not authz.check_config_permission('ckan.auth.create_unowned_dataset'):
+                datasets_name = [dataset.title for dataset in datasets]
+                raise ValidationError(_('Organization cannot be deleted while it still'
+                                        ' has datasets {0}').format(datasets_name))
+
+            pkg_table = model.package_table
+            # using Core SQLA instead of the ORM should be faster
+            model.Session.execute(
+                pkg_table.update().where(
+                    sqla.and_(pkg_table.c.owner_org == group.id,
+                              pkg_table.c.state != 'deleted')
+                ).values(owner_org=None)
+            )
+
+    # The group's Member objects are deleted
+    # (including hierarchy connections to parent and children groups)
+    for member in model.Session.query(model.Member). \
+        filter(or_(model.Member.table_id == id,
+                   model.Member.group_id == id)). \
+        filter(model.Member.state == 'active').all():
+        member.delete()
+
+    group.delete()
+
+    if is_org:
+        activity_type = 'deleted organization'
+    else:
+        activity_type = 'deleted group'
+
+    activity_dict = {
+        'user_id': model.User.by_name(six.ensure_text(user)).id,
+        'object_id': group.id,
+        'activity_type': activity_type,
+        'data': {
+            'group': dictization.table_dictize(group, context)
+        }
+    }
+    activity_create_context = {
+        'model': model,
+        'user': user,
+        'defer_commit': True,
+        'ignore_auth': True,
+        'session': context['session']
+    }
+    _get_action('activity_create')(activity_create_context, activity_dict)
+
+    if is_org:
+        plugin_type = plugins.IOrganizationController
+    else:
+        plugin_type = plugins.IGroupController
+
+    for item in plugins.PluginImplementations(plugin_type):
+        item.delete(group)
+
+    model.repo.commit()

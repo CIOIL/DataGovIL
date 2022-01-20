@@ -1,0 +1,34 @@
+{
+  "scheming_version": 1,
+  "organization_type": "organization",
+  "about_url": "http://github.com/ckan/ckanext-scheming",
+  "fields": [
+    {
+      "field_name": "title",
+      "label": "Name",
+      "validators": "govil_title_validator",
+      "preset": "title",
+      "form_placeholder": "My Organization"
+    },
+    {
+      "field_name": "name",
+      "label": "URL",
+      "validators": "not_empty unicode govil_name_validator group_name_validator",
+      "form_snippet": "slug.html",
+      "form_placeholder": "my-organization"
+    },
+    {
+      "field_name": "notes",
+      "label": "Description",
+      "validators": "govil_content_validator",
+      "form_snippet": "markdown.html",
+      "form_placeholder": "A little information about my organization..."
+    },
+    {
+      "field_name": "image_url",
+      "label": "Image URL",
+      "validators": "govil_url_validator",
+      "preset": "organization_url_upload"
+    }
+  ]
+}

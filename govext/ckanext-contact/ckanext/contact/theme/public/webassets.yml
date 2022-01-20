@@ -1,0 +1,15 @@
+form-contact:
+  contents:
+    - scripts/modules/form-contact.js
+
+modal-contact:
+  contents:
+    - scripts/modules/modal-contact.js
+
+validate-contact:
+  contents:
+    - scripts/modules/validate-contact.js
+
+recaptcha_helpers:
+  contents:
+    - scripts/recaptcha_helpers.js

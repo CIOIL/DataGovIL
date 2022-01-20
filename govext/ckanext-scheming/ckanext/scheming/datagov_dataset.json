@@ -7,18 +7,20 @@
     {
       "field_name": "title",
       "label": "Title",
+      "validators": "govil_title_validator",
       "preset": "title",
       "form_placeholder": "eg. A descriptive title"
     },
     {
       "field_name": "name",
       "label": "URL",
-      "preset": "dataset_slug",
+      "preset": "govil_dataset_slug",
       "form_placeholder": "eg. my-dataset"
     },
     {
       "field_name": "notes",
       "label": "Description",
+      "validators": "govil_description_validator",
       "form_snippet": "markdown.html",
       "form_placeholder": "eg. Some useful notes about the data"
     },
@@ -28,9 +30,19 @@
                 "en": "Remarks",
                 "he": "הערות"
       },
+      "validators": "govil_content_validator",
       "form_snippet": "markdown.html",
       "form_placeholder": "Some useful remarks about the data",
       "display_property": "dc:remarks"
+    },
+    {
+      "field_name": "mail_box",
+      "label": "Mail Box",
+      "validators": " govil_mail_box_validator",
+      "form_placeholder": "joe@example.com",
+      "display_property": "dc:creator",
+      "display_snippet": "email.html",
+      "display_email_name_field": "author"
     },
     {
       "required" : "True",
@@ -154,8 +166,7 @@
       ]
     },
     {
-      "field_name": "tags_in_dataset",
-      "required": "True",
+      "field_name": "tag_string",
       "label": "Tags",
       "preset": "tag_string_autocomplete",
       "form_placeholder": "eg. economy, mental health, government"
@@ -174,6 +185,7 @@
     {
       "field_name": "url",
       "label": "Source",
+      "validators": "govil_url_validator",
       "form_placeholder": "http://example.com/dataset.json",
       "display_property": "foaf:homepage",
       "display_snippet": "link.html"
@@ -181,7 +193,7 @@
     {
       "field_name": "version",
       "label": "Version",
-      "validators": "ignore_missing unicode package_version_validator",
+      "validators": "ignore_missing unicode govil_package_version_validator",
       "form_placeholder": "1.0"
     },
     {
@@ -194,17 +206,53 @@
       "display_snippet": "email.html",
       "display_email_name_field": "author"
     },
-
     {
-      "field_name": "ref_number",
-      "label": "Reference Number",
-      "validators": "ignore_missing"
+      "field_name": "author_notification",
+      "label": "Author Notification",
+      "validators": "scheming_required",
+      "form_snippet": "checkbox.html"
+    }
+  ],
+
+
+
+
+
+  "resource_fields": [
+    {
+      "field_name": "url",
+      "label": "URL",
+      "validators": "govil_url_validator",
+      "preset": "resource_url_upload"
     },
     {
-      "field_name": "desc_spatial_cover",
+      "field_name": "name",
+      "label": "Name",
+      "validators": "govil_resource_name_validator",
+      "form_placeholder": "eg. January 2011 Gold Prices"
+    },
+    {
+      "field_name": "notes",
+      "label": "Description",
+      "validators": "govil_content_validator",
+      "form_snippet": "markdown.html",
+      "form_placeholder": "eg. Some useful notes about the data"
+    },
+    {
+      "field_name": "format",
+      "label": "Format",
+      "preset": "resource_format_autocomplete"
+    },
+    {
+      "field_name": "resource_ref_number",
+      "label": "Reference Number",
+      "validators": "govil_ref_number_validator govil_gis_validator_format"
+    },
+    {
+      "field_name": "resource_desc_spatial_cover",
       "label": "Description of the spatial coverage",
       "preset": "select",
-      "validators": "ignore_missing",
+      "validators": "ignore_missing govil_gis_validator_format",
       "output_validators": "ignore_missing",
       "choices": [
         {
@@ -222,16 +270,16 @@
       ]
     },
     {
-      "field_name": "coordinates",
+      "field_name": "resource_coordinates",
       "label": "Coordinates / geographical demarcation",
       "alt_text": "The coordinate set of the polygon that delimits the coverage area of the reservoir",
-      "validators": "ignore_missing"
+      "validators": "govil_coordinates_validator govil_gis_validator_format"
     },
     {
-      "field_name": "geodetic_ref_sys",
+      "field_name": "resource_geodetic_ref_sys",
       "label": "Geodetic reference system",
       "alt_text": "The reference system of the coordinates in the repository",
-      "validators": "ignore_missing",
+      "validators": "ignore_missing govil_gis_validator_format",
       "preset": "select",
       "output_validators": "ignore_missing",
       "choices": [
@@ -248,34 +296,6 @@
             "value": "Old Network"
         }
       ]
-    }
-  ],
-
-
-
-
-
-  "resource_fields": [
-    {
-      "field_name": "url",
-      "label": "URL",
-      "preset": "resource_url_upload"
-    },
-    {
-      "field_name": "name",
-      "label": "Name",
-      "form_placeholder": "eg. January 2011 Gold Prices"
-    },
-    {
-      "field_name": "notes",
-      "label": "Description",
-      "form_snippet": "markdown.html",
-      "form_placeholder": "eg. Some useful notes about the data"
-    },
-    {
-      "field_name": "format",
-      "label": "Format",
-      "preset": "resource_format_autocomplete"
     }
   ]
 }

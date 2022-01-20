@@ -1,0 +1,132 @@
+# Hebrew translations for ckanext-contact.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the ckanext-contact
+# project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ckanext-contact 1.1.0a0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-06-06 16:20+0300\n"
+"PO-Revision-Date: 2021-06-06 16:20+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: he\n"
+"Language-Team: he <user@mail3>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: ckanext/contact/recaptcha.py:39
+msgid "Action mismatch"
+msgstr ""
+
+#: ckanext/contact/routes/_helpers.py:61
+msgid "Recaptcha check failed, please try again."
+msgstr ""
+
+#: ckanext/contact/routes/_helpers.py:206
+msgid "Please fill in this field"
+msgstr ""
+
+#: ckanext/contact/routes/_helpers.py:209
+#, python-format
+msgid "Must be at least %s characters long"
+msgstr ""
+
+#: ckanext/contact/routes/_helpers.py:212
+#, python-format
+msgid "Must be a maximum of %i characters long"
+msgstr ""
+
+#: ckanext/contact/routes/contact.py:41
+msgid "Not authorized to use contact form"
+msgstr ""
+
+#: ckanext/contact/theme/public/scripts/modules/modal-contact.js:22
+msgid ""
+"Thank you for contacting us, and we will try and reply as soon as "
+"possible.<br />Unfortunately due to the number of enquiries the Museum "
+"receives, we cannot always reply in person to every one."
+msgstr ""
+
+#: ckanext/contact/theme/public/scripts/modules/modal-contact.js:25
+msgid "Sorry, there was an error sending the email. Please try again later."
+msgstr ""
+
+#: ckanext/contact/theme/public/scripts/modules/validate-contact.js:46
+msgid ""
+"Must contain the following symbols: @. and after the last . must have "
+"between 2-6 characters"
+msgstr "השדה חייב להכיל את הסמלים הבאים: @. בנוסף, לאחר הנקודה (.) האחרונה השדה יכול להכיל בין 2-6 אותיות"
+
+#: ckanext/contact/theme/public/scripts/modules/validate-contact.js:57
+msgid "Must be purely alphabetic characters and these symbols: -'"
+msgstr "השדה מקבל אותיות ואת הסמלים: -'"
+
+#: ckanext/contact/theme/public/scripts/modules/validate-contact.js:67
+msgid "Must be purely alphanumeric characters and these symbols: '\"().,?/"
+msgstr "השדה מקבל ספרות, אותיות ואת הסמלים: '\"().,?\/"
+
+#: ckanext/contact/theme/templates/ajax_snippets/contact_form.html:20
+msgid "Contact form"
+msgstr ""
+
+#: ckanext/contact/theme/templates/contact/form.html:8
+#: ckanext/contact/theme/templates/contact/snippets/form.html:39
+#: ckanext/contact/theme/templates/contact/snippets/form.html:41
+#: ckanext/contact/theme/templates/package/resource_read.html:14
+msgid "Report Us"
+msgstr ""
+
+#: ckanext/contact/theme/templates/contact/form.html:12
+msgid "Tell us..."
+msgstr ""
+
+#: ckanext/contact/theme/templates/contact/success.html:7
+msgid "Thank you!"
+msgstr ""
+
+#: ckanext/contact/theme/templates/contact/success.html:8
+msgid "Your comment has been sent, we will answer you as soon as possible."
+msgstr ""
+
+#: ckanext/contact/theme/templates/contact/snippets/form.html:21
+msgid "Contact Name"
+msgstr ""
+
+#: ckanext/contact/theme/templates/contact/snippets/form.html:25
+msgid "Email"
+msgstr ""
+
+#: ckanext/contact/theme/templates/contact/snippets/form.html:31
+msgid "Report Type"
+msgstr ""
+
+#: ckanext/contact/theme/templates/contact/snippets/form.html:36
+msgid "General"
+msgstr ""
+
+#: ckanext/contact/theme/templates/contact/snippets/form.html:37
+msgid "Request for dataset"
+msgstr ""
+
+#: ckanext/contact/theme/templates/contact/snippets/form.html:48
+msgid "Your Request"
+msgstr ""
+
+#: ckanext/contact/theme/templates/contact/snippets/form.html:50
+msgid "Description..."
+msgstr ""
+
+#: ckanext/contact/theme/templates/contact/snippets/form.html:67
+msgid "Submit"
+msgstr ""
+
+#: ckanext/contact/theme/templates/contact/snippets/modal_link.html:6
+#: ckanext/contact/theme/templates/contact/snippets/modal_link.html:8
+msgid "Contact"
+msgstr ""
+

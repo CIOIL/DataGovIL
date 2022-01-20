@@ -10,6 +10,7 @@ import ckanext.gov_theme.helpers as gov_helpers
 from ckanext.gov_theme import blueprint
 
 import logging
+
 log = logging.getLogger(__name__)
 
 
@@ -20,6 +21,7 @@ class Gov_ThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IAuthFunctions)
     plugins.implements(plugins.IBlueprint)
+    plugins.implements(plugins.IResourceController)
 
     def get_blueprint(self):
         return blueprint.gov_blueprint
@@ -33,6 +35,7 @@ class Gov_ThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
         ckan.logic.schema.user_new_form_schema = _schema.user_new_form_schema
         ckan.logic.schema.user_edit_form_schema = _schema.user_edit_form_schema
         ckan.logic.schema.default_update_user_schema = _schema.default_update_user_schema
+        ckan.logic.schema.default_tags_schema = _schema.default_tags_schema
 
     # ITemplateHelpers
     def get_helpers(self):
@@ -54,6 +57,7 @@ class Gov_ThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
     def get_actions(self):
         return {'resource_create': _action.resource_create,
                 'resource_update': _action.resource_update,
+                'package_update': _action.package_update,
                 'user_invite': _action.user_invite,
                 'user_create_within_org': _action.user_create_within_org,
                 'follow_user': _action.follow_user,
@@ -69,48 +73,49 @@ class Gov_ThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
                 'resource_patch': _action.resource_patch,
                 'group_patch': _action.group_patch,
                 'organization_patch': _action.organization_patch,
-                'related_list':  _action.related_list,
-                'member_list':  _action.member_list,
+                'related_list': _action.related_list,
+                'member_list': _action.member_list,
                 'organization_list': _action.organization_list,
-
-                'group_package_show':  _action.group_package_show,
-                'resource_search':  _action.resource_search,
-                'tag_search':  _action.tag_search,
-                'term_translation_show':  _action.term_translation_show,
-                'status_show':  _action.status_show,
-                'user_activity_list':  _action.user_activity_list,
-                'package_activity_list':  _action.package_activity_list,
-                'group_activity_list':  _action.group_activity_list,
-                'organization_activity_list':  _action.organization_activity_list,
-                'recently_changed_packages_activity_list':  _action.recently_changed_packages_activity_list,
-                'user_activity_list_html':  _action.user_activity_list_html,
-                'package_activity_list_html':  _action.package_activity_list_html,
-                'group_activity_list_html':  _action.group_activity_list_html,
-                'organization_activity_list_html':  _action.organization_activity_list_html,
-                'user_follower_count':  _action.user_follower_count,
-                'dataset_follower_count':  _action.dataset_follower_count,
-                'group_follower_count':  _action.group_follower_count,
-                'organization_follower_count':  _action.organization_follower_count,
-                '_follower_list':  _action._follower_list,
-                'user_follower_list':  _action.user_follower_list,
-                'dataset_follower_list':  _action.dataset_follower_list,
-                'group_follower_list':  _action.group_follower_list,
-                'organization_follower_list':  _action.organization_follower_list,
-                'am_following_user':  _action.am_following_user,
-                'am_following_dataset':  _action.am_following_dataset,
-                'am_following_group':  _action.am_following_group,
-                'followee_count':  _action.followee_count,
-                'user_followee_count':  _action.user_followee_count,
-                'dataset_followee_count':  _action.dataset_followee_count,
-                'group_followee_count':  _action.group_followee_count,
-                'followee_list':  _action.followee_list,
-                'user_followee_list':  _action.user_followee_list,
-                'dataset_followee_list':  _action.dataset_followee_list,
-                'group_followee_list':  _action.group_followee_list,
-                #'dashboard_activity_list':  _action.dashboard_activity_list,
-                #'dashboard_activity_list_html':  _action.dashboard_activity_list_html,
-                #'dashboard_new_activities_count':  _action.dashboard_new_activities_count,
-                'member_roles_list': _action.member_roles_list}
+                'organization_delete': _action.organization_delete,
+                'group_package_show': _action.group_package_show,
+                'resource_search': _action.resource_search,
+                'tag_search': _action.tag_search,
+                'term_translation_show': _action.term_translation_show,
+                'status_show': _action.status_show,
+                'user_activity_list': _action.user_activity_list,
+                'package_activity_list': _action.package_activity_list,
+                'group_activity_list': _action.group_activity_list,
+                'organization_activity_list': _action.organization_activity_list,
+                'recently_changed_packages_activity_list': _action.recently_changed_packages_activity_list,
+                'user_activity_list_html': _action.user_activity_list_html,
+                'package_activity_list_html': _action.package_activity_list_html,
+                'group_activity_list_html': _action.group_activity_list_html,
+                'organization_activity_list_html': _action.organization_activity_list_html,
+                'user_follower_count': _action.user_follower_count,
+                'dataset_follower_count': _action.dataset_follower_count,
+                'group_follower_count': _action.group_follower_count,
+                'organization_follower_count': _action.organization_follower_count,
+                '_follower_list': _action._follower_list,
+                'user_follower_list': _action.user_follower_list,
+                'dataset_follower_list': _action.dataset_follower_list,
+                'group_follower_list': _action.group_follower_list,
+                'organization_follower_list': _action.organization_follower_list,
+                'am_following_user': _action.am_following_user,
+                'am_following_dataset': _action.am_following_dataset,
+                'am_following_group': _action.am_following_group,
+                'followee_count': _action.followee_count,
+                'user_followee_count': _action.user_followee_count,
+                'dataset_followee_count': _action.dataset_followee_count,
+                'group_followee_count': _action.group_followee_count,
+                'followee_list': _action.followee_list,
+                'user_followee_list': _action.user_followee_list,
+                'dataset_followee_list': _action.dataset_followee_list,
+                'group_followee_list': _action.group_followee_list,
+                # 'dashboard_activity_list':  _action.dashboard_activity_list,
+                # 'dashboard_activity_list_html':  _action.dashboard_activity_list_html,
+                # 'dashboard_new_activities_count':  _action.dashboard_new_activities_count,
+                'member_roles_list': _action.member_roles_list,
+                'resource_tracking_count': _action.resource_tracking}
 
     # IAuthFunctions
     def get_auth_functions(self):
@@ -143,7 +148,7 @@ class Gov_ThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
                 'user_generate_apikey': _auth.user_generate_apikey,
                 'dashboard_mark_activities_old': _auth.dashboard_mark_activities_old,
                 'bulk_update_private': _auth.bulk_update_private,
-                'bulk_update_public': _auth. bulk_update_public,
+                'bulk_update_public': _auth.bulk_update_public,
                 'bulk_update_delete': _auth.bulk_update_delete,
 
                 'package_delete': _auth.package_delete,
@@ -168,3 +173,28 @@ class Gov_ThemePlugin(plugins.SingletonPlugin, DefaultTranslation):
                 'resource_status_show': _auth.resource_status_show
                 }
 
+    # IResourceController
+
+    def before_create(self, context, resource):
+        pass
+
+    def after_create(self, context, resource):
+        pass
+
+    def before_update(self, context, current, resource):
+        log.info('Start resource_update for file:'
+                 ' name: {name}, resource_id: {resource_id}, package_id: {package_id}, user: {user}, url: {url}'
+                 .format(name=resource.get('name'), user=context.get('user'), url=current.get('original_url'),
+                         resource_id=current.get('resource_id'), package_id=current.get('package_id')))
+
+    def after_update(self, context, resource):
+        pass
+
+    def before_delete(self, context, resource, resources):
+        pass
+
+    def after_delete(self, context, resource):
+        pass
+
+    def before_show(self, resource_dict):
+        pass

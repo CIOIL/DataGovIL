@@ -19,10 +19,10 @@
         {% endblock %}
         {% block heading %}{% endblock %}
         {% block description %}
-          {% if organization.description %}
-            <p class="description">
-              {{ h.markdown_extract(organization.description, 180) }}
-            </p>
+          {% if organization.notes %}
+            <div id="full_org_des_{{ organization.id }}">
+              {{ h.govil_markdown_extract(organization.id, organization.notes, extract_length=truncate)|urlize }}
+            </div>
           {% else %}
             <p class="empty">{{ _('There is no description for this organization') }}</p>
           {% endif %}

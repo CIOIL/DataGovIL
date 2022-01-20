@@ -21,9 +21,16 @@
       }
     },
     {
+      "preset_name": "govil_dataset_slug",
+      "values": {
+        "validators": "not_empty unicode govil_name_validator govil_dataset_name_validator",
+        "form_snippet": "slug.html"
+      }
+    },
+    {
       "preset_name": "tag_string_autocomplete",
       "values": {
-        "validators": "scheming_required tag_string_convert",
+        "validators": "ignore_missing govil_tag_validator",
         "classes": ["control-full"],
         "form_attrs": {
           "data-module": "autocomplete",
@@ -61,7 +68,7 @@
     {
       "preset_name": "resource_format_autocomplete",
       "values": {
-        "validators": "if_empty_guess_format ignore_missing clean_format unicode",
+        "validators": "if_empty_guess_format ignore_missing clean_format unicode govil_format_validator",
         "form_placeholder": "eg. CSV, XML or JSON",
         "form_attrs": {
           "data-module": "autocomplete",

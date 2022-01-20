@@ -253,8 +253,8 @@ msgid "Cancel"
 msgstr "ביטול"
 
 #: ckanext/gov_theme/templates/ajax_snippets/api_info.html:8
-msgid "data.gov.il Data API"
-msgstr "ה-API של נתוני data.gov.il"
+msgid "name23 Data API"
+msgstr "ה-API של נתוני name23"
 
 #: ckanext/gov_theme/templates/ajax_snippets/api_info.html:12
 msgid "Access resource data via a web API with powerful query support"
@@ -266,7 +266,7 @@ msgstr "נקודות קצה"
 
 #: ckanext/gov_theme/templates/ajax_snippets/api_info.html:21
 msgid ""
-"The Data API can be accessed via the following actions of the data.gov.il "
+"The Data API can be accessed via the following actions of the name23 "
 "action API."
 msgstr "נתוני המידע יכולים להתקבל באמצעות הפעולות הבאות של ה-API"
 
@@ -327,14 +327,14 @@ msgstr "פעיליות אחרונות"
 
 msgid ""
 " <p><h2><b>משתמשי האתר יהנו מיד חופשית לפיתוח יישומים ומערכות המבוססות על מאגר "
-"הנתונים הממשלתי.</b></h2></p> <p>באתר data.gov.il מתפרסמים מאגרי מידע ממשלתיים "
+"הנתונים הממשלתי.</b></h2></p> <p>באתר name23 מתפרסמים מאגרי מידע ממשלתיים "
 "באופן ברור ונגיש.</p> <p>המאגרים מתעדכנים באופן קבוע ורציף.</p> <p>מערכת המידע "
-"של Data.gov.il מאפשרת איתור והורדה של נתונים בקלות וביעילות.</p> "
+"של name23 מאפשרת איתור והורדה של נתונים בקלות וביעילות.</p> "
 msgstr ""
 " <p><h2><b>משתמשי האתר יהנו מיד חופשית לפיתוח יישומים ומערכות המבוססות על מאגר "
-"הנתונים הממשלתי.</b></h2></p> <p>באתר data.gov.il מתפרסמים מאגרי מידע ממשלתיים "
+"הנתונים הממשלתי.</b></h2></p> <p>באתר name23 מתפרסמים מאגרי מידע ממשלתיים "
 "באופן ברור ונגיש.</p> <p>המאגרים מתעדכנים באופן קבוע ורציף.</p> <p>מערכת המידע "
-"של Data.gov.il מאפשרת איתור והורדה של נתונים בקלות וביעילות.</p> "
+"של name23 מאפשרת איתור והורדה של נתונים בקלות וביעילות.</p> "
 
 #: ckanext/gov_theme/templates/home/gov-layout.html:38
 #: ckanext/gov_theme/templates/home/snippets/gov-search.html:20
@@ -349,20 +349,20 @@ msgstr "תנאי שימוש"
 
 #: ckanext/gov_theme/templates/home/snippets/about_text.html:1
 msgid ""
-" About The Data.gov.il website was established by the e-government as part of "
+" About The name23 website was established by the e-government as part of "
 "an \"open government\" policy, based on promoting the transparency and "
 "presentation of reliable government information authorized for public use. "
 "This policy is implemented in other advanced countries in the world, such as "
-"the United States, United Kingdom and Australia. In the Data.gov.il website, "
+"the United States, United Kingdom and Australia. In the name23 website, "
 "government databases are published clearly and accessibly and are continuously "
-"updated. The information system of Data.gov.il allows for quick and efficient "
+"updated. The information system of name23 allows for quick and efficient "
 "location and downloading of data, subject to the Freedom of Information and "
-"Protection of Privacy Act. The Data.gov.il project was first developed "
+"Protection of Privacy Act. The name23 project was first developed "
 "following a decision by the Ministerial Committee on Improving Public "
 "Government Services and Open Government, on Monday, November 29, 2010. The "
 "project's goal is to improve the service to the public and encourage the "
 "creative use of the public, the academia and of the government with the "
-"government databases. The Data.gov.il site provides its users the full freedom "
+"government databases. The name23 site provides its users the full freedom "
 "to develop applications and systems, based on the published information. All "
 "information updates to the databases will be automatically available to "
 "applications based on them. About E-government E-government is responsible for "
@@ -371,9 +371,9 @@ msgid ""
 "government operates under the Prime Minister's office, under which operate the "
 "Gov.IL portal, Government Payment Service, Government Forms Service and more. "
 msgstr ""
-" <p><b>מה זה data.gov.il? </b></p><p>data.gov.il מרכז מאגרי נתונים מכלל משרדי "
+" <p><b>מה זה name23? </b></p><p>name23 מרכז מאגרי נתונים מכלל משרדי "
 "הממשלה הפתוחים לשימוש הציבור. האתר מאפשר חיפוש נתונים בקלות וביעילות. המשתמשים "
-"ב- data.gov.il מקבלים יד חופשית לפיתוח יישומים ומערכות המבוססות על המידע "
+"ב- name23 מקבלים יד חופשית לפיתוח יישומים ומערכות המבוססות על המידע "
 "המפורסם בו וכל עדכון במאגרי המידע באתר מעודכן אוטומטית גם ביישומים המבוססים "
 "עליו. </p><p><b>איזה מידע זמין באתר? </b></p><p>כיום ניתן למצוא באתר מאגרי "
 "מידע של משרדי ממשלה מרכזיים וכמה רשויות מרכזיות. המאגרים הם בנושא דיור, "
@@ -385,16 +385,16 @@ msgstr ""
 "PUBLIC LICENSE מצורף קוד ההרחבות שבוצעו באתר <a href='https://github.com/CIOIL/"
 "DataGovIL/tree/master/govext'>להורדת קוד ההרחבות</a>, מבוסס על Ckan 2.8.2 <a "
 "href='https://github.com/CIOIL/DataGovIL'>להורדת קוד המקור</a>.</p><p><b>כיצד "
-"ניתן להשתמש במידע המופיע באתר? </b></p><p>המשתמשים ב- data.gov.il מקבלים יד "
+"ניתן להשתמש במידע המופיע באתר? </b></p><p>המשתמשים ב- name23 מקבלים יד "
 "חופשית לפיתוח יישומים ומערכות המבוססות על המידע המפורסם בו וכל עדכון במאגרי "
 "המידע באתר מעודכן אוטומטית גם ביישומים המבוססים עליו. <br/> <p><b> צריכת "
 "נתונים מהאתר על ידי crawling </b></p> יש להוסיף ב  user agent את הערך datagov-"
 "external-client,  ניתן להוסיף את האפשרות  ל - user agent קיים  או להגדיר user "
 "agent חדש.</p><p><b>קצת על ממשל זמין </b></p><p>יחידת ממשל זמין ברשות התקשוב, "
-"משרד ראש הממשלה, הקימה את אתר data.gov.il בכדי להציג מידע ממשלתי אמין ומוסמך "
+"משרד ראש הממשלה, הקימה את אתר name23 בכדי להציג מידע ממשלתי אמין ומוסמך "
 "לשימוש הציבור הרחב, זאת כחלק ממדיניות ממשל פתוח המקדמת שקיפות מצד משרדי "
 "הממשלה. </p><p>ועדת השרים לעניין שיפור השירות הממשלתי לציבור, החליטה בשנת 2010 "
-"על פיתוח פרויקט data.gov.il במטרה לקדם את מדיניות <b>הממשל הפתוח</b> בישראל. </"
+"על פיתוח פרויקט name23 במטרה לקדם את מדיניות <b>הממשל הפתוח</b> בישראל. </"
 "p> "
 
 #: ckanext/gov_theme/templates/home/snippets/gov-search.html:3
@@ -402,9 +402,9 @@ msgid "E.g. environment"
 msgstr "חפש מאגר"
 
 #: ckanext/gov_theme/templates/home/snippets/terms_text.html:1
-msgid "<p><b><u> Terms of Use of the Data.gov.il Site </u></b></p> <p> This website (\"Site\") is managed and maintained by the Prime Minister's Office, the Government ICT Authority, E-Government Unit (\"Office\"). The Site displays data files accessed from the databases of government ministries, support units and other public bodies (\"Databases\"). Use of the Site is subject to the Terms of Use appearing on the <a href=\"www.gov.il\">www.gov.il</a> site (\"Terms of Use\"). </p> <p>Use of the Databases, as defined above, is not subject to the Terms of Use but to the User License set out below. If a different user license than the one set out below applies to any database, the license applying to the database shall prevail. Feel free to use the database any way you like, subject to the licensing terms.</p> <p><b><u> User License for Databases on the Data.gov.il Site </u></b></p> <p> Use of the Information is permitted solely in accordance with the terms of this License. The Office may change the terms of this License at any time, and any such change shall become effective immediately when it is posted on the Site. Use of the Information shall be subject to the terms of the License as in effect at the date and time the Information was accessed from the database. </p> <p><b><u> Definitions </u></b></p> <p> In this license: </p> <p> \"Site\"  The Data.gov.il site. </p> <p> \"Information\"  A data file, or any part thereof, accessed from databases of government ministries, support units and other public bodies, which is displayed on the Site. </p> <p> \"use\"  Doing any act with the Information that is restricted by copyright law, including copying, distributing, making available to the public, creating derivative works and any change as may be necessary technically to use it in a different state or in a different format, regardless of the medium in which the Information is embodied.</p> <p> \"value-added product\"  Any product, service or application you have produced by adapting or incorporating the Information, in whole or in part, in accordance with the terms of this License. </p> <p> \"you\"  Includes any natural person or legal entity or corporate body. </p> <p> In this License  the masculine gender includes the feminine. </p> <p><b><u>  Use of Information under this License </u></b></p> <p> The Information is protected by intellectual property rights, including copyrights, which are owned by the State of Israel. </p><p> Use of the information indicates your acceptance of the terms of this License, to the extent that such acceptance is required by law.This License grants you a worldwide, royalty-free, perpetual and non-exclusive license to use the Information subject to the terms and conditions below. </p> <p> This License does not derogate from the uses permitted by law, including fair use as well as the use of facts and figures in and of themselves in a manner that does not infringe the protection of the selection, coordination and arrangement of the data. </p> <p><b><u> Permitted Uses </u></b></p> <p> You may copy the Information, distribute it, make it available to the public, broadcast it, make technical changes to it and create derivative works from it  in any medium or format. </p> <p> You may make commercial and noncommercial use of the Information. </p> <p><b><u> Prohibited Uses </u></b></p> <p> You may not make the following use of the Information: </p> <ol> 	<li> present the information in a misleading manner and/or in a manner causing a misrepresentation and/or modify the Information in a manner that distorts it and/or in a manner which is or could be prejudicial to the honor or reputation of the owner of the copyright therein;</li> 	<li>make use of the Information in a manner that breaches any law or statute;</li> 	<li>make use of the Information in a manner that infringes a person's privacy, including by cross-referencing the Information with other sources of information;</li> 	<li>present the information in a manner that gives the appearance that you may have received, or had access to, information held by the State of Israel about any identifiable person.</li> </ol> <p><b><u>Attribution of the Information</u></b></p> <p>When using the Information, you must cite its source.</p> <p>It should be noted that when using data extracted from the Information in a manner that does not preserve the original aspect of the selection or arrangement of the data in the source, there is no need to cite the source of the Information.</p> <p><b><u>Scope of this License</u></b></p> <p>This License does not apply to:</p> <ol> 	<li>Data on the personality, personal status, intimate affairs, state of health, economic condition, vocational qualifications, opinions and beliefs of a person, as well as information about a person's private affairs, all the above within the meaning of the Protection of Privacy Law, 5741-1981.</li> <li>Information forbidden for publication and/or access by law, or obtained illegally or without permission, including by circumventing technological means meant to protect it;</li> 	<li>logos of the State of Israel and any government ministry, support unit or other public body, except where they form an integral part of a document;</li> 	<li>third party rights in the Information which the Office is not permitted to make available to the public under this License;</li> 	<li>rights other than copyright, including other intellectual property rights such as patents, trademarks and designs, and including rights under the Protection of Privacy Law;</li> <li>Any technological means, including software and applications, by which the Site functions.</li> </ol> <p><b><u>Copyright in Added-Value Products </u></b></p> <p>Copyright in value-added products shall be owned by you or by anyone you designate. However, if information used under this License is incorporated in a value-added product, any copyright in that information shall belong to the State of Israel, and the use of such information shall be subject to this User License.</p> <p><b><u>No Endorsement or Sponsorship</u></b></p> <p>This License does not grant you any right to use the Information in a way that implies or suggests any official status of such use or that the State of Israel sponsors or endorses you or any third party or your or any third party's use of the Information or any value-added product.</p> <p><b><u>Representations and Disclaimer</u></b></p> <p>The Information is made available to you under this License \"as is,\" without any representation, warranty or undertaking, whether explicit or implied, in relation to the Information. It is hereby expressly declared that the State of Israel does not guarantee the suitability of the Information for your use, either directly or in value-added products.</p> <p>The State of Israel is not liable for any damage caused to you or to any third party as a direct or indirect result of any act or omission involved in the use of the Information. For purposes of this section, \"State of Israel\" includes the Office as well as employees, representatives and service providers of the State.</p> <p>Without limiting the generality of the foregoing, the State of Israel shall not be liable:</p> <ol> 	<li>for any error or omission in the Information, and it shall not be held liable for any loss, injury or damage of any kind, whether direct or indirect, caused by its use to you or to any third party;</li> <li>for changes made to the Information by you or by any third party;</li> 	<li>to third parties, pursuant to use of the Information;</li> 	<li>for any damage caused due to the use of software applications downloaded directly through the Site or activated as a result of the use of the Site, including Internet applications (e.g. Java, JavaScript, ActiveX).</li> </ol> <p>The State of Israel does not guarantee or undertake to ensure the continued supply of the Information or the continued supply thereof in a certain format.</p> <p>The State of Israel reserves the right to remove information from the Site at any time.</p> <p><b><u> Breach </u></b></p> <p>Breach by you of this License shall result in immediate termination. Conditions which by their nature survive the termination of the License, shall continue to apply, including conditions regarding attribution of the Information, representations and disclaimer.</p> <p><b><u> Official Publications of the State of Israel </u></b></p> <p> In the event of a conflict or inconsistency between the Information and information appearing in official written publications of the State of Israel, only the material contained in such official publications shall be deemed correct.</p> <p><b><u> Governing Law and Venue </u></b></p> <p> This License is subject to the laws and statutes of the State of Israel. The courts in Jerusalem have exclusive jurisdiction to consider any issue arising from the use of this License, including with respect to its violation. </p> <p><b><u> Miscellaneous </u></b></p> <p> No party to this License shall be deemed to have waived fulfillment or consented to the breach of any of its conditions, unless the consent or waiver are made in writing by the persons by law to bind that party. </p> <p> This License covers all the rights granted to you in relation to the Information on the Office Site, except for exclusions and limitations prescribed by law, including fair use. </p> <p>&nbsp; </p> <p>&nbsp; </p> <p>Version 1.0 </p> <p>January 3, 2016</p>"
+msgid "<p><b><u> Terms of Use of the name23 Site </u></b></p> <p> This website (\"Site\") is managed and maintained by the Prime Minister's Office, the Government ICT Authority, E-Government Unit (\"Office\"). The Site displays data files accessed from the databases of government ministries, support units and other public bodies (\"Databases\"). Use of the Site is subject to the Terms of Use appearing on the <a href=\"www.gov.il\">www.gov.il</a> site (\"Terms of Use\"). </p> <p>Use of the Databases, as defined above, is not subject to the Terms of Use but to the User License set out below. If a different user license than the one set out below applies to any database, the license applying to the database shall prevail. Feel free to use the database any way you like, subject to the licensing terms.</p> <p><b><u> User License for Databases on the name23 Site </u></b></p> <p> Use of the Information is permitted solely in accordance with the terms of this License. The Office may change the terms of this License at any time, and any such change shall become effective immediately when it is posted on the Site. Use of the Information shall be subject to the terms of the License as in effect at the date and time the Information was accessed from the database. </p> <p><b><u> Definitions </u></b></p> <p> In this license: </p> <p> \"Site\"  The name23 site. </p> <p> \"Information\"  A data file, or any part thereof, accessed from databases of government ministries, support units and other public bodies, which is displayed on the Site. </p> <p> \"use\"  Doing any act with the Information that is restricted by copyright law, including copying, distributing, making available to the public, creating derivative works and any change as may be necessary technically to use it in a different state or in a different format, regardless of the medium in which the Information is embodied.</p> <p> \"value-added product\"  Any product, service or application you have produced by adapting or incorporating the Information, in whole or in part, in accordance with the terms of this License. </p> <p> \"you\"  Includes any natural person or legal entity or corporate body. </p> <p> In this License  the masculine gender includes the feminine. </p> <p><b><u>  Use of Information under this License </u></b></p> <p> The Information is protected by intellectual property rights, including copyrights, which are owned by the State of Israel. </p><p> Use of the information indicates your acceptance of the terms of this License, to the extent that such acceptance is required by law.This License grants you a worldwide, royalty-free, perpetual and non-exclusive license to use the Information subject to the terms and conditions below. </p> <p> This License does not derogate from the uses permitted by law, including fair use as well as the use of facts and figures in and of themselves in a manner that does not infringe the protection of the selection, coordination and arrangement of the data. </p> <p><b><u> Permitted Uses </u></b></p> <p> You may copy the Information, distribute it, make it available to the public, broadcast it, make technical changes to it and create derivative works from it  in any medium or format. </p> <p> You may make commercial and noncommercial use of the Information. </p> <p><b><u> Prohibited Uses </u></b></p> <p> You may not make the following use of the Information: </p> <ol> 	<li> present the information in a misleading manner and/or in a manner causing a misrepresentation and/or modify the Information in a manner that distorts it and/or in a manner which is or could be prejudicial to the honor or reputation of the owner of the copyright therein;</li> 	<li>make use of the Information in a manner that breaches any law or statute;</li> 	<li>make use of the Information in a manner that infringes a person's privacy, including by cross-referencing the Information with other sources of information;</li> 	<li>present the information in a manner that gives the appearance that you may have received, or had access to, information held by the State of Israel about any identifiable person.</li> </ol> <p><b><u>Attribution of the Information</u></b></p> <p>When using the Information, you must cite its source.</p> <p>It should be noted that when using data extracted from the Information in a manner that does not preserve the original aspect of the selection or arrangement of the data in the source, there is no need to cite the source of the Information.</p> <p><b><u>Scope of this License</u></b></p> <p>This License does not apply to:</p> <ol> 	<li>Data on the personality, personal status, intimate affairs, state of health, economic condition, vocational qualifications, opinions and beliefs of a person, as well as information about a person's private affairs, all the above within the meaning of the Protection of Privacy Law, 5741-1981.</li> <li>Information forbidden for publication and/or access by law, or obtained illegally or without permission, including by circumventing technological means meant to protect it;</li> 	<li>logos of the State of Israel and any government ministry, support unit or other public body, except where they form an integral part of a document;</li> 	<li>third party rights in the Information which the Office is not permitted to make available to the public under this License;</li> 	<li>rights other than copyright, including other intellectual property rights such as patents, trademarks and designs, and including rights under the Protection of Privacy Law;</li> <li>Any technological means, including software and applications, by which the Site functions.</li> </ol> <p><b><u>Copyright in Added-Value Products </u></b></p> <p>Copyright in value-added products shall be owned by you or by anyone you designate. However, if information used under this License is incorporated in a value-added product, any copyright in that information shall belong to the State of Israel, and the use of such information shall be subject to this User License.</p> <p><b><u>No Endorsement or Sponsorship</u></b></p> <p>This License does not grant you any right to use the Information in a way that implies or suggests any official status of such use or that the State of Israel sponsors or endorses you or any third party or your or any third party's use of the Information or any value-added product.</p> <p><b><u>Representations and Disclaimer</u></b></p> <p>The Information is made available to you under this License \"as is,\" without any representation, warranty or undertaking, whether explicit or implied, in relation to the Information. It is hereby expressly declared that the State of Israel does not guarantee the suitability of the Information for your use, either directly or in value-added products.</p> <p>The State of Israel is not liable for any damage caused to you or to any third party as a direct or indirect result of any act or omission involved in the use of the Information. For purposes of this section, \"State of Israel\" includes the Office as well as employees, representatives and service providers of the State.</p> <p>Without limiting the generality of the foregoing, the State of Israel shall not be liable:</p> <ol> 	<li>for any error or omission in the Information, and it shall not be held liable for any loss, injury or damage of any kind, whether direct or indirect, caused by its use to you or to any third party;</li> <li>for changes made to the Information by you or by any third party;</li> 	<li>to third parties, pursuant to use of the Information;</li> 	<li>for any damage caused due to the use of software applications downloaded directly through the Site or activated as a result of the use of the Site, including Internet applications (e.g. Java, JavaScript, ActiveX).</li> </ol> <p>The State of Israel does not guarantee or undertake to ensure the continued supply of the Information or the continued supply thereof in a certain format.</p> <p>The State of Israel reserves the right to remove information from the Site at any time.</p> <p><b><u> Breach </u></b></p> <p>Breach by you of this License shall result in immediate termination. Conditions which by their nature survive the termination of the License, shall continue to apply, including conditions regarding attribution of the Information, representations and disclaimer.</p> <p><b><u> Official Publications of the State of Israel </u></b></p> <p> In the event of a conflict or inconsistency between the Information and information appearing in official written publications of the State of Israel, only the material contained in such official publications shall be deemed correct.</p> <p><b><u> Governing Law and Venue </u></b></p> <p> This License is subject to the laws and statutes of the State of Israel. The courts in Jerusalem have exclusive jurisdiction to consider any issue arising from the use of this License, including with respect to its violation. </p> <p><b><u> Miscellaneous </u></b></p> <p> No party to this License shall be deemed to have waived fulfillment or consented to the breach of any of its conditions, unless the consent or waiver are made in writing by the persons by law to bind that party. </p> <p> This License covers all the rights granted to you in relation to the Information on the Office Site, except for exclusions and limitations prescribed by law, including fair use. </p> <p>&nbsp; </p> <p>&nbsp; </p> <p>Version 1.0 </p> <p>January 3, 2016</p>"
 msgstr ""
-" <p><b><u>תנאי השימוש באתר Data.gov.il</u></b></p> <p> אתר אינטרנט זה (להלן: "
+" <p><b><u>תנאי השימוש באתר name23</u></b></p> <p> אתר אינטרנט זה (להלן: "
 "האתר) מנוהל ומתוחזק על ידי משרד ראש הממשלה, רשות התקשוב הממשלתי, יחידת ממשל "
 "זמין (להלן – המשרד). באתר מתפרסמים קבצי נתונים הלקוחים מתוך מאגרי מידע השייכים "
 "למשרדי ממשלה, יחידות סמך וגופים ציבוריים נוספים (להלן: מאגרי המידע). השימוש "
@@ -413,11 +413,11 @@ msgstr ""
 "להלן. ככל שלמאגר מידע מוצמד רישיון שימוש השונה מהרישיון המובא להלן, יגבר "
 "הרישיון המוצמד למאגר המידע. הנכם מוזמנים להשתמש במאגרי המידע בכל אופן בו אתם "
 "מוצאים לנכון, בכפוף לתנאי רישיון השימוש.</p><p><b><u>רישיון לשימוש במאגרי "
-"המידע באתר Data.gov.il </u></b></p> <p> השימוש במידע מותר אך ורק בהתאם לתנאי "
+"המידע באתר name23 </u></b></p> <p> השימוש במידע מותר אך ורק בהתאם לתנאי "
 "רישיון זה. המשרד רשאי לשנות את תנאי רישיון זה בכל עת, כאשר כל שינוי כזה ייכנס "
 "לתוקף מידית עם הצגתו באתר. השימוש במידע יהיה בכפוף לתנאי הרישיון שהיו בתוקף "
 "בתאריך ובשעה בהם נלקח המידע מהאתר. </p> <p><b>הגדרות</b></p> <p> ברישיון זה: "
-"\"האתר\" - אתר Data.gov.il \"מידע\" – קובץ נתונים או כל חלק ממנו, הלקוח מתוך "
+"\"האתר\" - אתר name23 \"מידע\" – קובץ נתונים או כל חלק ממנו, הלקוח מתוך "
 "מאגרי מידע השייכים למשרדי ממשלה, יחידות סמך וגופים ציבוריים נוספים, המתפרסמים "
 "באתר. \"שימוש\" – עשיית כל מעשה במידע המוגבל על ידי דיני זכויות יוצרים, לרבות "
 "העתקה, הפצה, העמדה לרשות הציבור, יצירת יצירות נגזרות ושינוי כפי שיהיה נחוץ "
@@ -808,6 +808,9 @@ msgstr "1.0"
 #: ckanext/gov_theme/templates/package/snippets/package_metadata_fields.html:14
 msgid "Author Email"
 msgstr "אימייל מחבר"
+
+msgid "Author Notification"
+msgstr "האם ברצונך לקבל מייל כשהמאגר מתעדכן?"
 
 #: ckanext/gov_theme/templates/package/snippets/package_metadata_fields.html:14
 #: ckanext/gov_theme/templates/user/new_user_form.html:8
@@ -1288,7 +1291,60 @@ msgstr ""
 #: ckan/logic/validators.py:338
 #, python-format
 msgid "Must be at least %s characters long"
-msgstr "חייבים להיות לפחות %s תווים"
+msgstr "חייב להיות לפחות %s תווים"
+
+msgid "Must be a maximum of %i characters long"
+msgstr "חייב להיות מקסימום %i תווים"
+
+msgid "Must be purely alphanumeric characters and these symbols: -"
+msgstr "השדה מקבל ספרות, אותיות ואת הסמל - "
+
+msgid "Must be purely alphanumeric characters and these symbols: _-()\","
+msgstr "השדה מקבל ספרות, אותיות ואת הסמל _-()\","
+
+msgid "Must be purely alphanumeric characters and these symbols: _-"
+msgstr "השדה מקבל ספרות, אותיות ואת הסמל _-"
+
+msgid "Must be purely alphanumeric characters and these symbols: _-\"./(),"
+msgstr "השדה מקבל ספרות, אותיות ואת הסמלים _-\"./(),"
+
+msgid "Please fill in name field."
+msgstr "יש למלא את כתובת האתר"
+
+msgid "Must be purely alphanumeric characters and these symbols: '"
+msgstr "השדה מקבל ספרות, אותיות ואת הסמל: '"
+
+msgid "Must be purely alphanumeric characters and these symbols: ./-:"
+msgstr "השדה מקבל אותיות באנגלית, ספרות ואת הסמלים: ./-: "
+
+msgid "Must be purely digit and these symbols: ."
+msgstr "השדה מקבל ספרות ואת הסמל . "
+
+msgid "Must be purely digit and these symbols: -/"
+msgstr "השדה מקבל ספרות ואת הסמלים -/ "
+
+msgid ""
+"Must contain the following symbols: @. and after the last . must have between"
+" 2-6 characters"
+msgstr "השדה חייב להכיל את הסמלים הבאים: @. בנוסף, לאחר הנקודה (.) האחרונה השדה יכול להכיל בין 2-6 אותיות"
+
+msgid "Must be only alphabetic characters"
+msgstr "השדה מקבל אותיות באנגלית בלבד"
+
+msgid "Must be purely alphanumeric characters and these symbols: %%-_'\"().,?₪:/\\"
+msgstr "השדה מקבל ספרות, אותיות ואת הסמלים: -_'\"().,?₪%%/\: "
+
+msgid "Must be purely alphanumeric characters and these symbols: %-_'\"().,?₪:/\\"
+msgstr "השדה מקבל ספרות, אותיות ואת הסמלים: -_'\"().,?₪%/\: "
+
+msgid "Must be at least %(num)d characters long"
+msgstr "חייב להיות לפחות %(num)d תווים"
+
+msgid "Must be a maximum of %(num)d characters long"
+msgstr "חייב להיות מקסימום %(num)d תווים"
+
+msgid "This field is required when using GIS format"
+msgstr "שדה זה הוא שדה חובה כמשתמשים בקובץ מסוג GIS"
 
 #: ckan/controllers/package.py:1013
 msgid "Dataset has been deleted."
@@ -1553,11 +1609,11 @@ msgstr "{gibibytes} GB"
 
 #: ckan/templates/home/snippets/about_text.html:1
 msgid ""
-"About The Data.gov.il website was established by the e-government as part of an \"open government\" policy, based on promoting the transparency and presentation of reliable government information authorized for public use. This policy is implemented in other advanced countries in the world, such as the United States, United Kingdom and Australia. In the Data.gov.il website, government databases are published clearly and accessibly and are continuously updated. The information system of Data.gov.il allows for quick and efficient location and downloading of data, subject to the Freedom of Information and Protection of Privacy Act. The Data.gov.il project was first developed following a decision by the Ministerial Committee on Improving Public Government Services and Open Government, on Monday, November 29, 2010. The project's goal is to improve the service to the public and encourage the creative use of the public, the academia and of the government with the government databases. The Data.gov.il site provides its users the full freedom to develop applications and systems, based on the published information. All information updates to the databases will be automatically available to applications based on them. About E-government E-government is responsible for providing the services and information offered online to the public, in order to improve the communication between citizens and government institutions. E-government operates under the Prime Minister's office, under which operate the Gov.IL portal, Government Payment Service, Government Forms Service and more."
+"About The name23 website was established by the e-government as part of an \"open government\" policy, based on promoting the transparency and presentation of reliable government information authorized for public use. This policy is implemented in other advanced countries in the world, such as the United States, United Kingdom and Australia. In the name23 website, government databases are published clearly and accessibly and are continuously updated. The information system of name23 allows for quick and efficient location and downloading of data, subject to the Freedom of Information and Protection of Privacy Act. The name23 project was first developed following a decision by the Ministerial Committee on Improving Public Government Services and Open Government, on Monday, November 29, 2010. The project's goal is to improve the service to the public and encourage the creative use of the public, the academia and of the government with the government databases. The name23 site provides its users the full freedom to develop applications and systems, based on the published information. All information updates to the databases will be automatically available to applications based on them. About E-government E-government is responsible for providing the services and information offered online to the public, in order to improve the communication between citizens and government institutions. E-government operates under the Prime Minister's office, under which operate the Gov.IL portal, Government Payment Service, Government Forms Service and more."
 msgstr ""
-" <p><b>מה זה data.gov.il? </b></p><p>data.gov.il מרכז מאגרי נתונים מכלל משרדי "
+" <p><b>מה זה name23? </b></p><p>name23 מרכז מאגרי נתונים מכלל משרדי "
 "הממשלה הפתוחים לשימוש הציבור. האתר מאפשר חיפוש נתונים בקלות וביעילות. המשתמשים "
-"ב- data.gov.il מקבלים יד חופשית לפיתוח יישומים ומערכות המבוססות על המידע "
+"ב- name23 מקבלים יד חופשית לפיתוח יישומים ומערכות המבוססות על המידע "
 "המפורסם בו וכל עדכון במאגרי המידע באתר מעודכן אוטומטית גם ביישומים המבוססים "
 "עליו. </p><p><b>איזה מידע זמין באתר? </b></p><p>כיום ניתן למצוא באתר מאגרי "
 "מידע של משרדי ממשלה מרכזיים וכמה רשויות מרכזיות. המאגרים הם בנושא דיור, "
@@ -1569,16 +1625,16 @@ msgstr ""
 "PUBLIC LICENSE מצורף קוד ההרחבות שבוצעו באתר <a href='https://github.com/CIOIL/"
 "DataGovIL/tree/master/govext'>להורדת קוד ההרחבות</a>, מבוסס על Ckan 2.8.2 <a "
 "href='https://github.com/CIOIL/DataGovIL'>להורדת קוד המקור</a>.</p><p><b>כיצד "
-"ניתן להשתמש במידע המופיע באתר? </b></p><p>המשתמשים ב- data.gov.il מקבלים יד "
+"ניתן להשתמש במידע המופיע באתר? </b></p><p>המשתמשים ב- name23 מקבלים יד "
 "חופשית לפיתוח יישומים ומערכות המבוססות על המידע המפורסם בו וכל עדכון במאגרי "
 "המידע באתר מעודכן אוטומטית גם ביישומים המבוססים עליו. <br/> <p><b> צריכת "
 "נתונים מהאתר על ידי crawling </b></p> יש להוסיף ב  user agent את הערך datagov-"
 "external-client,  ניתן להוסיף את האפשרות  ל - user agent קיים  או להגדיר user "
 "agent חדש.</p><p><b>קצת על ממשל זמין </b></p><p>יחידת ממשל זמין ברשות התקשוב, "
-"משרד ראש הממשלה, הקימה את אתר data.gov.il בכדי להציג מידע ממשלתי אמין ומוסמך "
+"משרד ראש הממשלה, הקימה את אתר name23 בכדי להציג מידע ממשלתי אמין ומוסמך "
 "לשימוש הציבור הרחב, זאת כחלק ממדיניות ממשל פתוח המקדמת שקיפות מצד משרדי "
 "הממשלה. </p><p>ועדת השרים לעניין שיפור השירות הממשלתי לציבור, החליטה בשנת 2010 "
-"על פיתוח פרויקט data.gov.il במטרה לקדם את מדיניות <b>הממשל הפתוח</b> בישראל. </"
+"על פיתוח פרויקט name23 במטרה לקדם את מדיניות <b>הממשל הפתוח</b> בישראל. </"
 "p> "
 
 #: ckan/public/base/javascript/modules/resource-reorder.js:65
@@ -1670,3 +1726,31 @@ msgstr "הגדרות הרישוי ומידע נוסף נמצאים ב- http://op
 #: ckan/templates/snippets/activities/changed_package.html:6
 msgid "{actor} updated the dataset {dataset}"
 msgstr "{actor} {dataset} עודכן"
+
+#: ckanext/gov_theme/action.py:2749
+msgid "Organization cannot be deleted while it still has datasets {0}"
+msgstr "אי אפשר למחוק את הארגון, עוד יש בו מאגרי מידע {0}"
+
+msgid "Organization Name"
+msgstr "שם ארגון"
+
+msgid "Login failed. Bad username, password or captcha."
+msgstr "ההתחברות נכשלה. שגיאה בשם המשתמש, סיסמה או ריקאפצ'ה."
+
+msgid "Resource Name"
+msgstr "שם משאב"
+
+msgid "Dataset can't have more then %i resources"
+msgstr "ניתן להוסיף עד %i משאבים למאגר"
+
+msgid "Mail Box"
+msgstr "תיבת פניות"
+
+msgid "You’ve been logged out, sign in again ?"
+msgstr "נותקת בעקבות חוסר שימוש, לעבור לדף התחברות ?"
+
+msgid "Logged Out"
+msgstr "התנתקת"
+
+msgid "You are now logged out."
+msgstr "אתם מנותקים כעת."

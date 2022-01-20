@@ -162,7 +162,7 @@ To install XLoader:
 
    NB this assumes you used the defaults for the database name and username.
    If in doubt, check your config's ``ckan.datastore.write_url``. If you don't have
-   database name ``datastore_default`` and username ``ckan_default`` then adjust
+   database name ``datastore_default`` and username ``user23`` then adjust
    the psql option and ``full_text_function.sql`` before running this.
 
 5. Add ``xloader`` to the ``ckan.plugins`` setting in your CKAN
@@ -179,7 +179,7 @@ To install XLoader:
    CKAN postgres db by adding this line to the config, but with the same value
    as you have for ``sqlalchemy.url``::
 
-     ckanext.xloader.jobs_db.uri = postgresql://ckan_default:pass@localhost/ckan_default
+     ckanext.xloader.jobs_db.uri = postgresql://user23:pass@localhost/user23
 
    (This step can be skipped when just developing or testing.)
 
@@ -189,16 +189,16 @@ To install XLoader:
 
 8. Run the worker. First test it on the command-line::
 
-     paster --plugin=ckan jobs -c /etc/ckan/default/ckan.ini worker
+     paster --plugin=ckan jobs -c file_path worker
 
    or if you have CKAN version 2.6.x or less (and are therefore using ckanext-rq)::
 
-     paster --plugin=ckanext-rq jobs -c /etc/ckan/default/ckan.ini worker
+     paster --plugin=ckanext-rq jobs -c file_path worker
 
    Test it will load a CSV ok by submitting a `CSV in the web interface <http://docs.ckan.org/projects/datapusher/en/latest/using.html#ckan-2-2-and-above>`_
    or in another shell::
 
-     paster --plugin=ckanext-xloader xloader submit <dataset-name> -c /etc/ckan/default/ckan.ini
+     paster --plugin=ckanext-xloader xloader submit <dataset-name> -c file_path
 
    Clearly, running the worker on the command-line is only for testing - for
    production services see:
@@ -284,7 +284,7 @@ To upgrade from DataPusher to XLoader:
 
 2. (Optional) For existing datasets that have been datapushed to datastore, freeze the column types (in the data dictionaries), so that XLoader doesn't change them back to string on next xload::
 
-       paster --plugin=ckanext-xloader migrate_types -c /etc/ckan/default/ckan.ini
+       paster --plugin=ckanext-xloader migrate_types -c file_path
 
 3. If you've not already, change the enabled plugin in your config - on the
    ``ckan.plugins`` line replace ``datapusher`` with ``xloader``.
@@ -311,12 +311,12 @@ command-line interface.
 
 e.g. ::
 
-    paster --plugin=ckanext-xloader xloader submit <dataset-name> -c /etc/ckan/default/ckan.ini
+    paster --plugin=ckanext-xloader xloader submit <dataset-name> -c file_path
 
 For debugging you can try xloading it synchronously (which does the load
 directly, rather than asking the worker to do it) with the ``-s`` option::
 
-    paster --plugin=ckanext-xloader xloader submit <dataset-name> -s -c /etc/ckan/default/ckan.ini
+    paster --plugin=ckanext-xloader xloader submit <dataset-name> -s -c file_path
 
 See the status of jobs::
 
@@ -324,12 +324,12 @@ See the status of jobs::
 
 Submit all datasets' resources to the DataStore::
 
-    paster --plugin=ckanext-xloader xloader submit all -c /etc/ckan/default/ckan.ini
+    paster --plugin=ckanext-xloader xloader submit all -c file_path
 
 Re-submit all the resources already in the DataStore (Ignores any resources
 that have not been stored in DataStore e.g. because they are not tabular)::
 
-    paster --plugin=ckanext-xloader xloader submit all-existing -c /etc/ckan/default/ckan.ini
+    paster --plugin=ckanext-xloader xloader submit all-existing -c file_path
 
 **Full list of XLoader CLI commands**::
 

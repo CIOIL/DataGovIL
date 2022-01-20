@@ -1,30 +1,77 @@
-{% extends 'package/snippets/resource_form.html' %}
+{% import 'macros/form.html' as form %}
 
-{% block errors %}
+{% set data = data or {} %}
+{% set errors = errors or {} %}
+{% set action = form_action or h.url_for(dataset_type ~ '_resource.new', id=pkg_name) %}
+
+
+<form id="resource-edit" class="dataset-form dataset-resource-form" method="post" action="{{ action }}"
+      data-module="validate-user-input basic-form resource-form" data-module-is_resource="{{ true }}"
+      enctype="multipart/form-data">
+
+  {% block stages %}
+    {# An empty stages variable will not show the stages #}
+    {% if stage %}
+      {{ h.snippet('package/snippets/stages.html', stages=stage, pkg_name=pkg_name) }}
+    {% endif %}
+  {% endblock %}
+
+  {% block errors %}
   {%- if errors -%}
     {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
     {%- snippet 'scheming/snippets/errors.html',
       errors=errors, fields=schema.resource_fields,
       entity_type='dataset', object_type=dataset_type -%}
   {%- endif -%}
-{% endblock %}
+  {% endblock %}
 
-{% block basic_fields %}
-  {%- if not dataset_type -%}
-    <p>
-    dataset_type not passed to template. your version of CKAN
-    might not be compatible with ckanext-scheming
-    </p>
-  {%- endif -%}
-  {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
-  {%- for field in schema.resource_fields -%}
-    {%- if field.form_snippet is not none -%}
-      {%- snippet 'scheming/snippets/form_field.html',
-        field=field, data=data, errors=errors,
-	entity_type='dataset', object_type=dataset_type -%}
+  <input name="id" value="{{ data.id }}" type="hidden"/>
+
+  {% block basic_fields %}
+    {%- if not dataset_type -%}
+      <p>
+      dataset_type not passed to template. your version of CKAN
+      might not be compatible with ckanext-scheming
+      </p>
     {%- endif -%}
-  {%- endfor -%}
-{% endblock %}
+    {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
+    {%- for field in schema.resource_fields -%}
+      {%- if field.form_snippet is not none -%}
+        {%- snippet 'scheming/snippets/form_field.html',
+          field=field, data=data, errors=errors,
+    entity_type='dataset', object_type=dataset_type -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {% endblock basic_fields %}
 
-{% block metadata_fields %}
-{% endblock %}
+  {% block metadata_fields %}
+  {% endblock %}
+
+  <div class="form-actions">
+    {% block delete_button %}
+      {% if data.id %}
+        {% if h.check_access('resource_delete', {'id': data.id})  %}
+          <a class="btn btn-danger pull-left" href="{% url_for dataset_type ~ '_resource.delete', resource_id=data.id, id=pkg_name %}" data-module="confirm-action" data-module-content="{{ _('Are you sure you want to delete this resource?') }}">{% block delete_button_text %}{{ _('Delete') }}{% endblock %}</a>
+        {% endif %}
+      {% endif %}
+    {% endblock %}
+    {% if stage %}
+      {% block previous_button %}
+        <button class="btn btn-default" name="save" value="go-dataset" type="submit">{{ _('Previous') }}</button>
+      {% endblock %}
+    {% endif %}
+    {% block again_button %}
+      <button class="btn btn-default" name="save" value="again" type="submit">{{ _('Save & add another') }}</button>
+    {% endblock %}
+    {% if stage %}
+      {% block save_button %}
+        <button class="btn btn-primary" name="save" value="go-metadata" type="submit">{% block save_button_text %}{{ _('Finish') }}{% endblock %}</button>
+      {% endblock %}
+    {% else %}
+      {% block add_button %}
+        <button class="btn btn-primary" name="save" value="go-dataset-complete" type="submit">{{ _('Add') }}</button>
+      {% endblock %}
+    {% endif %}
+  </div>
+</form>
+

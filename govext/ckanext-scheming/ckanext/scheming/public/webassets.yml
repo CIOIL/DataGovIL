@@ -1,3 +1,7 @@
+govil-validate-user-input:
+  contents:
+    - js/govil-validate-user-input.js
+
 popover-bs-govil:
   contents:
     - js/popover-bs-govil-module.js

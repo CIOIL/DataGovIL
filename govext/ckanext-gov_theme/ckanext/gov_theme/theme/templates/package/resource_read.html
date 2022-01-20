@@ -3,27 +3,29 @@
 
 
 {% block resource_actions_inner %}
+  {% set rel_res_download_path = h.url_for(controller='gov_theme', action='download', id=pkg.name, resource_id=res.id, filename=res.get('url','').split('/')[-1]) %}
   {% if res.url and h.is_url(res.url) %}
     <li>
       <div class="btn-group">
         <button class="btn btn-primary btn-circle" data-toggle="dropdown">
-        {% if res.datastore_active %}
+        {# {% if res.datastore_active %}
           <i title="{{ _('Download') }}" class="upload-icon icon"></i>
-        {% else %}
-          <a class="resource-url-analytics resource-type-{{ res.resource_type }}" href="{{ res.url }}">
-            {% if res.resource_type in ('listing', 'service') %}
+        {% else %} #}
+          <a class="resource-url-analytics resource-type-{{ res.resource_type }}" href="{{ rel_res_download_path }}">
+            {# {% if res.resource_type in ('listing', 'service') %}
               <i title="{{ _('View') }}" class="eye-icon icon"></i>
             {% elif  res.resource_type == 'api' %}
               <i class="fa fa-key"></i> {{ _('API Endpoint') }}
             {% elif not res.has_views and not res.url_type == 'upload' %}
               <i class="fa fa-external-link"></i> {{ _('Go to resource') }}
-            {% else %}
+            {% else %} #}
               <i title="{{ _('Download') }}" class="upload-icon icon"></i>
-            {% endif %}
+            {# {% endif %} #}
           </a>
-         {% endif %}
+         {# {% endif %} #}
         </button>
         {% block download_resource_button %}
+          {#
           {% if res.datastore_active %}
             <ul class="dropdown-menu">
               <li>
@@ -38,6 +40,7 @@
               </li>
             </ul>
           {% endif %}
+          #}
         {% endblock %}
       </div>
     </li>
@@ -53,7 +56,11 @@
 {% block resource_content %}
 
   {% block package_archive_notice %}{{ super() }}{% endblock %}
-  {% block resource_read_title %}{{ super() }}{% endblock %}
+  {% block resource_read_title %}
+    <h1 class="page-heading">
+      {{ h.resource_display_name(res) | truncate(100) }}
+    </h1>
+  {% endblock %}
 
   {% block resource_read_url %}
     {#
@@ -68,9 +75,13 @@
   <div class="prose notes" property="rdfs:label">
     {% if res.description %}
       {{ h.render_markdown(res.description) }}
-      {% elif res.notes %}
+    {% elif res.notes %}
+      {% set notes = h.govil_markdown_extract(res.id, res.notes) %}
       <h3>{{ _('Description') }}:</h3>
-      <blockquote>{{ h.markdown_extract(res.notes) }}</blockquote>
+      <blockquote>
+        <div id="short_pack_des_{{ res.id }}">{{ notes|urlize }}</div>
+        <div id="full_pack_des_{{ res.id }}" class="collapse">{{ res.notes }}</div>
+      </blockquote>
     {% endif %}
   </div>
 

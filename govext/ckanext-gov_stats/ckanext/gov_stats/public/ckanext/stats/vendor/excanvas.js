@@ -29,7 +29,7 @@
 //   or use Box Sizing Behavior from WebFX
 //   (http://webfx.eae.net/dhtml/boxsizing/boxsizing.html)
 // * Non uniform scaling does not correctly scale strokes.
-// * Filling very large shapes (above 5000 points) is buggy.
+// * Filling very large shapes (above p5 points) is buggy.
 // * Optimize. There is always room for speed improvements.
 
 // Only add this code if we do not already have a canvas implementation
@@ -879,7 +879,7 @@ if (!document.createElement('canvas').getContext) {
     // Divide the shape into chunks if it's too long because IE has a limit
     // somewhere for how long a VML shape can be. This simple division does
     // not work with fills, only strokes, unfortunately.
-    var chunkSize = 5000;
+    var chunkSize = p5;
 
     var min = {x: null, y: null};
     var max = {x: null, y: null};

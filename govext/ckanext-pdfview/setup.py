@@ -23,8 +23,8 @@ setup(
     url='https://github.com/ckan/ckanext-pdfview',
 
     # Author details
-    author='''Open Knowledge''',
-    author_email='''info@ckan.org''',
+    author='''user5''',
+    author_email='''user@mail5''',
 
     # Choose your license
     license='AGPL',

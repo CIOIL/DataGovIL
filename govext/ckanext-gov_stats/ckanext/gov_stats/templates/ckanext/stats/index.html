@@ -235,6 +235,8 @@
         <thead>
           <tr>
             <th> {{ _('Resource') }} </th>
+            <th> {{ _('Organization Name') }} </th>
+            <th> {{ _('Resource Name') }} </th>
             <th> {{ _('State') }} </th>
             <th> {{ _('Error') }} </th>
             <th> {{ _('Last Modified') }} </th>
@@ -244,11 +246,12 @@
           {% for resource in xloader_tasks %}
             <tr>
               <td> {{ h.link_to(resource[0], h.url_for(controller='dataset_resource', action='read',
-                        id=resource[6], resource_id=resource[0])) }} </td>
+                        id=resource[7], resource_id=resource[0])) }} </td>
               <td>{{ resource[2] }}</td>
+              <td>{{ resource[1] }}</td>
               <td>{{ resource[3] }}</td>
               <td>{{ resource[4] }}</td>
-
+              <td>{{ resource[5] }}</td>
             </tr>
           {% endfor %}
         </tbody>

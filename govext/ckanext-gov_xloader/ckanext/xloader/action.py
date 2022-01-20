@@ -91,7 +91,7 @@ def xloader_submit(context, data_dict):
         'entity_id': res_id,
         'entity_type': 'resource',
         'task_type': 'xloader',
-        'last_updated': str(datetime.datetime.utcnow()),
+        'last_updated': str(datetime.datetime.now()),
         'state': 'submitting',
         'key': 'xloader',
         'value': '{}',
@@ -118,7 +118,7 @@ def xloader_submit(context, data_dict):
                 ]
             updated = datetime.datetime.strptime(
                 existing_task['last_updated'], '%Y-%m-%dT%H:%M:%S.%f')
-            time_since_last_updated = datetime.datetime.utcnow() - updated
+            time_since_last_updated = datetime.datetime.now() - updated
             if (res_id not in queued_res_ids and
                     time_since_last_updated > assume_task_stillborn_after):
                 # it's not on the queue (and if it had just been started then
@@ -183,7 +183,7 @@ def xloader_submit(context, data_dict):
 
     task['value'] = value
     task['state'] = 'pending'
-    task['last_updated'] = str(datetime.datetime.utcnow()),
+    task['last_updated'] = str(datetime.datetime.now()),
     p.toolkit.get_action('task_status_update')(context, task)
     model.Session = original_session
 
@@ -256,7 +256,7 @@ def xloader_hook(context, data_dict):
     })
 
     task['state'] = status
-    task['last_updated'] = str(datetime.datetime.utcnow())
+    task['last_updated'] = str(datetime.datetime.now())
     task['error'] = data_dict.get('error')
 
     resubmit = False
@@ -321,7 +321,7 @@ def xloader_status(context, data_dict):
     :type resource_id: string
     '''
 
-    p.toolkit.check_access('xloader_status', context, data_dict)
+    #p.toolkit.check_access('xloader_status', context, data_dict)
 
     if 'id' in data_dict:
         data_dict['resource_id'] = data_dict['id']

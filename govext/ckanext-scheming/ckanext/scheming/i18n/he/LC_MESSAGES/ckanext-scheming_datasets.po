@@ -1,0 +1,244 @@
+# Hebrew translations for ckanext-scheming.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the ckanext-scheming
+# project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ckanext-scheming 2.0.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-06-07 11:14+0300\n"
+"PO-Revision-Date: 2021-06-07 11:14+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: he\n"
+"Language-Team: he <user@mail3>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: ckanext/scheming/validation.py:52 ckanext/scheming/validation.py:112
+#, python-format
+msgid "unexpected choice \"%s\""
+msgstr ""
+
+#: ckanext/scheming/validation.py:97
+msgid "expecting list of strings"
+msgstr ""
+
+#: ckanext/scheming/validation.py:120
+msgid "Select at least one"
+msgstr ""
+
+#: ckanext/scheming/validation.py:126 ckanext/scheming/validation.py:192
+#: ckanext/scheming/validation.py:221
+msgid "Date format incorrect"
+msgstr ""
+
+#: ckanext/scheming/validation.py:127
+msgid "Time format incorrect"
+msgstr ""
+
+#: ckanext/scheming/validation.py:160
+msgid "Date is required when a time is provided"
+msgstr ""
+
+#: ckanext/scheming/validation.py:255
+msgid "Unsupported value for JSON field: {}"
+msgstr ""
+
+#: ckanext/scheming/validation.py:260
+msgid "Invalid JSON string: {}"
+msgstr ""
+
+#: ckanext/scheming/validation.py:266
+msgid "Invalid JSON object: {}"
+msgstr ""
+
+#: ckanext/scheming/validation.py:269
+msgid "Unsupported type for JSON field: {}"
+msgstr ""
+
+#: ckanext/scheming/validation.py:423
+#, python-format
+msgid "Must be at least %s characters long"
+msgstr ""
+
+#: ckanext/scheming/validation.py:426
+#, python-format
+msgid "Must be a maximum of %i characters long"
+msgstr ""
+
+#: ckanext/scheming/public/js/govil-validate-user-input.js:68
+#: ckanext/scheming/public/js/govil-validate-user-input.js:95
+#: ckanext/scheming/public/js/govil-validate-user-input.js:107
+#: ckanext/scheming/public/js/govil-validate-user-input.js:235
+msgid "Must be purely alphanumeric characters and these symbols: -"
+msgstr ""
+
+#: ckanext/scheming/public/js/govil-validate-user-input.js:76
+msgid "Please fill in name field."
+msgstr ""
+
+#: ckanext/scheming/public/js/govil-validate-user-input.js:143
+msgid "Must be purely alphanumeric characters and these symbols: '"
+msgstr ""
+
+#: ckanext/scheming/public/js/govil-validate-user-input.js:159
+msgid "Must be purely alphanumeric characters and these symbols: ./-:"
+msgstr ""
+
+#: ckanext/scheming/public/js/govil-validate-user-input.js:171
+#: ckanext/scheming/public/js/govil-validate-user-input.js:195
+msgid "Must be purely digit and these symbols: ."
+msgstr ""
+
+#: ckanext/scheming/public/js/govil-validate-user-input.js:183
+msgid "Must be purely digit and these symbols: -/"
+msgstr ""
+
+#: ckanext/scheming/public/js/govil-validate-user-input.js:207
+msgid ""
+"Must contain the following symbols: @. and after the last . must have "
+"between 2-6 characters"
+msgstr ""
+
+#: ckanext/scheming/public/js/govil-validate-user-input.js:219
+msgid "Must be only alphabetic characters"
+msgstr ""
+
+#: ckanext/scheming/public/js/govil-validate-user-input.js:248
+#, python-format
+msgid ""
+"Must be purely alphanumeric characters and these symbols: "
+"%%-_'\"().,?₪:/\\"
+msgstr ""
+
+#: ckanext/scheming/public/js/govil-validate-user-input.js:273
+#, python-format
+msgid "Must be at least %(num)d characters long"
+msgstr ""
+
+#: ckanext/scheming/public/js/govil-validate-user-input.js:276
+#, python-format
+msgid "Must be a maximum of %(num)d characters long"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/form_snippets/_organization_select.html:21
+msgid "No organization"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/form_snippets/organization.html:25
+msgid "Visibility"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/form_snippets/organization.html:28
+msgid "Private"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/form_snippets/organization.html:28
+msgid "Public"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/group/group_form.html:26
+msgid "Are you sure you want to delete this Group?"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/group/group_form.html:27
+#: ckanext/scheming/templates/scheming/organization/group_form.html:29
+#: ckanext/scheming/templates/scheming/package/snippets/resource_form.html:54
+msgid "Delete"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/group/group_form.html:31
+msgid "Save Group"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/organization/group_form.html:28
+msgid "Are you sure you want to delete this Organization?"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/organization/group_form.html:33
+msgid "Save Organization"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/resource_read.html:15
+msgid "Additional Information"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/resource_read.html:19
+msgid "Field"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/resource_read.html:20
+msgid "Value"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/resource_read.html:26
+msgid "Last modified date of file"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/resource_read.html:27
+msgid "Last updated"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/resource_read.html:32
+#: ckanext/scheming/templates/scheming/package/resource_read.html:38
+#: ckanext/scheming/templates/scheming/package/resource_read.html:44
+msgid "unknown"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/resource_read.html:37
+msgid "File creation date"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/resource_read.html:37
+msgid "Created"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/resource_read.html:43
+msgid "Format"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/resource_read.html:49
+msgid "License"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/resource_read.html:56
+msgid "File Size"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/resource_read.html:85
+msgid "Data Dictionary"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/snippets/additional_info.html:37
+msgid "State"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/snippets/resource_form.html:54
+msgid "Are you sure you want to delete this resource?"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/snippets/resource_form.html:60
+msgid "Previous"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/snippets/resource_form.html:64
+msgid "Save & add another"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/snippets/resource_form.html:68
+msgid "Finish"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/package/snippets/resource_form.html:72
+msgid "Add"
+msgstr ""
+
+#: ckanext/scheming/templates/scheming/snippets/errors.html:6
+msgid "The form contains invalid entries:"
+msgstr ""
+

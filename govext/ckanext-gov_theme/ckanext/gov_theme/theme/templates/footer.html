@@ -2,6 +2,11 @@
 
 <footer>
   {% block footer_content %}
+
+      {% if h.is_back_site() and c.get('user','') != '' %}
+        <div data-module="session-notifier" data-module-session_timeout="{{ config.get('who.timeout','0') }}" data-module="confirm-action" data-module-content="{{ _('You’ve been logged out, sign in again ?') }}"></div>
+      {% endif %}
+
     <div class="footer-wrapper">
       <div class="custom-footer-links">
         {% block footer_nav %}

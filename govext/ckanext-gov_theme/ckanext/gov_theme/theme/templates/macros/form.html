@@ -18,12 +18,13 @@ Examples:
 {{ form.input('title', label=_('Title'), value=data.title, error=errors.title) }}
 
 #}
-{% macro input(name, id='', label='', maxlength=524288, value='', placeholder='', type='text', error="", classes=[], attrs={'class': 'form-control'}, is_required=false) %}
+{% macro input(name, id='', label='', maxlength=524288, pattern='[\s\S]*', value='', placeholder='', type='text', error="", classes=[], attrs={'class': 'form-control'}, is_required=false) %}
 {%- set extra_html = caller() if caller -%}
 
 {% call input_block(id or name, label or name, error, classes, extra_html=extra_html, is_required=is_required) %}
-<input id="{{ id or name }}" type="{{ type }}" maxlength="{{ maxlength  }}" name="{{ name }}" value="{{ value | empty_and_escape }}" placeholder="{{ placeholder }}" {{ attributes(attrs) }} />
-{% endcall %}
+<input id="{{ id or name }}" type="{{ type }}" maxlength="{{ maxlength  }}" name="{{ name }}"
+       value="{{ value | empty_and_escape }}" placeholder="{{ placeholder }}" {{ attributes(attrs) }}
+       {{ "required " if is_required }} pattern="{{ pattern }}"/>{% endcall %}
 {% endmacro %}
 
 {#
@@ -122,7 +123,9 @@ options     - A list/tuple of fields to be used as <options>.
 
   {%- set extra_html = caller() if caller -%}
   {% call input_block(id or name, label or name, error, classes, control_classes=["editor"], extra_html=extra_html, is_required=is_required) %}
-  <textarea id="{{ id or name }}" name="{{ name }}" maxlength="{{ maxlength  }}" cols="20" rows="5" placeholder="{{ placeholder }}" {{ attributes(attrs) }}>{{ value | empty_and_escape }}</textarea>
+  <textarea id="{{ id or name }}" name="{{ name }}" maxlength="{{ maxlength  }}" cols="20" rows="5"
+            placeholder="{{ placeholder }}" {{ "required " if is_required }}
+            {{ attributes(attrs) }}>{{ value | empty_and_escape }}</textarea>
   <span class="editor-info-block">{% trans %}You can use <a href="#markdown" title="Markdown quick reference" data-target="popover" data-content="{{ markdown_tooltip }}" data-html="true">Markdown formatting</a> here{% endtrans %}</span>
   {% endcall %}
   {% endmacro %}
@@ -178,7 +181,7 @@ options     - A list/tuple of fields to be used as <options>.
   {{ form.prepend('slug', id='field-slug', prepend='/dataset/', label=_('Slug'), value=data.slug, error=errors.slug) }}
 
   #}
-  {% macro prepend(name, id='', label='', prepend='', value='', placeholder='', type='text', error="", classes=[], attrs={'class': 'form-control'}, is_required=false) %}
+  {% macro prepend(name, id='', label='', prepend='', value='', placeholder='', type='text', autocomplete='', error="", classes=[], attrs={'class': 'form-control'}, is_required=false) %}
   {# We manually append the error here as it needs to be inside the .input-group block #}
   {% set classes = (classes|list) %}
   {% do classes.append('error') if error %}
@@ -186,7 +189,8 @@ options     - A list/tuple of fields to be used as <options>.
   {% call input_block(id or name, label or name, error='', classes=classes, extra_html=extra_html, is_required=is_required) %}
   <div class="input-group">
     {% if prepend %}<span class="input-group-addon">{{ prepend }}</span>{%- endif -%}
-    <input id="{{ id or name }}" type="{{ type }}" name="{{ name }}" value="{{ value | empty_and_escape }}" placeholder="{{ placeholder }}" {{ attributes(attrs) }} />
+    <input id="{{ id or name }}" type="{{ type }}" name="{{ name }}" value="{{ value | empty_and_escape }}"
+           placeholder="{{ placeholder }}" autocomplete="{{ autocomplete }}" {{ "required " if is_required }} {{ attributes(attrs) }} />
     {% if error and error is iterable %}<span class="error-block">{{ error|join(', ') }}</span>{% endif %}
   </div>
   {% endcall %}
@@ -220,7 +224,7 @@ options     - A list/tuple of fields to be used as <options>.
   error=''
   ) }}
   #}
-  {% macro custom(names=(), id="", label="", values=(), placeholders=(), error="", classes=[], attrs={}, is_required=false, key_values=()) %}
+  {% macro custom(names=(), id="", label="", values=(), placeholders=(), error="", classes=[], attrs={}, is_required=false, readonly=false, key_values=()) %}
   {%- set classes = (classes|list) -%}
   {%- set label_id = (id or names[0]) ~ "-key" -%}
   {%- set extra_html = caller() if caller -%}
@@ -231,7 +235,8 @@ options     - A list/tuple of fields to be used as <options>.
     <div class="col-md-6 col-md-push-6">
       <div class="input-group" {{ attributes(attrs) }}>
         <label for="{{ label_id }}" class="input-group-addon">Key</label>
-        <input class="form-control" id="{{ id or names[0] }}-key" type="text" name="{{ names[0] }}" value="{{ values[0] | empty_and_escape }}" placeholder="{{ placeholders[0] }}" />
+        <input class="form-control" id="{{ id or names[0] }}-key" type="text" name="{{ names[0] }}"
+               value="{{ values[0] | empty_and_escape }}" placeholder="{{ placeholders[0] }}" readonly={{ readonly }} />
       </div>
     </div>
     <div class="col-md-6 col-md-pull-6  ">

@@ -1,74 +1,82 @@
 # Translations template for ckanext-gov_theme.
-# Copyright (C) 2019 ORGANIZATION
+# Copyright (C) 2021 ORGANIZATION
 # This file is distributed under the same license as the ckanext-gov_theme
 # project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-gov_theme 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-05-01 11:34+0300\n"
+"POT-Creation-Date: 2021-07-05 08:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: LANGUAGE <user@mail3>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
+"Generated-By: Babel 2.9.0\n"
 
-#: ckanext/gov_theme/action.py:136 ckanext/gov_theme/action.py:144
-#: ckanext/gov_theme/action.py:155 ckanext/gov_theme/action.py:164
-#: ckanext/gov_theme/action.py:1552
+#: ckanext/gov_theme/action.py:142 ckanext/gov_theme/action.py:150
+#: ckanext/gov_theme/action.py:161 ckanext/gov_theme/action.py:170
+#: ckanext/gov_theme/action.py:1594
 msgid "Missing value"
 msgstr ""
 
-#: ckanext/gov_theme/action.py:144
-#: ckanext/gov_theme/templates/package/snippets/package_metadata_fields.html:14
+#: ckanext/gov_theme/action.py:150
+#: ckanext/gov_theme/theme/templates/package/snippets/package_metadata_fields.html:4
 msgid "Author Email"
 msgstr ""
 
-#: ckanext/gov_theme/action.py:217
+#: ckanext/gov_theme/action.py:223
 #, python-format
 msgid "REST API: Create object %s"
 msgstr ""
 
-#: ckanext/gov_theme/action.py:526 ckanext/gov_theme/action.py:533
+#: ckanext/gov_theme/action.py:532 ckanext/gov_theme/action.py:539
 msgid "You must be logged in to follow users"
 msgstr ""
 
-#: ckanext/gov_theme/action.py:546
+#: ckanext/gov_theme/action.py:552
 msgid "You cannot follow yourself"
 msgstr ""
 
-#: ckanext/gov_theme/action.py:554 ckanext/gov_theme/action.py:614
-#: ckanext/gov_theme/action.py:671
+#: ckanext/gov_theme/action.py:560 ckanext/gov_theme/action.py:620
+#: ckanext/gov_theme/action.py:677
 msgid "You are already following {0}"
 msgstr ""
 
-#: ckanext/gov_theme/action.py:588 ckanext/gov_theme/action.py:596
+#: ckanext/gov_theme/action.py:594 ckanext/gov_theme/action.py:602
 msgid "You must be logged in to follow a dataset."
 msgstr ""
 
-#: ckanext/gov_theme/action.py:647 ckanext/gov_theme/action.py:655
+#: ckanext/gov_theme/action.py:653 ckanext/gov_theme/action.py:661
 msgid "You must be logged in to follow a group."
 msgstr ""
 
-#: ckanext/gov_theme/action.py:768 ckanext/gov_theme/action.py:782
+#: ckanext/gov_theme/action.py:774 ckanext/gov_theme/action.py:788
 msgid "Resource was not found."
 msgstr ""
 
-#: ckanext/gov_theme/action.py:1556
+#: ckanext/gov_theme/action.py:1598
 msgid "Do not specify if using \"query\" parameter"
 msgstr ""
 
-#: ckanext/gov_theme/action.py:1565
+#: ckanext/gov_theme/action.py:1607
 msgid "Must be <field>:<value> pair(s)"
 msgstr ""
 
-#: ckanext/gov_theme/action.py:1597
+#: ckanext/gov_theme/action.py:1639
 msgid "Field \"{field}\" not recognised in resource_search."
+msgstr ""
+
+#: ckanext/gov_theme/action.py:2789
+msgid "Organization cannot be deleted while it still has datasets {0}"
+msgstr ""
+
+#: ckanext/gov_theme/api_util.py:62
+msgid "Access denied"
 msgstr ""
 
 #: ckanext/gov_theme/auth.py:41
@@ -194,19 +202,75 @@ msgstr ""
 msgid "User %s not authorized to delete organization %s"
 msgstr ""
 
-#: ckanext/gov_theme/mailer.py:10
+#: ckanext/gov_theme/file_validators.py:58
+msgid "There is more then one data sheet in the file"
+msgstr ""
+
+#: ckanext/gov_theme/file_validators.py:73
+msgid "too long header (64 max)"
+msgstr ""
+
+#: ckanext/gov_theme/file_validators.py:88
+msgid "Duplicate column names are not supported"
+msgstr ""
+
+#: ckanext/gov_theme/helpers.py:135
+msgid "Transport"
+msgstr ""
+
+#: ckanext/gov_theme/helpers.py:135
+msgid "Justice"
+msgstr ""
+
+#: ckanext/gov_theme/helpers.py:135
+msgid "Energy Watter"
+msgstr ""
+
+#: ckanext/gov_theme/helpers.py:135
+msgid "Environment"
+msgstr ""
+
+#: ckanext/gov_theme/helpers.py:135
+msgid "Finance Economy"
+msgstr ""
+
+#: ckanext/gov_theme/helpers.py:135
+msgid "Population"
+msgstr ""
+
+#: ckanext/gov_theme/helpers.py:135
+msgid "Religion"
+msgstr ""
+
+#: ckanext/gov_theme/helpers.py:135
+msgid "Education Culture"
+msgstr ""
+
+#: ckanext/gov_theme/helpers.py:135
+msgid "Health Wellness"
+msgstr ""
+
+#: ckanext/gov_theme/helpers.py:135
+msgid "Accommodation"
+msgstr ""
+
+#: ckanext/gov_theme/helpers.py:135
+msgid "Tourism"
+msgstr ""
+
+#: ckanext/gov_theme/mailer.py:11
 msgid "Invite for {site_title}"
 msgstr ""
 
-#: ckanext/gov_theme/mailer.py:17
+#: ckanext/gov_theme/mailer.py:18
 msgid "Reset your password"
 msgstr ""
 
-#: ckanext/gov_theme/mailer.py:23
+#: ckanext/gov_theme/mailer.py:24
 msgid "No recipient email address available!"
 msgstr ""
 
-#: ckanext/gov_theme/mailer.py:28
+#: ckanext/gov_theme/mailer.py:29
 msgid ""
 "You have requested your password on {site_title} to be reset.\n"
 "\n"
@@ -215,53 +279,9 @@ msgid ""
 "   {reset_link}\n"
 msgstr ""
 
-#: ckanext/gov_theme/mailer.py:71
+#: ckanext/gov_theme/mailer.py:73
 #, python-format
 msgid "%s <%s>"
-msgstr ""
-
-#: ckanext/gov_theme/plugin.py:89
-msgid "Transport"
-msgstr ""
-
-#: ckanext/gov_theme/plugin.py:89
-msgid "Justice"
-msgstr ""
-
-#: ckanext/gov_theme/plugin.py:89
-msgid "Energy Watter"
-msgstr ""
-
-#: ckanext/gov_theme/plugin.py:89
-msgid "Environment"
-msgstr ""
-
-#: ckanext/gov_theme/plugin.py:89
-msgid "Finance Economy"
-msgstr ""
-
-#: ckanext/gov_theme/plugin.py:89
-msgid "Population"
-msgstr ""
-
-#: ckanext/gov_theme/plugin.py:89
-msgid "Religion"
-msgstr ""
-
-#: ckanext/gov_theme/plugin.py:89
-msgid "Education Culture"
-msgstr ""
-
-#: ckanext/gov_theme/plugin.py:89
-msgid "Health Wellness"
-msgstr ""
-
-#: ckanext/gov_theme/plugin.py:89
-msgid "Accommodation"
-msgstr ""
-
-#: ckanext/gov_theme/plugin.py:89
-msgid "Tourism"
 msgstr ""
 
 #: ckanext/gov_theme/validators.py:22 ckanext/gov_theme/validators.py:34
@@ -269,331 +289,280 @@ msgid "Passwords must be strings."
 msgstr ""
 
 #: ckanext/gov_theme/validators.py:26
-msgid "Your password must be 4 characters or longer"
+msgid "ms"
 msgstr ""
 
-#: ckanext/gov_theme/fanstatic/autocompletecustum.js:195
+#: ckanext/gov_theme/views.py:40
+msgid "Resource not found"
+msgstr ""
+
+#: ckanext/gov_theme/views.py:47
+msgid "No download is available"
+msgstr ""
+
+#: ckanext/gov_theme/theme/public/js/autocompletecustum.js:195
 msgid "Start typing…"
 msgstr ""
 
-#: ckanext/gov_theme/fanstatic/autocompletecustum.js:195
+#: ckanext/gov_theme/theme/public/js/autocompletecustum.js:195
 msgid "No matches found"
 msgstr ""
 
-#: ckanext/gov_theme/fanstatic/autocompletecustum.js:204
+#: ckanext/gov_theme/theme/public/js/autocompletecustum.js:204
 #, python-format
 msgid "Input is too short, must be at least one character"
 msgid_plural "Input is too short, must be at least %(num)d characters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ckanext/gov_theme/fanstatic/modernizr-custom.js:3
+#: ckanext/gov_theme/theme/public/js/modernizr-custom.js:3
 msgid "#modernizr { height: 50vh; }"
 msgstr ""
 
-#: ckanext/gov_theme/fanstatic/modernizr-custom.js:3
+#: ckanext/gov_theme/theme/public/js/modernizr-custom.js:3
 msgid ""
 "#modernizr1{width: "
 "50vm;width:50vmin}#modernizr2{width:50px;height:50px;overflow:scroll}#modernizr3{position:fixed;top:0;left:0;bottom:0;right:0}"
 msgstr ""
 
-#: ckanext/gov_theme/fanstatic/modernizr-custom.js:3
+#: ckanext/gov_theme/theme/public/js/modernizr-custom.js:3
 msgid "#modernizr { width: 50vw; }"
 msgstr ""
 
-#: ckanext/gov_theme/fanstatic/modernizr-custom.js:3
+#: ckanext/gov_theme/theme/public/js/modernizr-custom.js:3
 msgid ""
 "#modernizr1{width: "
 "50vmax}#modernizr2{width:50px;height:50px;overflow:scroll}#modernizr3{position:fixed;top:0;left:0;bottom:0;right:0}"
 msgstr ""
 
-#: ckanext/gov_theme/templates/footer.html:12
-msgid "About Gvoernment Data"
-msgstr ""
-
-#: ckanext/gov_theme/templates/footer.html:13
-#: ckanext/gov_theme/templates/group/read_base.html:21
-#: ckanext/gov_theme/templates/header.html:224
-#: ckanext/gov_theme/templates/organization/read_base.html:21
-#: ckanext/gov_theme/templates/user/edit_user_form.html:15
+#: ckanext/gov_theme/theme/templates/footer.html:13
+#: ckanext/gov_theme/theme/templates/group/read_base.html:8
+#: ckanext/gov_theme/theme/templates/header.html:111
+#: ckanext/gov_theme/theme/templates/header.html:159
+#: ckanext/gov_theme/theme/templates/home/about.html:4
+#: ckanext/gov_theme/theme/templates/old_footer.html:13
+#: ckanext/gov_theme/theme/templates/old_header.html:169
+#: ckanext/gov_theme/theme/templates/organization/read_base.html:17
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:15
 msgid "About"
 msgstr ""
 
-#: ckanext/gov_theme/templates/footer.html:14
+#: ckanext/gov_theme/theme/templates/footer.html:16
+#: ckanext/gov_theme/theme/templates/old_footer.html:14
 msgid "Terms Of Use"
 msgstr ""
 
-#: ckanext/gov_theme/templates/footer.html:15
+#: ckanext/gov_theme/theme/templates/footer.html:19
+#: ckanext/gov_theme/theme/templates/header.html:120
+#: ckanext/gov_theme/theme/templates/header.html:174
+#: ckanext/gov_theme/theme/templates/old_footer.html:15
 msgid "Contact"
 msgstr ""
 
-#: ckanext/gov_theme/templates/header.html:14
-#: ckanext/gov_theme/templates/header.html:20
-#: ckanext/gov_theme/templates/header.html:37
-#: ckanext/gov_theme/templates/header.html:66
-msgid "Government Data"
-msgstr ""
-
-#: ckanext/gov_theme/templates/header.html:120
+#: ckanext/gov_theme/theme/templates/header.html:18
+#: ckanext/gov_theme/theme/templates/old_header.html:79
 msgid "Sysadmin settings"
 msgstr ""
 
-#: ckanext/gov_theme/templates/header.html:122
+#: ckanext/gov_theme/theme/templates/header.html:20
+#: ckanext/gov_theme/theme/templates/old_header.html:81
 msgid "Admin"
 msgstr ""
 
-#: ckanext/gov_theme/templates/header.html:127
+#: ckanext/gov_theme/theme/templates/header.html:26
+#: ckanext/gov_theme/theme/templates/old_header.html:87
 msgid "View profile"
 msgstr ""
 
-#: ckanext/gov_theme/templates/header.html:134
+#: ckanext/gov_theme/theme/templates/header.html:33
+#: ckanext/gov_theme/theme/templates/old_header.html:94
 #, python-format
 msgid "Dashboard (%(num)d new item)"
 msgid_plural "Dashboard (%(num)d new items)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ckanext/gov_theme/templates/header.html:137
-#: ckanext/gov_theme/templates/user/dashboard.html:6
+#: ckanext/gov_theme/theme/templates/header.html:36
+#: ckanext/gov_theme/theme/templates/old_header.html:97
 msgid "Dashboard"
 msgstr ""
 
-#: ckanext/gov_theme/templates/header.html:143
-#: ckanext/gov_theme/templates/user/dashboard.html:16
+#: ckanext/gov_theme/theme/templates/header.html:42
+#: ckanext/gov_theme/theme/templates/old_header.html:104
+#: ckanext/gov_theme/theme/templates/user/dashboard.html:6
 msgid "Edit settings"
 msgstr ""
 
-#: ckanext/gov_theme/templates/header.html:145
+#: ckanext/gov_theme/theme/templates/header.html:44
+#: ckanext/gov_theme/theme/templates/old_header.html:106
 msgid "Settings"
 msgstr ""
 
-#: ckanext/gov_theme/templates/header.html:151
-#: ckanext/gov_theme/templates/header.html:153
+#: ckanext/gov_theme/theme/templates/header.html:49
+#: ckanext/gov_theme/theme/templates/header.html:51
+#: ckanext/gov_theme/theme/templates/old_header.html:112
+#: ckanext/gov_theme/theme/templates/old_header.html:114
 msgid "Log out"
 msgstr ""
 
-#: ckanext/gov_theme/templates/header.html:164
+#: ckanext/gov_theme/theme/templates/header.html:61
+#: ckanext/gov_theme/theme/templates/old_header.html:125
 msgid "Log in"
 msgstr ""
 
-#: ckanext/gov_theme/templates/group/read_base.html:17
-#: ckanext/gov_theme/templates/header.html:222
-#: ckanext/gov_theme/templates/organization/read_base.html:17
-#: ckanext/gov_theme/templates/package/search.html:4
-#: ckanext/gov_theme/templates/package/search.html:7
-#: ckanext/gov_theme/templates/snippets/organization.html:44
-#: ckanext/gov_theme/templates/user/read_base.html:19
-#: ckanext/gov_theme/templates/user/read_base.html:53
-msgid "Datasets"
+#: ckanext/gov_theme/theme/templates/header.html:63
+msgid "Register"
 msgstr ""
 
-#: ckanext/gov_theme/templates/header.html:223
-#: ckanext/gov_theme/templates/organization/read_base.html:3
-#: ckanext/gov_theme/templates/organization/read_base.html:6
+#: ckanext/gov_theme/theme/templates/header.html:102
+msgid "LogoText"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/header.html:108
+#: ckanext/gov_theme/theme/templates/header.html:154
+msgid "Home page"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/header.html:114
+#: ckanext/gov_theme/theme/templates/header.html:164
+#: ckanext/gov_theme/theme/templates/old_header.html:169
+#: ckanext/gov_theme/theme/templates/organization/index.html:8
 msgid "Organizations"
 msgstr ""
 
-#: ckanext/gov_theme/templates/header.html:239
-msgid "Search Datasets"
+#: ckanext/gov_theme/theme/templates/group/read_base.html:4
+#: ckanext/gov_theme/theme/templates/header.html:117
+#: ckanext/gov_theme/theme/templates/header.html:169
+#: ckanext/gov_theme/theme/templates/old_header.html:169
+#: ckanext/gov_theme/theme/templates/organization/read_base.html:13
+msgid "Datasets"
 msgstr ""
 
-#: ckanext/gov_theme/templates/header.html:240
-#: ckanext/gov_theme/templates/home/snippets/gov-search.html:6
-#: ckanext/gov_theme/templates/home/snippets/gov-search.html:13
-msgid "Search"
+#: ckanext/gov_theme/theme/templates/old_footer.html:12
+msgid "About Gvoernment Data"
 msgstr ""
 
-#: ckanext/gov_theme/templates/page.html:6
-msgid "Skip to content"
+#: ckanext/gov_theme/theme/templates/old_header.html:13
+#: ckanext/gov_theme/theme/templates/old_header.html:21
+msgid "Government Data"
 msgstr ""
 
-#: ckanext/gov_theme/templates/admin/config.html:17
-#: ckanext/gov_theme/templates/admin/confirm_reset.html:8
+#: ckanext/gov_theme/theme/templates/page.html:11
+msgid "Breadcrumb"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/admin/config.html:13
+#: ckanext/gov_theme/theme/templates/admin/confirm_reset.html:5
 msgid "Are you sure you want to reset the config?"
 msgstr ""
 
-#: ckanext/gov_theme/templates/admin/config.html:18
+#: ckanext/gov_theme/theme/templates/admin/config.html:14
 msgid "Reset"
 msgstr ""
 
-#: ckanext/gov_theme/templates/admin/config.html:19
+#: ckanext/gov_theme/theme/templates/admin/config.html:15
 msgid "Update Config"
 msgstr ""
 
-#: ckanext/gov_theme/templates/admin/config.html:28
-msgid "CKAN config options"
-msgstr ""
-
-#: ckanext/gov_theme/templates/admin/config.html:35
-#, python-format
-msgid ""
-" <p><strong>Site Title:</strong> This is the title of this CKAN instance It "
-"appears in various places throughout CKAN.</p> <p><strong>Style:</strong> "
-"Choose from a list of simple variations of the main colour scheme to get a "
-"very quick custom theme working.</p> <p><strong>Site Tag Logo:</strong> This "
-"is the logo that appears in the header of all the CKAN instance "
-"templates.</p> <p><strong>About:</strong> This text will appear on this CKAN "
-"instances <a href=\"%(about_url)s\">about page</a>.</p> <p><strong>Intro "
-"Text:</strong> This text will appear on this CKAN instances <a "
-"href=\"%(home_url)s\">home page</a> as a welcome to visitors.</p> "
-"<p><strong>Custom CSS:</strong> This is a block of CSS that appears in "
-"<code>&lt;head&gt;</code> tag of every page. If you wish to customize the "
-"templates more fully we recommend <a href=\"%(docs_url)s\" "
-"target=\"_blank\">reading the documentation</a>.</p> "
-"<p><strong>Homepage:</strong> This is for choosing a predefined layout for "
-"the modules that appear on your homepage.</p> "
-msgstr ""
-
-#: ckanext/gov_theme/templates/admin/confirm_reset.html:3
-#: ckanext/gov_theme/templates/admin/confirm_reset.html:12
-msgid "Confirm Reset"
-msgstr ""
-
-#: ckanext/gov_theme/templates/admin/confirm_reset.html:11
-#: ckanext/gov_theme/templates/group/confirm_delete.html:15
-#: ckanext/gov_theme/templates/group/confirm_delete_member.html:16
-#: ckanext/gov_theme/templates/organization/confirm_delete.html:15
-#: ckanext/gov_theme/templates/organization/confirm_delete_member.html:16
-#: ckanext/gov_theme/templates/package/confirm_delete.html:15
-#: ckanext/gov_theme/templates/package/confirm_delete_resource.html:15
+#: ckanext/gov_theme/theme/templates/admin/confirm_reset.html:7
+#: ckanext/gov_theme/theme/templates/organization/confirm_delete.html:7
+#: ckanext/gov_theme/theme/templates/organization/confirm_delete_member.html:8
+#: ckanext/gov_theme/theme/templates/package/confirm_delete.html:8
+#: ckanext/gov_theme/theme/templates/package/confirm_delete_resource.html:8
 msgid "Cancel"
 msgstr ""
 
-#: ckanext/gov_theme/templates/ajax_snippets/api_info.html:8
-msgid "data.gov.il Data API"
+#: ckanext/gov_theme/theme/templates/admin/confirm_reset.html:8
+msgid "Confirm Reset"
 msgstr ""
 
-#: ckanext/gov_theme/templates/ajax_snippets/api_info.html:12
+#: ckanext/gov_theme/theme/templates/ajax_snippets/api_info.html:21
+msgid "CKAN Data API"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/ajax_snippets/api_info.html:25
 msgid "Access resource data via a web API with powerful query support"
 msgstr ""
 
-#: ckanext/gov_theme/templates/ajax_snippets/api_info.html:17
+#: ckanext/gov_theme/theme/templates/ajax_snippets/api_info.html:26
+msgid ""
+"Further information in the <a "
+"href=\"http://docs.ckan.org/en/latest/maintaining/datastore.html\" "
+"target=\"_blank\">main CKAN Data API and DataStore documentation</a>.</p>"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/ajax_snippets/api_info.html:35
 msgid "Endpoints"
 msgstr ""
 
-#: ckanext/gov_theme/templates/ajax_snippets/api_info.html:21
-msgid ""
-"The Data API can be accessed via the following actions of the data.gov.il "
-"action API."
+#: ckanext/gov_theme/theme/templates/ajax_snippets/api_info.html:39
+msgid "The Data API can be accessed via the following actions of the CKAN action API."
 msgstr ""
 
-#: ckanext/gov_theme/templates/ajax_snippets/api_info.html:27
+#: ckanext/gov_theme/theme/templates/ajax_snippets/api_info.html:44
 msgid "Query"
 msgstr ""
 
-#: ckanext/gov_theme/templates/ajax_snippets/api_info.html:31
-msgid "Query (via SQL)"
-msgstr ""
-
-#: ckanext/gov_theme/templates/ajax_snippets/api_info.html:43
+#: ckanext/gov_theme/theme/templates/ajax_snippets/api_info.html:56
 msgid "Querying"
 msgstr ""
 
-#: ckanext/gov_theme/templates/ajax_snippets/api_info.html:47
+#: ckanext/gov_theme/theme/templates/ajax_snippets/api_info.html:60
 msgid "Query example (first 5 results)"
 msgstr ""
 
-#: ckanext/gov_theme/templates/ajax_snippets/api_info.html:52
+#: ckanext/gov_theme/theme/templates/ajax_snippets/api_info.html:66
 msgid "Query example (results containing 'jones')"
 msgstr ""
 
-#: ckanext/gov_theme/templates/ajax_snippets/api_info.html:58
-msgid "Query example (via SQL statement)"
-msgstr ""
-
-#: ckanext/gov_theme/templates/ajax_snippets/api_info.html:70
+#: ckanext/gov_theme/theme/templates/ajax_snippets/api_info.html:78
 msgid "Example: Javascript"
 msgstr ""
 
-#: ckanext/gov_theme/templates/ajax_snippets/api_info.html:74
+#: ckanext/gov_theme/theme/templates/ajax_snippets/api_info.html:82
 msgid "A simple ajax (JSONP) request to the data API using jQuery."
 msgstr ""
 
-#: ckanext/gov_theme/templates/ajax_snippets/api_info.html:95
+#: ckanext/gov_theme/theme/templates/ajax_snippets/api_info.html:103
 msgid "Example: Python"
 msgstr ""
 
-#: ckanext/gov_theme/templates/group/confirm_delete.html:3
-#: ckanext/gov_theme/templates/group/confirm_delete.html:16
-#: ckanext/gov_theme/templates/group/confirm_delete_member.html:3
-#: ckanext/gov_theme/templates/group/confirm_delete_member.html:17
-#: ckanext/gov_theme/templates/organization/confirm_delete.html:3
-#: ckanext/gov_theme/templates/organization/confirm_delete.html:16
-#: ckanext/gov_theme/templates/organization/confirm_delete_member.html:3
-#: ckanext/gov_theme/templates/organization/confirm_delete_member.html:17
-#: ckanext/gov_theme/templates/package/confirm_delete.html:3
-#: ckanext/gov_theme/templates/package/confirm_delete.html:16
-#: ckanext/gov_theme/templates/package/confirm_delete_resource.html:3
-#: ckanext/gov_theme/templates/package/confirm_delete_resource.html:16
-msgid "Confirm Delete"
-msgstr ""
-
-#: ckanext/gov_theme/templates/group/confirm_delete.html:11
-msgid "Are you sure you want to delete group - {name}?"
-msgstr ""
-
-#: ckanext/gov_theme/templates/group/confirm_delete_member.html:11
-#: ckanext/gov_theme/templates/organization/confirm_delete_member.html:11
-msgid "Are you sure you want to delete member - {name}?"
-msgstr ""
-
-#: ckanext/gov_theme/templates/group/read_base.html:3
-#: ckanext/gov_theme/templates/group/read_base.html:6
-msgid "Groups"
-msgstr ""
-
-#: ckanext/gov_theme/templates/group/read_base.html:12
-#: ckanext/gov_theme/templates/organization/read_base.html:12
-#: ckanext/gov_theme/templates/package/resource_read.html:7
-#: ckanext/gov_theme/templates/user/edit.html:8
-#: ckanext/gov_theme/templates/user/edit_base.html:3
-#: ckanext/gov_theme/templates/user/read_base.html:14
-msgid "Manage"
-msgstr ""
-
-#: ckanext/gov_theme/templates/group/read_base.html:19
-#: ckanext/gov_theme/templates/organization/read_base.html:19
-#: ckanext/gov_theme/templates/package/read_base.html:6
-#: ckanext/gov_theme/templates/user/read_base.html:20
+#: ckanext/gov_theme/theme/templates/group/read_base.html:6
+#: ckanext/gov_theme/theme/templates/organization/read_base.html:15
+#: ckanext/gov_theme/theme/templates/package/read_base.html:8
 msgid "Activity Stream"
 msgstr ""
 
-#: ckanext/gov_theme/templates/home/gov-layout.html:12
+#: ckanext/gov_theme/theme/templates/home/gov-layout.html:7
 msgid ""
-" <p><h2><b>משתמשי האתר יהנו מיד חופשית לפיתוח יישומים ומערכות המבוססות על "
-"מאגר הנתונים הממשלתי.</b></h2></p> <p>באתר data.gov.il מתפרסמים מאגרי מידע "
+"<p><h2><b>משתמשי האתר יהנו מיד חופשית לפיתוח יישומים ומערכות המבוססות על מאגר"
+" הנתונים הממשלתי.</b></h2></p> <p>באתר name23 מתפרסמים מאגרי מידע "
 "ממשלתיים באופן ברור ונגיש.</p> <p>המאגרים מתעדכנים באופן קבוע ורציף.</p> "
-"<p>מערכת המידע של Data.gov.il מאפשרת איתור והורדה של נתונים בקלות "
-"וביעילות.</p> "
+"<p>מערכת המידע של name23 מאפשרת איתור והורדה של נתונים בקלות "
+"וביעילות.</p>"
 msgstr ""
 
-#: ckanext/gov_theme/templates/home/gov-layout.html:46
-#: ckanext/gov_theme/templates/home/snippets/gov-search.html:20
-msgid "Popular tags"
-msgstr ""
-
-#: ckanext/gov_theme/templates/home/terms.html:3
-#: ckanext/gov_theme/templates/home/terms.html:6
-#: ckanext/gov_theme/templates/home/terms.html:16
+#: ckanext/gov_theme/theme/templates/home/terms.html:3
+#: ckanext/gov_theme/theme/templates/home/terms.html:6
 msgid "terms"
 msgstr ""
 
-#: ckanext/gov_theme/templates/home/snippets/about_text.html:1
+#: ckanext/gov_theme/theme/templates/home/snippets/about_text.html:1
 msgid ""
-" About The Data.gov.il website was established by the e-government as part of"
-" an \"open government\" policy, based on promoting the transparency and "
+"About The name23 website was established by the e-government as part of "
+"an \"open government\" policy, based on promoting the transparency and "
 "presentation of reliable government information authorized for public use. "
 "This policy is implemented in other advanced countries in the world, such as "
-"the United States, United Kingdom and Australia. In the Data.gov.il website, "
+"the United States, United Kingdom and Australia. In the name23 website, "
 "government databases are published clearly and accessibly and are "
-"continuously updated. The information system of Data.gov.il allows for quick "
+"continuously updated. The information system of name23 allows for quick "
 "and efficient location and downloading of data, subject to the Freedom of "
-"Information and Protection of Privacy Act. The Data.gov.il project was first "
+"Information and Protection of Privacy Act. The name23 project was first "
 "developed following a decision by the Ministerial Committee on Improving "
 "Public Government Services and Open Government, on Monday, November 29, 2010."
 " The project's goal is to improve the service to the public and encourage the"
 " creative use of the public, the academia and of the government with the "
-"government databases. The Data.gov.il site provides its users the full "
+"government databases. The name23 site provides its users the full "
 "freedom to develop applications and systems, based on the published "
 "information. All information updates to the databases will be automatically "
 "available to applications based on them. About E-government E-government is "
@@ -601,34 +570,34 @@ msgid ""
 "public, in order to improve the communication between citizens and government"
 " institutions. E-government operates under the Prime Minister's office, under"
 " which operate the Gov.IL portal, Government Payment Service, Government "
-"Forms Service and more. "
+"Forms Service and more."
 msgstr ""
 
-#: ckanext/gov_theme/templates/home/snippets/gov-search.html:3
-msgid "E.g. environment"
+#: ckanext/gov_theme/theme/templates/home/snippets/gov-search.html:8
+msgid "Popular tags"
 msgstr ""
 
-#: ckanext/gov_theme/templates/home/snippets/terms_text.html:1
+#: ckanext/gov_theme/theme/templates/home/snippets/terms_text.html:1
 msgid ""
-" <p><b><u> Terms of Use of the Data.gov.il Site </u></b></p> <p> This website"
-" (\"Site\") is managed and maintained by the Prime Minister's Office, the "
+"<p><b><u> Terms of Use of the name23 Site </u></b></p> <p> This website "
+"(\"Site\") is managed and maintained by the Prime Minister's Office, the "
 "Government ICT Authority, E-Government Unit (\"Office\"). The Site displays "
 "data files accessed from the databases of government ministries, support "
 "units and other public bodies (\"Databases\"). Use of the Site is subject to "
-"the Terms of Use appearing on the <a href='www.gov.il'>www.gov.il</a> site "
+"the Terms of Use appearing on the <a href=\"www.gov.il\">www.gov.il</a> site "
 "(\"Terms of Use\"). </p> <p>Use of the Databases, as defined above, is not "
 "subject to the Terms of Use but to the User License set out below. If a "
 "different user license than the one set out below applies to any database, "
 "the license applying to the database shall prevail. Feel free to use the "
 "database any way you like, subject to the licensing terms.</p> <p><b><u> User"
-" License for Databases on the Data.gov.il Site </u></b></p> <p> Use of the "
+" License for Databases on the name23 Site </u></b></p> <p> Use of the "
 "Information is permitted solely in accordance with the terms of this License."
 " The Office may change the terms of this License at any time, and any such "
 "change shall become effective immediately when it is posted on the Site. Use "
 "of the Information shall be subject to the terms of the License as in effect "
 "at the date and time the Information was accessed from the database. </p> "
 "<p><b><u> Definitions </u></b></p> <p> In this license: </p> <p> \"Site\"  "
-"The Data.gov.il site. </p> <p> \"Information\"  A data file, or any part "
+"The name23 site. </p> <p> \"Information\"  A data file, or any part "
 "thereof, accessed from databases of government ministries, support units and "
 "other public bodies, which is displayed on the Site. </p> <p> \"use\"  Doing"
 " any act with the Information that is restricted by copyright law, including "
@@ -640,9 +609,9 @@ msgid ""
 "Information, in whole or in part, in accordance with the terms of this "
 "License. </p> <p> \"you\"  Includes any natural person or legal entity or "
 "corporate body. </p> <p> In this License  the masculine gender includes the "
-"feminine. </p> <p><b><u> Use of Information under this License </u></b></p> "
+"feminine. </p> <p><b><u>  Use of Information under this License </u></b></p> "
 "<p> The Information is protected by intellectual property rights, including "
-"copyrights, which are owned by the State of Israel. <p> Use of the "
+"copyrights, which are owned by the State of Israel. </p><p> Use of the "
 "information indicates your acceptance of the terms of this License, to the "
 "extent that such acceptance is required by law.This License grants you a "
 "worldwide, royalty-free, perpetual and non-exclusive license to use the "
@@ -737,10 +706,10 @@ msgid ""
 "bind that party. </p> <p> This License covers all the rights granted to you "
 "in relation to the Information on the Office Site, except for exclusions and "
 "limitations prescribed by law, including fair use. </p> <p>&nbsp; </p> "
-"<p>&nbsp; </p> <p>Version 1.0 </p> <p>January 3, 2016</p> "
+"<p>&nbsp; </p> <p>Version 1.0 </p> <p>January 3, 2016</p>"
 msgstr ""
 
-#: ckanext/gov_theme/templates/macros/form.html:126
+#: ckanext/gov_theme/theme/templates/macros/form.html:129
 #, python-format
 msgid ""
 "You can use <a href=\"#markdown\" title=\"Markdown quick reference\" data-"
@@ -748,459 +717,273 @@ msgid ""
 "html=\"true\">Markdown formatting</a> here"
 msgstr ""
 
-#: ckanext/gov_theme/templates/macros/form.html:235
-#: ckanext/gov_theme/templates/snippets/search_form.html:74
+#: ckanext/gov_theme/theme/templates/macros/form.html:245
 msgid "Remove"
 msgstr ""
 
-#: ckanext/gov_theme/templates/macros/form.html:265
+#: ckanext/gov_theme/theme/templates/macros/form.html:282
 msgid "This field is required"
 msgstr ""
 
-#: ckanext/gov_theme/templates/macros/form.html:265
+#: ckanext/gov_theme/theme/templates/macros/form.html:282
 msgid "Custom"
 msgstr ""
 
-#: ckanext/gov_theme/templates/macros/form.html:290
+#: ckanext/gov_theme/theme/templates/macros/form.html:307
 msgid "The form contains invalid entries:"
 msgstr ""
 
-#: ckanext/gov_theme/templates/macros/form.html:395
+#: ckanext/gov_theme/theme/templates/macros/form.html:412
 msgid "Required field"
 msgstr ""
 
-#: ckanext/gov_theme/templates/macros/form.html:410
+#: ckanext/gov_theme/theme/templates/macros/form.html:427
 msgid "http://example.com/my-image.jpg"
 msgstr ""
 
-#: ckanext/gov_theme/templates/macros/form.html:411
+#: ckanext/gov_theme/theme/templates/macros/form.html:428
 msgid "Image URL"
 msgstr ""
 
-#: ckanext/gov_theme/templates/macros/form.html:412
+#: ckanext/gov_theme/theme/templates/macros/form.html:429
 msgid "Image"
 msgstr ""
 
-#: ckanext/gov_theme/templates/macros/form.html:424
+#: ckanext/gov_theme/theme/templates/macros/form.html:443
 msgid "Clear Upload"
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/confirm_delete.html:11
+#: ckanext/gov_theme/theme/templates/organization/confirm_delete.html:4
 msgid "Are you sure you want to delete organization - {name}?"
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/snippets/organization_form.html:11
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:32
+#: ckanext/gov_theme/theme/templates/organization/confirm_delete.html:8
+#: ckanext/gov_theme/theme/templates/organization/confirm_delete_member.html:9
+#: ckanext/gov_theme/theme/templates/package/confirm_delete.html:9
+#: ckanext/gov_theme/theme/templates/package/confirm_delete_resource.html:9
+msgid "Confirm Delete"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/organization/confirm_delete_member.html:4
+msgid "Are you sure you want to delete member - {name}?"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/organization/read_base.html:8
+#: ckanext/gov_theme/theme/templates/package/resource_read.html:49
+msgid "Manage"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_form.html:11
+#: ckanext/gov_theme/theme/templates/user/api_tokens.html:5
 msgid "Name"
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/snippets/organization_form.html:11
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_form.html:11
 msgid "My Organization"
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/snippets/organization_form.html:19
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:13
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:28
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_form.html:19
 msgid "URL"
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/snippets/organization_form.html:19
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_form.html:19
 msgid "my-organization"
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/snippets/organization_form.html:21
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:19
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:36
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_form.html:21
+#: ckanext/gov_theme/theme/templates/package/resource_read.html:76
 msgid "Description"
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/snippets/organization_form.html:21
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_form.html:21
 msgid "A little information about my organization..."
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/snippets/organization_form.html:36
-#: ckanext/gov_theme/templates/organization/snippets/organization_form.html:49
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:40
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:66
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_form.html:37
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:90
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:172
 msgid "Custom Field"
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/snippets/organization_form.html:61
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_form.html:49
+msgid "Save Organization"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_form.html:53
 msgid ""
 "Are you sure you want to delete this Organization? This will delete all the "
 "public and private datasets belonging to this organization."
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/snippets/organization_form.html:62
-#: ckanext/gov_theme/templates/package/edit_view.html:20
-#: ckanext/gov_theme/templates/package/snippets/package_form.html:51
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:107
-#: ckanext/gov_theme/templates/user/edit_user_form.html:39
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_form.html:54
+#: ckanext/gov_theme/theme/templates/package/snippets/package_form.html:52
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:39
 msgid "Delete"
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/snippets/organization_form.html:65
-msgid "Save Organization"
-msgstr ""
-
-#: ckanext/gov_theme/templates/organization/snippets/organization_item.html:17
-#: ckanext/gov_theme/templates/organization/snippets/organization_item.html:45
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_item.html:19
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_item.html:66
 msgid "View {organization_name}"
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/snippets/organization_item.html:29
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_item.html:40
 msgid "Datasets Count"
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/snippets/organization_item.html:31
-msgid "0 Datasets"
+#: ckanext/gov_theme/theme/templates/organization/snippets/organization_item.html:59
+msgid "Resources Count"
 msgstr ""
 
-#: ckanext/gov_theme/templates/organization/snippets/organization_item.html:37
-msgid "{num} Resource"
-msgid_plural "{num} Resources"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ckanext/gov_theme/templates/organization/snippets/organization_item.html:39
-msgid "0 Resources"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/confirm_delete.html:11
+#: ckanext/gov_theme/theme/templates/package/confirm_delete.html:5
 msgid "Are you sure you want to delete dataset - {name}?"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/confirm_delete_resource.html:11
+#: ckanext/gov_theme/theme/templates/package/confirm_delete_resource.html:5
 msgid "Are you sure you want to delete resource - {name}?"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/edit_view.html:3
-#: ckanext/gov_theme/templates/package/edit_view.html:4
-#: ckanext/gov_theme/templates/package/edit_view.html:8
-#: ckanext/gov_theme/templates/package/edit_view.html:12
-msgid "Edit view"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/edit_view.html:21
-#: ckanext/gov_theme/templates/package/new_view.html:29
-#: ckanext/gov_theme/templates/package/snippets/resource_item.html:36
-msgid "Preview"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/edit_view.html:22
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:16
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:28
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:29
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:59
-msgid "Update"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/new_view.html:3
-#: ckanext/gov_theme/templates/package/new_view.html:4
-#: ckanext/gov_theme/templates/package/new_view.html:8
-#: ckanext/gov_theme/templates/package/new_view.html:12
-msgid "Add view"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/new_view.html:19
-msgid ""
-" Data Explorer views may be slow and unreliable unless the DataStore "
-"extension is enabled. For more information, please see the <a "
-"href='http://docs.ckan.org/en/latest/maintaining/data-viewer.html#viewing-"
-"structured-data-the-data-explorer' target='_blank'>Data Explorer "
-"documentation</a>. "
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/new_view.html:30
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:123
-msgid "Add"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/read_base.html:4
+#: ckanext/gov_theme/theme/templates/package/read_base.html:7
 msgid "Dataset"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/resource_read.html:10
-msgid "Broken link report"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:11
-msgid "Report"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:17
-#: ckanext/gov_theme/templates/package/resource_views.html:4
-msgid "View"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:19
-msgid "API Endpoint"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:21
-#: ckanext/gov_theme/templates/package/snippets/resource_item.html:52
-msgid "Go to resource"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:23
-#: ckanext/gov_theme/templates/package/snippets/resource_item.html:49
+#: ckanext/gov_theme/theme/templates/package/resource_read.html:22
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_item.html:47
 msgid "Download"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/resource_read.html:58
-#: ckanext/gov_theme/templates/package/snippets/resource_view.html:26
-msgid "There are no views created for this resource yet."
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:59
-#: ckanext/gov_theme/templates/package/snippets/resource_view.html:27
-msgid "The resource can be downloaded by clicking on 'Link to file'."
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:64
-msgid "Not seeing the views you were expecting?"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:66
-#: ckanext/gov_theme/templates/package/snippets/resource_view.html:30
-msgid "Click here for more information."
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:69
-msgid "Here are some reasons you may not be seeing expected views:"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:71
-msgid "No view has been created that is suitable for this resource"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:72
-msgid "The site administrators may not have enabled the relevant view plugins"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:73
-msgid ""
-"If a view requires the DataStore, the DataStore plugin may not be enabled, or"
-" the data may not have been pushed to the DataStore, or the DataStore hasn't "
-"finished processing the data yet"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:89
-msgid "Additional Information"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:93
-#: ckanext/gov_theme/templates/package/snippets/additional_info.html:6
-msgid "Field"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:94
-#: ckanext/gov_theme/templates/package/snippets/additional_info.html:7
-msgid "Value"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:99
-msgid "Data last updated"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:100
-#: ckanext/gov_theme/templates/package/resource_read.html:104
-#: ckanext/gov_theme/templates/package/resource_read.html:108
-#: ckanext/gov_theme/templates/package/resource_read.html:112
-#: ckanext/gov_theme/templates/package/snippets/additional_info.html:55
-#: ckanext/gov_theme/templates/package/snippets/additional_info.html:64
-#: ckanext/gov_theme/templates/package/snippets/resource_item.html:16
-msgid "unknown"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:103
-msgid "Metadata last updated"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:107
-#: ckanext/gov_theme/templates/package/search.html:29
-#: ckanext/gov_theme/templates/package/snippets/additional_info.html:61
-msgid "Created"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:111
-msgid "Format"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:115
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:30
-msgid "License"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_read.html:132
-msgid "Link to file"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/resource_views.html:10
+#: ckanext/gov_theme/theme/templates/package/resource_views.html:7
 msgid "New view"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/resource_views.html:28
-msgid "This resource has no views"
+#: ckanext/gov_theme/theme/templates/package/search.html:18
+#: ckanext/gov_theme/theme/templates/package/snippets/additional_info.html:49
+msgid "Created"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/search.html:16
-msgid "Add Dataset"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/search.html:30
+#: ckanext/gov_theme/theme/templates/package/search.html:19
 msgid "Relevance"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/search.html:31
-#: ckanext/gov_theme/templates/snippets/search_form.html:4
+#: ckanext/gov_theme/theme/templates/package/search.html:20
 msgid "Name Ascending"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/search.html:32
-#: ckanext/gov_theme/templates/snippets/search_form.html:4
+#: ckanext/gov_theme/theme/templates/package/search.html:21
 msgid "Name Descending"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/search.html:33
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:92
+#: ckanext/gov_theme/theme/templates/package/search.html:22
 msgid "Last Modified"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/search.html:34
+#: ckanext/gov_theme/theme/templates/package/search.html:23
 msgid "Popular"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/search.html:55
+#: ckanext/gov_theme/theme/templates/package/search.html:34
 msgid "API"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/search.html:56
+#: ckanext/gov_theme/theme/templates/package/search.html:35
 msgid "API Docs"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/search.html:58
+#: ckanext/gov_theme/theme/templates/package/search.html:37
 msgid "full {format} dump"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/search.html:59
+#: ckanext/gov_theme/theme/templates/package/search.html:38
 #, python-format
 msgid ""
-" You can also access this registry using the API (see %(api_doc_link)s) or "
-"download a %(dump_link)s. "
+"You can also access this registry using the %(api_link)s (see "
+"%(api_doc_link)s) or download a %(dump_link)s."
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/search.html:63
+#: ckanext/gov_theme/theme/templates/package/search.html:42
 #, python-format
-msgid " You can also access this registry using the API (see %(api_doc_link)s). "
+msgid ""
+"You can also access this registry using the %(api_link)s (see "
+"%(api_doc_link)s)."
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/additional_info.html:2
-msgid "Additional Info"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/additional_info.html:14
-#: ckanext/gov_theme/templates/package/snippets/package_metadata_fields.html:6
+#: ckanext/gov_theme/theme/templates/package/snippets/additional_info.html:5
 msgid "Source"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/additional_info.html:25
-#: ckanext/gov_theme/templates/package/snippets/additional_info.html:30
+#: ckanext/gov_theme/theme/templates/package/snippets/additional_info.html:17
+#: ckanext/gov_theme/theme/templates/package/snippets/additional_info.html:23
 msgid "Author"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/additional_info.html:39
-#: ckanext/gov_theme/templates/package/snippets/package_metadata_fields.html:10
+#: ckanext/gov_theme/theme/templates/package/snippets/additional_info.html:32
 msgid "Version"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/additional_info.html:46
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:108
-#: ckanext/gov_theme/templates/user/read_base.html:91
-msgid "State"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/additional_info.html:52
+#: ckanext/gov_theme/theme/templates/package/snippets/additional_info.html:40
 msgid "Last Updated"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/data_api_button.html:8
+#: ckanext/gov_theme/theme/templates/package/snippets/additional_info.html:43
+#: ckanext/gov_theme/theme/templates/package/snippets/additional_info.html:52
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_item.html:14
+msgid "unknown"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/package/snippets/data_api_button.html:2
 msgid "Loading..."
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/data_api_button.html:10
+#: ckanext/gov_theme/theme/templates/package/snippets/data_api_button.html:7
 msgid "Data API"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/info.html:27
-#: ckanext/gov_theme/templates/snippets/organization.html:40
-#: ckanext/gov_theme/templates/user/read_base.html:49
+#: ckanext/gov_theme/theme/templates/package/snippets/info.html:27
 msgid "Followers"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:4
-msgid "Title"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:4
-msgid "eg. A descriptive title"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:13
-msgid "eg. my-dataset"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:19
-msgid "eg. Some useful notes about the data"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:24
+#: ckanext/gov_theme/theme/templates/package/snippets/package_basic_fields.html:5
 msgid "Tags"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:24
+#: ckanext/gov_theme/theme/templates/package/snippets/package_basic_fields.html:5
 msgid "eg. economy, mental health, government"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:41
-msgid ""
-" License definitions and additional information can be found at <a "
-"href=\"http://opendefinition.org/licenses/\">opendefinition.org</a> "
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:70
-#: ckanext/gov_theme/templates/snippets/organization.html:6
+#: ckanext/gov_theme/theme/templates/package/snippets/package_basic_fields.html:28
+#: ckanext/gov_theme/theme/templates/snippets/organization.html:9
 msgid "Organization"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:74
+#: ckanext/gov_theme/theme/templates/package/snippets/package_basic_fields.html:32
 msgid "No organization"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:89
+#: ckanext/gov_theme/theme/templates/package/snippets/package_basic_fields.html:47
 msgid "Visibility"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:92
+#: ckanext/gov_theme/theme/templates/package/snippets/package_basic_fields.html:50
 msgid "Public"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:92
-#: ckanext/gov_theme/templates/user/read_base.html:82
-#: ckanext/gov_theme/templates/user/read_base.html:96
+#: ckanext/gov_theme/theme/templates/package/snippets/package_basic_fields.html:50
+#: ckanext/gov_theme/theme/templates/snippets/package_item.html:12
 msgid "Private"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:111
+#: ckanext/gov_theme/theme/templates/package/snippets/package_basic_fields.html:66
+msgid "State"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/package/snippets/package_basic_fields.html:69
 msgid "Active"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/package_basic_fields.html:112
-#: ckanext/gov_theme/templates/snippets/organization.html:20
+#: ckanext/gov_theme/theme/templates/package/snippets/package_basic_fields.html:70
 msgid "Deleted"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/package_form.html:39
+#: ckanext/gov_theme/theme/templates/package/snippets/package_form.html:38
 msgid ""
 "The <i>data license</i> you select above only applies to the contents of any "
 "resource files that you add to this dataset. By submitting this form, you "
@@ -1209,507 +992,503 @@ msgid ""
 "Database License</a>."
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/package_form.html:50
+#: ckanext/gov_theme/theme/templates/package/snippets/package_form.html:49
 msgid "Are you sure you want to delete this dataset?"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/package_form.html:55
+#: ckanext/gov_theme/theme/templates/package/snippets/package_form.html:56
 msgid "Next: Add Data"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/package_metadata_fields.html:6
-msgid "http://example.com/dataset.json"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/package_metadata_fields.html:10
-msgid "1.0"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/package_metadata_fields.html:14
-#: ckanext/gov_theme/templates/user/new_user_form.html:8
+#: ckanext/gov_theme/theme/templates/package/snippets/package_metadata_fields.html:4
+#: ckanext/gov_theme/theme/templates/user/new_user_form.html:8
 msgid "joe@example.com"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:28
-msgid "File"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:32
-msgid "eg. January 2011 Gold Prices"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:36
-msgid "Some useful notes about the data"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:46
-msgid "Language"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:49
-msgid "Hebrew"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:49
-msgid "English"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:49
-msgid "Russian"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:49
-msgid "Ukrainian"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:49
-msgid "Spanish"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:49
-msgid "Polish"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:49
-msgid "German"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:49
-msgid "Italian"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:49
-msgid "French"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:49
-msgid "Chinese"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:49
-msgid "Portuguese"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:56
-msgid "reference number"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:60
-msgid "spatial coverage"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:63
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:75
-msgid "NA"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:63
-msgid "earthly"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:63
-msgid "urban"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:72
-msgid "geodetic"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:75
-msgid "new_net"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:75
-msgid "old_net"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:75
-msgid "geographic_net"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:82
-msgid "demarcation"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:92
-msgid "eg. 2012-06-05"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:94
-msgid "File Size"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:94
-msgid "eg. 1024"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:96
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:98
-msgid "MIME Type"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:96
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:98
-msgid "eg. application/json"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:106
-msgid "Are you sure you want to delete this resource?"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:113
-msgid "Previous"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:116
-msgid "Save & add another"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_form.html:119
-msgid "Finish"
-msgstr ""
-
-#: ckanext/gov_theme/templates/package/snippets/resource_item.html:15
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_item.html:13
 msgid "Last Updated Date"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/resource_item.html:27
-msgid "Explore"
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_item.html:16
+msgid "API Usage"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/resource_item.html:39
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_item.html:19
+msgid "Number Of Downloads"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_item.html:38
+msgid "Preview"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_item.html:40
 msgid "More information"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/resource_item.html:61
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_item.html:49
+msgid "Go to resource"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_item.html:55
 msgid "Edit"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/resource_view.html:11
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_view_old.html:12
 msgid "Embed"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/resource_view.html:25
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_view_old.html:26
 msgid "This resource view is not available at the moment."
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/resource_view.html:38
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_view_old.html:27
+msgid "There are no views created for this resource yet."
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_view_old.html:28
+msgid "The resource can be downloaded by clicking on 'Link to file'."
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_view_old.html:31
+msgid "Click here for more information."
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_view_old.html:40
 msgid "Download resource"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/resource_view.html:61
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_view_old.html:64
 msgid "Your browser does not support iframes."
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/resource_view.html:68
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_view_old.html:71
 msgid "Embed resource view"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/resource_view.html:71
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_view_old.html:74
 msgid ""
 "You can copy and paste the embed code into a CMS or blog software that "
 "supports raw HTML"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/resource_view.html:74
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_view_old.html:77
 msgid "Width"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/resource_view.html:77
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_view_old.html:80
 msgid "Height"
 msgstr ""
 
-#: ckanext/gov_theme/templates/package/snippets/resource_view.html:80
+#: ckanext/gov_theme/theme/templates/package/snippets/resource_view_old.html:83
 msgid "Code"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/activity_item.html:3
-msgid "New activity item"
+#: ckanext/gov_theme/theme/templates/package/snippets/resources.html:9
+msgid "Resources"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:15
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:20
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:22
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:56
+#: ckanext/gov_theme/theme/templates/package/snippets/resources_list.html:13
+msgid "Data and Resources"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/package/snippets/resources_list.html:30
+#: ckanext/gov_theme/theme/templates/package/snippets/resources_list.html:58
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:53
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:136
+msgid "NotAccessible"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/package/snippets/resources_list.html:32
+#: ckanext/gov_theme/theme/templates/package/snippets/resources_list.html:60
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:64
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:76
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:148
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:160
+msgid "Yes"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/package/snippets/resources_list.html:40
+#: ckanext/gov_theme/theme/templates/package/snippets/resources_list.html:69
+#, python-format
+msgid ""
+"<p class=\"empty\">This dataset has no data <div "
+"class=\"page_primary_action\"> <a class=\"btn btn-primary\" href=\"%(url)s\">"
+" בקשה למאגר</a> </div> </p>"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/package/snippets/resources_list.html:50
+#, python-format
+msgid ""
+"<p class=\"empty\">This dataset has no data, <a href=\"%(url)s\">why not add "
+"some?</a></p>"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/package/snippets/resources_list.html:79
+msgid "This dataset has no data"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:27
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:110
 msgid "Frequency"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:23
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:56
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:28
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:41
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:111
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:116
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:119
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:125
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:128
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:131
+msgid "NA"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:28
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:111
 msgid "Year"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:23
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:56
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:28
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:111
 msgid "Quarter"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:24
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:56
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:29
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:112
 msgid "Month"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:24
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:56
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:29
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:112
 msgid "Week"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:24
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:56
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:29
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:112
 msgid "Day"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:25
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:56
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:30
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:113
 msgid "NoUpdate"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:25
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:56
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:30
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:113
 msgid "NotConstant"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:29
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:59
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:40
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:124
+msgid "Update"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:41
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:125
 msgid "Manual"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:29
-#: ckanext/gov_theme/templates/snippets/custom_form_fields.html:59
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:41
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:125
 msgid "Automat"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/facet_list.html:80
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:52
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:135
+msgid "Accessibility"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:53
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:136
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:139
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:142
+msgid "Accessible"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:63
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:147
+msgid "ContainPrivateData"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:64
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:76
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:148
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:151
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:154
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:160
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:163
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:166
+msgid "No"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:75
+#: ckanext/gov_theme/theme/templates/snippets/custom_form_fields.html:159
+msgid "is_geographic"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/facet_list.html:52
 msgid "Show More {facet_type}"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/facet_list.html:83
-msgid "Show Only Popular {facet_type}"
+#: ckanext/gov_theme/theme/templates/snippets/facet_list.html:59
+msgid "Show Only Popular {facet_type} female"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/facet_list.html:87
+#: ckanext/gov_theme/theme/templates/snippets/facet_list.html:62
+msgid "Show Only Popular {facet_type} male"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/facet_list.html:69
 msgid "There are no {facet_type} that match this search"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/follow_button.html:11
+#: ckanext/gov_theme/theme/templates/snippets/follow_button.html:11
 msgid "Unfollow"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/follow_button.html:16
+#: ckanext/gov_theme/theme/templates/snippets/follow_button.html:16
 msgid "Follow"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/organization.html:28
-msgid "read more"
+#: ckanext/gov_theme/theme/templates/snippets/license.html:8
+msgid "Licenses"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/organization.html:31
+#: ckanext/gov_theme/theme/templates/snippets/license.html:19
+msgid "This dataset satisfies the Open Definition."
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/organization.html:27
 msgid "There is no description for this organization"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/search_form.html:3
-msgid "Search datasets..."
+#: ckanext/gov_theme/theme/templates/snippets/package_item.html:31
+msgid "This dataset has no description"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/search_form.html:25
+#: ckanext/gov_theme/theme/templates/snippets/search_form.html:19
 msgid "Submit"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/search_form.html:40
+#: ckanext/gov_theme/theme/templates/snippets/search_form.html:39
 msgid "Order by"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/search_form.html:49
+#: ckanext/gov_theme/theme/templates/snippets/search_form.html:42
 msgid "Go"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/search_form.html:79
-msgid "Filter Results"
+#: ckanext/gov_theme/theme/templates/snippets/search_result_text.html:15
+msgid "{number} dataset found for \"{query}\""
+msgid_plural "{number} datasets found for \"{query}\""
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/gov_theme/theme/templates/snippets/search_result_text.html:16
+msgid "No datasets found for \"{query}\""
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/search_form.html:86
-msgid " <p class=\"extra\">Please try another search.</p> "
+#: ckanext/gov_theme/theme/templates/snippets/header_custom/search_form.html:5
+#: ckanext/gov_theme/theme/templates/snippets/search_result_text.html:17
+msgid "{number} dataset found"
+msgid_plural "{number} datasets found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/gov_theme/theme/templates/snippets/search_result_text.html:18
+msgid "No datasets found"
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/search_form.html:92
-msgid ""
-" <p><strong>There was an error while searching.</strong> Please try "
-"again.</p> "
+#: ckanext/gov_theme/theme/templates/snippets/search_result_text.html:21
+msgid "{number} group found for \"{query}\""
+msgid_plural "{number} groups found for \"{query}\""
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/gov_theme/theme/templates/snippets/search_result_text.html:22
+msgid "No groups found for \"{query}\""
 msgstr ""
 
-#: ckanext/gov_theme/templates/snippets/social.html:5
+#: ckanext/gov_theme/theme/templates/snippets/search_result_text.html:23
+msgid "{number} group found"
+msgid_plural "{number} groups found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/gov_theme/theme/templates/snippets/search_result_text.html:24
+msgid "No groups found"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/search_result_text.html:27
+msgid "{number} organization found for \"{query}\""
+msgid_plural "{number} organizations found for \"{query}\""
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/gov_theme/theme/templates/snippets/search_result_text.html:28
+msgid "No organizations found for \"{query}\""
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/header_custom/search_form.html:5
+#: ckanext/gov_theme/theme/templates/snippets/search_result_text.html:29
+msgid "{number} organization found"
+msgid_plural "{number} organizations found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/gov_theme/theme/templates/snippets/search_result_text.html:30
+msgid "No organizations found"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/social.html:8
 msgid "Social"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/dashboard.html:19
-#: ckanext/gov_theme/templates/user/dashboard.html:37
+#: ckanext/gov_theme/theme/templates/snippets/activities/changed_package.html:6
+msgid "{actor} updated the dataset {dataset}"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/activities/changed_package.html:16
+msgid "View this version"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/activities/changed_package.html:20
+msgid "Changes"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/snippets/header_custom/search_form.html:18
+msgid "Search"
+msgstr ""
+
+#: ckanext/gov_theme/theme/templates/user/dashboard.html:9
 msgid "News feed"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/dashboard.html:20
+#: ckanext/gov_theme/theme/templates/user/dashboard.html:10
 msgid "My Datasets"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/dashboard.html:21
+#: ckanext/gov_theme/theme/templates/user/dashboard.html:11
 msgid "My Organizations"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/dashboard.html:39
-msgid "Activity from items that I'm following"
-msgstr ""
-
-#: ckanext/gov_theme/templates/user/edit.html:6
-#: ckanext/gov_theme/templates/user/edit_base.html:3
-#: ckanext/gov_theme/templates/user/read_base.html:5
-#: ckanext/gov_theme/templates/user/read_base.html:8
-msgid "Users"
-msgstr ""
-
-#: ckanext/gov_theme/templates/user/edit.html:17
-msgid "Account Info"
-msgstr ""
-
-#: ckanext/gov_theme/templates/user/edit.html:19
-msgid " Your profile lets other CKAN users know about who you are and what you do. "
-msgstr ""
-
-#: ckanext/gov_theme/templates/user/edit_user_form.html:8
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:8
 msgid "Change details"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:9
-#: ckanext/gov_theme/templates/user/new_user_form.html:6
-#: ckanext/gov_theme/templates/user/read_base.html:76
-#: ckanext/gov_theme/templates/user/snippets/login_form.html:20
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:9
+#: ckanext/gov_theme/theme/templates/user/new_user_form.html:6
+#: ckanext/gov_theme/theme/templates/user/request_reset.html:7
+#: ckanext/gov_theme/theme/templates/user/snippets/login_form.html:22
 msgid "Username"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:11
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:11
 msgid "Full name"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:11
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:11
 msgid "eg. Joe Bloggs"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:13
-#: ckanext/gov_theme/templates/user/new_user_form.html:8
-#: ckanext/gov_theme/templates/user/read_base.html:82
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:13
+#: ckanext/gov_theme/theme/templates/user/new_user_form.html:8
 msgid "Email"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:13
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:13
 msgid "eg. joe@example.com"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:15
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:15
 msgid "A little information about yourself"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:18
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:18
 msgid "Subscribe to notification emails"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:27
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:27
 msgid "Change password"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:28
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:28
 msgid "Old Password"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:30
-#: ckanext/gov_theme/templates/user/new_user_form.html:9
-#: ckanext/gov_theme/templates/user/snippets/login_form.html:22
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:30
+#: ckanext/gov_theme/theme/templates/user/new_user_form.html:9
+#: ckanext/gov_theme/theme/templates/user/perform_reset.html:7
+#: ckanext/gov_theme/theme/templates/user/snippets/login_form.html:24
 msgid "Password"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:32
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:32
 msgid "Confirm Password"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:38
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:38
 msgid "Are you sure you want to delete this User?"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:44
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:44
 msgid "Are you sure you want to regenerate the API key?"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:45
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:45
 msgid "Regenerate API Key"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/edit_user_form.html:49
+#: ckanext/gov_theme/theme/templates/user/edit_user_form.html:49
 msgid "Update Profile"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/login.html:9
+#: ckanext/gov_theme/theme/templates/user/login.html:9
 msgid "Forgotten your password?"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/login.html:11
+#: ckanext/gov_theme/theme/templates/user/login.html:11
 msgid "No problem, use our password recovery form to reset it."
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/login.html:14
+#: ckanext/gov_theme/theme/templates/user/login.html:14
 msgid "Forgot your password?"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/new_user_form.html:6
+#: ckanext/gov_theme/theme/templates/user/new_user_form.html:6
 msgid "username"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/new_user_form.html:7
+#: ckanext/gov_theme/theme/templates/user/new_user_form.html:7
 msgid "Full Name"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/new_user_form.html:7
+#: ckanext/gov_theme/theme/templates/user/new_user_form.html:7
 msgid "Joe Bloggs"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/new_user_form.html:10
+#: ckanext/gov_theme/theme/templates/user/new_user_form.html:10
+#: ckanext/gov_theme/theme/templates/user/perform_reset.html:8
 msgid "Confirm"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/new_user_form.html:18
+#: ckanext/gov_theme/theme/templates/user/new_user_form.html:18
 msgid "Create Account"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/read_base.html:39
-msgid "You have not provided a biography."
+#: ckanext/gov_theme/theme/templates/user/perform_reset.html:11
+msgid "Update Password"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/read_base.html:41
-msgid "This user has no biography."
+#: ckanext/gov_theme/theme/templates/user/request_reset.html:10
+msgid "Request Reset"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/read_base.html:57
-msgid "Edits"
-msgstr ""
-
-#: ckanext/gov_theme/templates/user/read_base.html:73
-msgid "Open ID"
-msgstr ""
-
-#: ckanext/gov_theme/templates/user/read_base.html:82
-#: ckanext/gov_theme/templates/user/read_base.html:96
-msgid "This means only you can see this"
-msgstr ""
-
-#: ckanext/gov_theme/templates/user/read_base.html:87
-msgid "Member Since"
-msgstr ""
-
-#: ckanext/gov_theme/templates/user/read_base.html:96
-msgid "API Key"
-msgstr ""
-
-#: ckanext/gov_theme/templates/user/snippets/login_form.html:24
+#: ckanext/gov_theme/theme/templates/user/snippets/login_form.html:26
 msgid "Remember me"
 msgstr ""
 
-#: ckanext/gov_theme/templates/user/snippets/login_form.html:30
+#: ckanext/gov_theme/theme/templates/user/snippets/login_form.html:32
 msgid "Login"
 msgstr ""
 

@@ -23,6 +23,7 @@ try:
 except ImportError:
     from pylons import config
 import ckan.lib.search as search
+import ckan.lib.mailer as mailer
 
 from . import loader
 from . import db
@@ -102,6 +103,12 @@ def xloader_data_into_datastore(input):
         errored = errored or not is_saved_ok
     return 'error' if errored else None
 
+def send_dp_error_email(err_msg_enc):
+    test_email = {'recipient_name': config.get('ckan.site_title'),
+                  'recipient_email': config.get('xloader_error_email_to'),
+                  'subject': config.get('xloader_error_email_subject'),
+                  'body': err_msg_enc}
+    mailer.mail_recipient(**test_email)
 
 def xloader_data_into_datastore_(input, job_dict):
     '''This function:
@@ -195,6 +202,9 @@ def xloader_data_into_datastore_(input, job_dict):
                               logger=logger)
         except JobError as e:
             logger.error('Error during messytables load: {}'.format(e))
+            send_dp_error_email('Error during messytables in dataset: {} , resource: {} , file name: {},  '
+                                'error details: {}'.format(resource.get('package_id'), resource.get('id'),
+                                                           resource.get('name'), e))
             raise
         loader.calculate_record_count(
             resource_id=resource['id'], logger=logger)

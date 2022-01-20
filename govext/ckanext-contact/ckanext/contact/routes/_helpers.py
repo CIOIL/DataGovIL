@@ -6,6 +6,7 @@
 
 import logging
 import socket
+import re
 
 from ckanext.contact import recaptcha
 from ckanext.contact.interfaces import IContact
@@ -15,6 +16,11 @@ from ckan.lib import mailer
 import ckanext.gov_theme.mailer as custom_mailer
 from ckan.lib.navl.dictization_functions import unflatten
 from ckan.plugins import PluginImplementations, toolkit
+from ckantoolkit import _
+
+SMALL_FIELD_MAX_LENGTH = 30
+BIG_FIELD_MAX_LENGTH = 300
+EMAIL_MIN_LENGTH = 6
 
 log = logging.getLogger(__name__)
 
@@ -37,6 +43,11 @@ def validate(data_dict):
         if value is None or value == u'':
             errors[field] = [u'Missing Value']
             error_summary[field] = u'Missing value'
+        else:
+            error =  eval(f'_validate_{field}_field(value)')
+            if error:
+                errors[field] = [error]
+                error_summary[field] = error
 
     # only check the recaptcha if there are no errors
     if not errors:
@@ -96,7 +107,7 @@ def submit():
             body += '\n' + ('Resource Title') + ': ' + data_dict[u'resource_title']
             body += '\n' + ('Dataset Author') + ': ' + data_dict[u'dataset_author']
             body += '\n' + ('Organization') + ': ' + data_dict[u'organization_name']
-            body += '\n' + ('Link to data') + ': ' + "{}/dataset/{}/resource/{}".format(toolkit.config.get('ckan.site_url', '//localhost:5000'),
+            body += '\n' + ('Link to data') + ': ' + "{}/dataset/{}/resource/{}".format(toolkit.config.get('ckan.site_url', '//localhost:p5'),
                                                                                             data_dict[u'dataset_id'],
                                                                                           data_dict[u'resource_id'])
             body += '\n\n' + (u'Best Regards')
@@ -130,3 +141,75 @@ def submit():
         u'error_summary': error_summary,
         u'recaptcha_error': recaptcha_error,
         }
+
+
+def _validate_email_field(email):
+    '''
+    Validate the email field with expected regular expression
+
+    :param email: the given email
+    :type email: string
+    :return: if the given data is not validate return string represent the error else return None.
+    :rtype: string or None
+    '''
+    email_pattern = re.compile(r'^[\w|\.|\-]+@(?:[\w|\-]+\.)+[a-zA-Z]{2,6}$')
+    invalid_message = 'Must contain the following symbols: @. and after the last . must have between 2-6 characters'
+    return _validate_data(email, email_pattern, invalid_message, SMALL_FIELD_MAX_LENGTH, EMAIL_MIN_LENGTH)
+
+
+def _validate_name_field(name):
+    '''
+    Validate the name field with expected regular expression
+
+    :param name: the given name
+    :type name: string
+    :return: if the given data is not validate return string represent the error else return None.
+    :rtype: string or None
+    '''
+    name_pattern = re.compile(r'[a-zA-Zא-ת\s\'\-]*$')
+    invalid_message = 'Must be purely alphabetic characters and these symbols: -\''
+    return _validate_data(name, name_pattern, invalid_message, SMALL_FIELD_MAX_LENGTH)
+
+
+def _validate_content_field(content):
+    '''
+    Validate the content field with expected regular expression
+
+    :param content: the given content
+    :type content: string
+    :return: if the given data is not validate return string represent the error else return None.
+    :rtype: string or None
+    '''
+    content_pattern = re.compile(r'[a-zA-Zא-ת0-9\'\"\(\)\.\,\/\?\s]*$')
+    invalid_message = "Must be purely alphanumeric characters and these symbols: '\"().,?\/"
+    return _validate_data(content, content_pattern, invalid_message, BIG_FIELD_MAX_LENGTH)
+
+
+def _validate_data(value, pattern, invalid_message, max_length, min_length=0):
+    '''
+    Return the given value if it's a valid data, otherwise raise Invalid message.
+    If it's a valid data, the given value will be returned unmodified.
+    :param value: The given data
+    :type value: string
+    :param pattern: The expected pattern to validate with
+    :type pattern: Pattern[str]
+    :param invalid_message: The message to raise if not match by the regular expression
+    :type invalid_message: string
+    :param max_length: The max length value can be
+    :type max_length: int
+    :param min_length: The min length value can be, default is zero
+    :type min_length: int
+    :return: if the given data is not validate return string represent the error else raise error.
+    :rtype: string
+    '''
+    if len(value) < 1:
+        return _('Please fill in this field')
+
+    if len(value) < min_length:
+        return _('Must be at least %s characters long') % min_length
+
+    if len(value) > max_length:
+        return _('Must be a maximum of %i characters long') % max_length
+
+    if not pattern.match(value):
+        return _(invalid_message)

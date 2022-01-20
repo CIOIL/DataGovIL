@@ -23,38 +23,41 @@ def mail_user(recipient, subject, body, headers={}):
     if (recipient.email is None) or not len(recipient.email):
         raise _mailer.MailerException(_("No recipient email address available!"))
     mail_recipient(recipient.display_name, recipient.email, subject,
-            body, headers=headers)
+                   body, headers=headers)
+
 
 def get_reset_link_body(user):
     reset_link_message = _(
-    "You have requested your password on {site_title} to be reset.\n"
-    "\n"
-    "Please click the following link to confirm this request:\n"
-    "\n"
-    "   {reset_link}\n"
+        "You have requested your password on {site_title} to be reset.\n"
+        "\n"
+        "Please click the following link to confirm this request:\n"
+        "\n"
+        "   {reset_link}\n"
     )
 
     d = {
         'reset_link': get_reset_link(user),
         'site_title': config.get('site_title', ''),
         'user_fullname': user.fullname
-        }
+    }
     return reset_link_message.format(**d)
+
 
 def get_reset_link(user):
     from urlparse import urljoin
 
-    if "gov.il" in _mailer.config.get("ckan.site_url"):
-        site_url = g.site_url.replace("http://","https://e.")
+    if "name" in _mailer.config.get("ckan.site_url"):
+        site_url = g.site_url.replace("http://", "https://e.")
     else:
         site_url = g.site_url
     return urljoin(site_url,
                    h.url_for(controller='user',
-                           action='perform_reset',
-                           id=user.id,
-                           key=user.reset_key))
+                             action='perform_reset',
+                             id=user.id,
+                             key=user.reset_key))
 
-def mail_recipient(recipient_name, recipient_email, subject,body, headers={}):
+
+def mail_recipient(recipient_name, recipient_email, subject, body, headers={}):
     site_title = _mailer.config.get('ckan.site_title')
     site_url = _mailer.config.get('ckan.site_url')
     return _mail_recipient(recipient_name, recipient_email,
@@ -62,22 +65,20 @@ def mail_recipient(recipient_name, recipient_email, subject,body, headers={}):
 
 
 def _mail_recipient(recipient_name, recipient_email,
-        sender_name, sender_url, subject,
-        body, headers={}):
+                    sender_name, sender_url, subject,
+                    body, headers={}):
     mail_from = _mailer.config.get('smtp.mail_from')
-    #body = add_msg_niceties(recipient_name, body, sender_name, sender_url)
+    # body = add_msg_niceties(recipient_name, body, sender_name, sender_url)
     msg = _mailer.MIMEText(body.encode('utf-8'), 'plain', 'utf-8')
     for k, v in headers.items(): msg[k] = v
     subject = _mailer.Header(subject.encode('utf-8'), 'utf-8')
     msg['Subject'] = subject
     msg['From'] = _("%s <%s>") % (sender_name, mail_from)
-    recipient = u"%s <%s>" % (recipient_name, recipient_email)
-    msg['To'] = _mailer.Header(recipient, 'utf-8')
+    msg['To'] = u"%s <%s>" % (recipient_name, recipient_email)
     msg['Date'] = _mailer.utils.formatdate(_mailer.time())
     msg['X-Mailer'] = "Version %s" % _mailer.ckan.__version__
 
     # Send the email using Python's smtplib.
-    smtp_connection = _mailer.smtplib.SMTP()
     if 'smtp.test_server' in _mailer.config:
         # If 'smtp.test_server' is configured we assume we're running tests,
         # and don't use the smtp.server, starttls, user, password etc. options.
@@ -91,10 +92,16 @@ def _mail_recipient(recipient_name, recipient_email,
             _mailer.config.get('smtp.starttls'))
         smtp_user = _mailer.config.get('smtp.user')
         smtp_password = _mailer.config.get('smtp.password')
-    smtp_connection.connect(smtp_server)
-    try:
-        #smtp_connection.set_debuglevel(True)
 
+    try:
+        smtp_connection = _mailer.smtplib.SMTP(smtp_server)
+        # smtp_connection.set_debuglevel(True)
+    except (_mailer.socket.error, _mailer.smtplib.SMTPConnectError) as e:
+        _mailer.log.exception(e)
+        raise _mailer.MailerException('SMTP server could not be connected to: "%s" %s'
+                                      % (smtp_server, e))
+
+    try:
         # Identify ourselves and prompt the server for supported features.
         smtp_connection.ehlo()
 
@@ -111,7 +118,7 @@ def _mail_recipient(recipient_name, recipient_email,
         # If 'smtp.user' is in CKAN config, try to login to SMTP server.
         if smtp_user:
             assert smtp_password, ("If smtp.user is configured then "
-                    "smtp.password must be configured as well.")
+                                   "smtp.password must be configured as well.")
             smtp_connection.login(smtp_user, smtp_password)
 
         smtp_connection.sendmail(mail_from, recipient_email.split(","), msg.as_string())
